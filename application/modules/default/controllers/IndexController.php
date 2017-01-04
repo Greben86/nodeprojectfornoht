@@ -111,15 +111,6 @@ class IndexController extends Zend_Controller_Action
 
                 $mail = new Zend_Mail();
 
-                /*if (is_uploaded_file($file['userfile']['tmp_name'])) {
-                echo "Файл ". $_FILES['userfile']['name'] ." успешно загружен.\n";
-                echo "Отображаем содержимое\n";
-                readfile($_FILES['userfile']['tmp_name']);
-                } else {
-                echo "Возможная атака с участием загрузки файла: ";
-                echo "файл '". $_FILES['userfile']['tmp_name'] . "'.";
-                }*/
-
                 $mail->setBodyHtml(
                 '<h2>' . trim(trim($values['family']. ' ' . $values['name']) . ' ' . $values['name2']) . '</h2><br>' .
                 'Тел.: <b>'.$values['phone'] . '</b><br>' .
@@ -128,11 +119,8 @@ class IndexController extends Zend_Controller_Action
                 $mail->addTo('grebenvictor@yandex.ru', 'Администратор кооператива');
                 $mail->setSubject('Заявка на вступление');
 
-                //if ($tmpFilePath != ""){
-                //$newFilePath = realpath(dirname('.'))."./upload/" . $_FILES['image']['name'][$i];
                 $newFilePath = APPLICATION_PATH . '/../public/upload/' . $file['image']['name'];
 
-                //if(move_uploaded_file($tmpFilePath, $newFilePath)) {
                 $fname = $_FILES['image']['name'];
                 $ftempname = $_FILES['image']['tmp_name'];
                 $at = new Zend_Mime_Part(file_get_contents($newFilePath));
@@ -141,8 +129,7 @@ class IndexController extends Zend_Controller_Action
                 $at->filename = $fname;
 
                 $mail->addAttachment($at);
-                //}
-                //}*/
+
                 $mail->send($transport);
 
                 $this->_redirect('/default/index/posted');
