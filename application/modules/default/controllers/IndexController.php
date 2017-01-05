@@ -102,42 +102,27 @@ class IndexController extends Zend_Controller_Action
                 $newFilename = 'file-' . uniqid() . '.' . $originalFilename['extension'];
                 $form->image->addFilter('Rename', $newFilename);
                 $form->image->receive();
-
-                $values = $form->getValues();
-                $body = '<h2>' . trim(trim($values['family']. ' ' . $values['name']) . ' ' . $values['name2']) . '</h2><br>' .
-                    'Тел.: <b>'.$values['phone'] . '</b><br>' .
-                    'Email: <b>'.$values['email'] . '</b>';
-
-                $config = array(
-                    'ssl' => 'ssl',
-                    'port' => 465,
-                    'auth' => 'login', 
-                    'username' => 'grebenvictor',
-                    'password' => '21pnds73rdit'
-                );
-
-                $transport = new Zend_Mail_Transport_Smtp('smtp.yandex.ru', $config);
-
-                $mail = new Zend_Mail();
-
-                $mail->setBodyHtml(
-                '<h2>' . trim(trim($values['family']. ' ' . $values['name']) . ' ' . $values['name2']) . '</h2><br>' .
-                'Тел.: <b>'.$values['phone'] . '</b><br>' .
-                'Email: <b>'.$values['email'] . '</b>');
-                $mail->setFrom('grebenvictor@yandex.ru', 'Система регистрации участников');
-                $mail->addTo('grebenvictor@yandex.ru', 'Администратор кооператива');
-                $mail->setSubject('Заявка на вступление');
-
+                
                 $newFilePath = APPLICATION_PATH . '/../public/upload/' . $newFilename;
 
-                $at = new Zend_Mime_Part(file_get_contents($newFilePath));
-                $at->disposition = Zend_Mime::DISPOSITION_INLINE;
-                $at->encoding = Zend_Mime::ENCODING_BASE64;
-                $at->filename = $newFilename;
+                $values = $form->getValues();
+                
+                $domDoc = new DOMDocument();
+                $fio = $domDoc->createElement( 'h2', trim(trim($values['family']. ' ' . $values['name']) . ' ' . $values['name2'])  );
+                $phone = $domDoc->createElement( 'p', 'Тел.: ' );
+                $phone->appendChild( new DOMElement( 'b', $values['phone'] ) );
+                $email = $domDoc->createElement( 'p', 'Email: ' );
+                $email->appendChild( new DOMElement( 'b', $values['email'] ) );
+                
+                $domDoc->appendChild($fio);
+                $domDoc->appendChild( new DOMElement( 'br' ) );
+                $domDoc->appendChild($phone);
+                $domDoc->appendChild( new DOMElement( 'br' ) );
+                $domDoc->appendChild($email);
+                
+                $body = $domDoc->saveHTML();
 
-                $mail->addAttachment($at);
-
-                $mail->send($transport);
+                $this->sendMail('Заявка на вступление', $body, 'Скан' . '.' . $originalFilename['extension'], $newFilePath);
 
                 $this->_redirect('/default/index/posted');
             }
