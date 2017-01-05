@@ -94,36 +94,22 @@ class IndexController extends Zend_Controller_Action
         $form = new Default_Form_Index();
         $this->view->form = $form;
 
-        if ($this->getRequest()->isPost()) {
-            if ($form->isValid($this->getRequest()->getPost())) {
-                $file = $form->image->getFileInfo();
-                
+        if ($this->getRequest()->isPost()) 
+        {
+            if ($form->isValid($this->getRequest()->getPost())) 
+            {   
+                // Переименуем файл
                 $originalFilename = pathinfo($form->image->getFileName());
                 $newFilename = 'file-' . uniqid() . '.' . $originalFilename['extension'];
                 $form->image->addFilter('Rename', $newFilename);
                 $form->image->receive();
-                
-                $newFilePath = APPLICATION_PATH . '/../public/upload/' . $newFilename;
-
-                $values = $form->getValues();
-                
-                $domDoc = new DOMDocument();
-                $fio = $domDoc->createElement( 'h2', trim(trim($values['family']. ' ' . $values['name']) . ' ' . $values['name2'])  );
-                $phone = $domDoc->createElement( 'p', 'Тел.: ' );
-                $phone->appendChild( new DOMElement( 'b', $values['phone'] ) );
-                $email = $domDoc->createElement( 'p', 'Email: ' );
-                $email->appendChild( new DOMElement( 'b', $values['email'] ) );
-                
-                $domDoc->appendChild($fio);
-                $domDoc->appendChild( new DOMElement( 'br' ) );
-                $domDoc->appendChild($phone);
-                $domDoc->appendChild( new DOMElement( 'br' ) );
-                $domDoc->appendChild($email);
-                
-                $body = $domDoc->saveHTML();
-
-                $this->sendMail('Заявка на вступление', $body, 'Скан' . '.' . $originalFilename['extension'], $newFilePath);
-
+                // Отправляем письмо
+                $this->sendMail(
+                        'Заявка на вступление', 
+                        $this->buildBody($form->getValues()), 
+                        'Скан' . '.' . $originalFilename['extension'], 
+                        APPLICATION_PATH . '/../public/upload/' . $newFilename);
+                // Перенаправляем
                 $this->_redirect('/default/index/posted');
             }
         }
@@ -160,6 +146,22 @@ class IndexController extends Zend_Controller_Action
         $transport = new Zend_Mail_Transport_Smtp('smtp.yandex.ru', $config);
         
         $mail->send($transport);
+    }
+    
+    private function buildBody($values)
+    {
+        $domDoc = new DOMDocument();
+        $title = $domDoc->createElement( 'h2', trim(trim($values['family']. ' ' . $values['name']) . ' ' . $values['name2'])  );
+        $phone = $domDoc->createElement( 'p', 'Тел.: ' );
+        $phone->appendChild( new DOMElement( 'b', $values['phone'] ) );
+        $email = $domDoc->createElement( 'p', 'Email: ' );
+        $email->appendChild( new DOMElement( 'b', $values['email'] ) );
+
+        $domDoc->appendChild($title);
+        $domDoc->appendChild($phone);
+        $domDoc->appendChild($email);
+
+        return $domDoc->saveHTML();
     }
 
 }
