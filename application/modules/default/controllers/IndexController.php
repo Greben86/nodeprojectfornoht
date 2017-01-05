@@ -97,15 +97,24 @@ class IndexController extends Zend_Controller_Action
         if ($this->getRequest()->isPost()) {
             if ($form->isValid($this->getRequest()->getPost())) {
                 $file = $form->image->getFileInfo();
+                
+                $originalFilename = pathinfo($form->image->getFileName());
+                $newFilename = 'file-' . uniqid() . '.' . $originalFilename['extension'];
+                $form->image->addFilter('Rename', $newFilename);
+                $form->image->receive();
 
                 $values = $form->getValues();
+                $body = '<h2>' . trim(trim($values['family']. ' ' . $values['name']) . ' ' . $values['name2']) . '</h2><br>' .
+                    'Тел.: <b>'.$values['phone'] . '</b><br>' .
+                    'Email: <b>'.$values['email'] . '</b>';
 
                 $config = array(
-                'ssl' => 'ssl',
-                'port' => 465,
-                'auth' => 'login',
-                'username' => 'grebenvictor',
-                'password' => '21pnds73rdit');
+                    'ssl' => 'ssl',
+                    'port' => 465,
+                    'auth' => 'login', 
+                    'username' => 'grebenvictor',
+                    'password' => '21pnds73rdit'
+                );
 
                 $transport = new Zend_Mail_Transport_Smtp('smtp.yandex.ru', $config);
 
@@ -119,14 +128,12 @@ class IndexController extends Zend_Controller_Action
                 $mail->addTo('grebenvictor@yandex.ru', 'Администратор кооператива');
                 $mail->setSubject('Заявка на вступление');
 
-                $newFilePath = APPLICATION_PATH . '/../public/upload/' . $file['image']['name'];
+                $newFilePath = APPLICATION_PATH . '/../public/upload/' . $newFilename;
 
-                $fname = $_FILES['image']['name'];
-                $ftempname = $_FILES['image']['tmp_name'];
                 $at = new Zend_Mime_Part(file_get_contents($newFilePath));
                 $at->disposition = Zend_Mime::DISPOSITION_INLINE;
                 $at->encoding = Zend_Mime::ENCODING_BASE64;
-                $at->filename = $fname;
+                $at->filename = $newFilename;
 
                 $mail->addAttachment($at);
 
@@ -140,6 +147,34 @@ class IndexController extends Zend_Controller_Action
     public function postedAction()
     {
     // Заглушка
+    }
+    
+    private function sendMail($subject, $body, $filename, $filepath)
+    {
+        $config = array(
+            'ssl' => 'ssl',
+            'port' => 465,
+            'auth' => 'login', 
+            'username' => 'grebenvictor',
+            'password' => '21pnds73rdit'
+        );       
+
+        $mail = new Zend_Mail();
+        $mail->setBodyHtml($body);
+        $mail->setFrom('grebenvictor@yandex.ru', 'Система регистрации участников');
+        $mail->addTo('grebenvictor@yandex.ru', 'Администратор кооператива');
+        $mail->setSubject($subject);
+
+        $at = new Zend_Mime_Part(file_get_contents($filepath));
+        $at->disposition = Zend_Mime::DISPOSITION_INLINE;
+        $at->encoding = Zend_Mime::ENCODING_BASE64;
+        $at->filename = $filename;
+
+        $mail->addAttachment($at);
+
+        $transport = new Zend_Mail_Transport_Smtp('smtp.yandex.ru', $config);
+        
+        $mail->send($transport);
     }
 
 }
