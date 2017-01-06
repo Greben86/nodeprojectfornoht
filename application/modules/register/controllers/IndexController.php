@@ -9,6 +9,10 @@ class Register_Form_Index extends Zend_Form {
     // создаем текстовое поле для ввода названия
     $family = new Zend_Form_Element_Text('family');
     $family -> setLabel('Фамилия')
+        ->setAttribs(array(
+            'class' => 'form-control',
+            'placeholder'  => 'Укажите фамилию',
+        ))
         -> setOptions(array('size' => '35'))
         -> setRequired(true)
         -> addValidator('NotEmpty', true)
@@ -18,6 +22,10 @@ class Register_Form_Index extends Zend_Form {
     // создаем текстовое поле для ввода названия
     $name = new Zend_Form_Element_Text('name');
     $name -> setLabel('Имя')
+        ->setAttribs(array(
+            'class' => 'form-control',
+            'placeholder'  => 'Укажите имя',
+        ))
         -> setOptions(array('size' => '35'))
         -> setRequired(true)
         -> addValidator('NotEmpty', true)
@@ -27,6 +35,10 @@ class Register_Form_Index extends Zend_Form {
     // создаем текстовое поле для ввода названия
     $name2 = new Zend_Form_Element_Text('name2');
     $name2 -> setLabel('Отчество')
+        ->setAttribs(array(
+            'class' => 'form-control',
+            'placeholder'  => 'Укажите отчество',
+        ))
         -> setOptions(array('size' => '35'))
         -> setRequired(true)
         -> addValidator('NotEmpty', true)
@@ -36,6 +48,10 @@ class Register_Form_Index extends Zend_Form {
     // создаем текстовое поле для ввода названия
     $phone = new Zend_Form_Element_Text('phone');
     $phone -> setLabel('Телефон')
+        ->setAttribs(array(
+            'class' => 'form-control',
+            'placeholder'  => 'Укажите контактный телефон',
+        ))
         -> setOptions(array('size' => '50'))
         -> setRequired(true)
         -> addValidator('NotEmpty', true)
@@ -45,6 +61,10 @@ class Register_Form_Index extends Zend_Form {
     // создаем текстовое поле для ввода адреса электронной почты
     $email = new Zend_Form_Element_Text('email');
     $email -> setLabel('Электропочта')
+        ->setAttribs(array(
+            'class' => 'form-control',
+            'placeholder'  => 'Укажите электронную почту',
+        ))
         -> setOptions(array('size' => '50'))
         -> setRequired(true)
         -> addValidator('NotEmpty', true)
@@ -62,7 +82,7 @@ class Register_Form_Index extends Zend_Form {
     // создаем кнопку отправки
     $submit = new Zend_Form_Element_Submit('submit');
     $submit -> setLabel('Подать заявку')
-        -> setOptions(array('class' => 'btn btn-primary'));
+        -> setAttribs(array('class' => 'btn btn-success'));
 
     // добавляем элементы к форме
     $this -> addElement($family)
