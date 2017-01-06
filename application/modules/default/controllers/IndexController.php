@@ -94,57 +94,22 @@ class IndexController extends Zend_Controller_Action
         $form = new Default_Form_Index();
         $this->view->form = $form;
 
-        if ($this->getRequest()->isPost()) {
-            if ($form->isValid($this->getRequest()->getPost())) {
-                $file = $form->image->getFileInfo();
-
-                $values = $form->getValues();
-
-                $config = array(
-                'ssl' => 'ssl',
-                'port' => 465,
-                'auth' => 'login',
-                'username' => 'grebenvictor',
-                'password' => '21pnds73rdit');
-
-                $transport = new Zend_Mail_Transport_Smtp('smtp.yandex.ru', $config);
-
-                $mail = new Zend_Mail();
-
-                /*if (is_uploaded_file($file['userfile']['tmp_name'])) {
-                echo "Файл ". $_FILES['userfile']['name'] ." успешно загружен.\n";
-                echo "Отображаем содержимое\n";
-                readfile($_FILES['userfile']['tmp_name']);
-                } else {
-                echo "Возможная атака с участием загрузки файла: ";
-                echo "файл '". $_FILES['userfile']['tmp_name'] . "'.";
-                }*/
-
-                $mail->setBodyHtml(
-                '<h2>' . trim(trim($values['family']. ' ' . $values['name']) . ' ' . $values['name2']) . '</h2><br>' .
-                'Тел.: <b>'.$values['phone'] . '</b><br>' .
-                'Email: <b>'.$values['email'] . '</b>');
-                $mail->setFrom('grebenvictor@yandex.ru', 'Система регистрации участников');
-                $mail->addTo('grebenvictor@yandex.ru', 'Администратор кооператива');
-                $mail->setSubject('Заявка на вступление');
-
-                //if ($tmpFilePath != ""){
-                //$newFilePath = realpath(dirname('.'))."./upload/" . $_FILES['image']['name'][$i];
-                $newFilePath = APPLICATION_PATH . '/../public/upload/' . $file['image']['name'];
-
-                //if(move_uploaded_file($tmpFilePath, $newFilePath)) {
-                $fname = $_FILES['image']['name'];
-                $ftempname = $_FILES['image']['tmp_name'];
-                $at = new Zend_Mime_Part(file_get_contents($newFilePath));
-                $at->disposition = Zend_Mime::DISPOSITION_INLINE;
-                $at->encoding = Zend_Mime::ENCODING_BASE64;
-                $at->filename = $fname;
-
-                $mail->addAttachment($at);
-                //}
-                //}*/
-                $mail->send($transport);
-
+        if ($this->getRequest()->isPost()) 
+        {
+            if ($form->isValid($this->getRequest()->getPost())) 
+            {   
+                // Переименуем файл
+                $originalFilename = pathinfo($form->image->getFileName());
+                $newFilename = 'file-' . uniqid() . '.' . $originalFilename['extension'];
+                $form->image->addFilter('Rename', $newFilename);
+                $form->image->receive();
+                // Отправляем письмо
+                $this->sendMail(
+                        'Заявка на вступление', 
+                        $this->buildBody($form->getValues()), 
+                        'Скан' . '.' . $originalFilename['extension'], 
+                        APPLICATION_PATH . '/../public/upload/' . $newFilename);
+                // Перенаправляем
                 $this->_redirect('/default/index/posted');
             }
         }
@@ -153,6 +118,50 @@ class IndexController extends Zend_Controller_Action
     public function postedAction()
     {
     // Заглушка
+    }
+    
+    private function sendMail($subject, $body, $filename, $filepath)
+    {
+        $config = array(
+            'ssl' => 'ssl',
+            'port' => 465,
+            'auth' => 'login', 
+            'username' => 'grebenvictor',
+            'password' => '21pnds73rdit'
+        );       
+
+        $mail = new Zend_Mail();
+        $mail->setBodyHtml($body);
+        $mail->setFrom('grebenvictor@yandex.ru', 'Система регистрации участников');
+        $mail->addTo('grebenvictor@yandex.ru', 'Администратор кооператива');
+        $mail->setSubject($subject);
+
+        $at = new Zend_Mime_Part(file_get_contents($filepath));
+        $at->disposition = Zend_Mime::DISPOSITION_INLINE;
+        $at->encoding = Zend_Mime::ENCODING_BASE64;
+        $at->filename = $filename;
+
+        $mail->addAttachment($at);
+
+        $transport = new Zend_Mail_Transport_Smtp('smtp.yandex.ru', $config);
+        
+        $mail->send($transport);
+    }
+    
+    private function buildBody($values)
+    {
+        $domDoc = new DOMDocument();
+        $title = $domDoc->createElement( 'h2', trim(trim($values['family']. ' ' . $values['name']) . ' ' . $values['name2'])  );
+        $phone = $domDoc->createElement( 'p', 'Тел.: ' );
+        $phone->appendChild( new DOMElement( 'b', $values['phone'] ) );
+        $email = $domDoc->createElement( 'p', 'Email: ' );
+        $email->appendChild( new DOMElement( 'b', $values['email'] ) );
+
+        $domDoc->appendChild($title);
+        $domDoc->appendChild($phone);
+        $domDoc->appendChild($email);
+
+        return $domDoc->saveHTML();
     }
 
 }
