@@ -1,5 +1,5 @@
 <?php if (count($this->records)): ?>
-<table class="table table-condensed">
+<table class="table table-striped">
     <caption></caption>
     <thead>
         <tr>
@@ -28,15 +28,15 @@
         <td>
             <?php echo $r['phone']; ?>
         </td>
-        <td>
-            <?php echo $r['email']; ?>
+        <td>            
+            <a href="mailto:<?php echo $r['email']; ?>"><?php echo $r['email']; ?></a>
         </td>
         <td>
             <?php echo $r['note']; ?>
         </td>
         <td>
-            <a href="/upload/<?php echo $r['filename']; ?>">
-                <?php echo $r['filename']; ?>
+            <a href="/upload/<?php echo $r['filename']; ?>" title="<?php echo $r['filename']; ?>">
+                <span class="glyphicon glyphicon-paperclip"></span>
             </a>            
         </td>
     </tr>
