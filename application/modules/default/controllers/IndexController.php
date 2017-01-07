@@ -13,7 +13,12 @@ class IndexController extends Zend_Controller_Action
         // Заглушка
     }
 
-    public function postedAction()
+    public function infoAction()
+    {
+        // Заглушка
+    }
+    
+    public function aboutAction()
     {
         // Заглушка
     }

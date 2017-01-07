@@ -18,13 +18,14 @@
   </head>
 
   <body>
-
+      
     <div class="container">
       <div class="header">
+          <?php echo $this->navigation()->menu(); ?>
         <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="<?php echo $this->url(array(), 'home'); ?>">Главная</a></li>
-          <li><a href="<?php echo $this->url(array(), 'home'); ?>">О нас</a></li>
-          <li><a href="<?php echo $this->url(array(), 'home'); ?>">Контакты</a></li>
+          <li><a href="<?php echo $this->url(array(), 'home'); ?>">Главная</a></li>
+          <li class="active"><a href="<?php echo $this->url(array(), 'home-info'); ?>">О нас</a></li>
+          <li><a href="<?php echo $this->url(array(), 'home-about'); ?>">Контакты</a></li>
         </ul>
         <h3 class="text-muted">НПК Содействие</h3>
       </div>
