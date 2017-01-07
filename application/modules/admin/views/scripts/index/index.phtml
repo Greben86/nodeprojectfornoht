@@ -1,23 +1,52 @@
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span2">
-        <?php echo $this->form; ?>
-    </div>
-    <div class="span10">
-        <!--Body content-->
-        <div class="hero-unit">
-            <h3>Lorem ipsum dolor sit amet</h3>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in euismod nisl, a faucibus turpis. Phasellus euismod commodo arcu, luctus elementum dolor gravida a. Aenean sit amet tortor tortor. Suspendisse sollicitudin ac lorem in aliquam. Etiam nisl nisl, hendrerit sed quam non, faucibus ullamcorper justo. Morbi quis libero dolor. Donec scelerisque rhoncus justo, a ultricies quam euismod vel. Suspendisse dictum turpis sed eros molestie, id gravida ipsum porttitor. Fusce sollicitudin, magna venenatis posuere accumsan, velit metus fermentum turpis, eget blandit risus libero aliquet tellus. Duis sit amet ante vitae justo sagittis ornare non vitae sapien. Ut in convallis neque, eget rhoncus ex. Suspendisse convallis non nisl posuere commodo. Quisque varius eleifend consectetur. Duis in sagittis nisl.
+<?php if (count($this->records)): ?>
+<table class="table table-condensed">
+    <caption></caption>
+    <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Организация</th>
+            <th>ФИО</th>
+            <th>Телефон</th>                
+            <th>Email</th>
+            <th>Описание</th>
+            <th>Файл</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($this->records as $r): ?>
 
-            Aliquam tincidunt bibendum semper. Phasellus posuere lorem purus, a venenatis urna vestibulum a. Donec semper euismod orci nec imperdiet. Maecenas finibus non tortor id varius. Morbi gravida maximus leo vitae egestas. In quis tempus ex, non sollicitudin libero. Integer magna purus, ultrices tincidunt laoreet et, semper sed massa. Sed nec turpis eleifend, bibendum nisl sit amet, commodo turpis. Nam quam velit, hendrerit non nulla sit amet, faucibus dapibus mauris. Praesent lacus arcu, tincidunt ut odio id, congue tempus lorem.
+    <tr>
+        <td>
+            <?php echo $r['date_doc']; ?>
+        </td>
+        <td>
+            <?php echo $r['fullname']; ?>
+        </td>
+        <td>
+            <?php echo trim(trim($r['family']. ' ' . $r['name']) . ' ' . $r['name2']); ?>
+        </td>
+        <td>
+            <?php echo $r['phone']; ?>
+        </td>
+        <td>
+            <?php echo $r['email']; ?>
+        </td>
+        <td>
+            <?php echo $r['note']; ?>
+        </td>
+        <td>
+            <a href="/upload/<?php echo $r['filename']; ?>">
+                <?php echo $r['filename']; ?>
+            </a>            
+        </td>
+    </tr>
 
-            Proin tincidunt, justo ac iaculis malesuada, dolor ante varius nulla, sed vestibulum tortor lacus id eros. Morbi ut dolor ante. Morbi suscipit malesuada ultrices. Quisque non neque elementum, euismod ex eget, lacinia augue. Quisque mollis lectus a condimentum gravida. Fusce vulputate ac libero vel blandit. Nunc pharetra sapien sit amet nunc accumsan blandit. Sed vestibulum faucibus dignissim. Suspendisse iaculis mauris vitae ex imperdiet, eu finibus eros commodo. Mauris maximus nunc ac arcu sollicitudin eleifend. Donec dignissim commodo elit, vitae ultricies ex volutpat a. Integer dictum augue non sem pellentesque vulputate.
-
-            Vestibulum lacinia sapien a metus maximus, nec vestibulum neque cursus. Nunc consequat nunc et rhoncus condimentum. Cras feugiat, purus sed mollis convallis, lorem ligula placerat sem, vitae lacinia nisi odio sed dolor. Phasellus rhoncus, felis et mattis porta, nisi elit pharetra est, tincidunt congue urna justo in elit. In mauris justo, tempor a eleifend non, ornare id mi. Donec scelerisque eu tortor eu sodales. Aliquam et lectus interdum, suscipit nisi a, pretium enim. Suspendisse potenti. Donec diam tortor, pretium id sapien id, hendrerit tristique magna. Nunc cursus nulla et posuere ornare. Suspendisse euismod est in erat malesuada, a convallis lorem vehicula. Praesent cursus, mauris vitae ultrices hendrerit, tellus augue ultricies elit, eget volutpat orci diam vel turpis. Nunc sagittis, ipsum id aliquam ornare, elit velit efficitur purus, sed pharetra lorem quam id velit.
-
-            Donec a finibus est, sed condimentum urna. Aliquam eget lectus malesuada, imperdiet est vel, convallis magna. Fusce vel erat id massa bibendum rutrum nec eget dui. Nulla sed vestibulum nisl, id placerat nisl. Suspendisse potenti. Sed convallis nisl a justo finibus vulputate. Morbi non felis laoreet, blandit dui a, euismod lectus. Phasellus vitae mi ut mauris euismod pretium id scelerisque nisi. Fusce vitae lorem efficitur est elementum scelerisque in at nibh. Cras consequat lobortis scelerisque. Nulla sed est rutrum, convallis tellus quis, porttitor ipsum. Ut venenatis ultricies dolor porta laoreet.            
-        </div>
-    </div>
-  </div>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+<?php else: ?>
+<div class="alert alert-info">
+    <strong>Нет заявок</strong>
 </div>
+<?php endif; ?>
 
