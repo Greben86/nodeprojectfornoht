@@ -20,23 +20,22 @@
   <body>
       
     <div class="container">
-      <div class="header">
-          <?php echo $this->navigation()->menu(); ?>
-        <ul class="nav nav-pills pull-right">
-          <li><a href="<?php echo $this->url(array(), 'home'); ?>">Главная</a></li>
-          <li class="active"><a href="<?php echo $this->url(array(), 'home-info'); ?>">О нас</a></li>
-          <li><a href="<?php echo $this->url(array(), 'home-about'); ?>">Контакты</a></li>
-        </ul>
-        <h3 class="text-muted">НПК Содействие</h3>
-      </div>
+        <div class="header">
+            <?php 
+                echo $this->navigation()
+                        ->menu()
+                        ->renderMenu(null, array('ulClass' => 'nav nav-pills pull-right')); 
+            ?>
+            <h3 class="text-muted">НПК Содействие</h3>
+        </div>
 
         <?php 
             echo $this->layout()->content;
         ?>
 
-      <div class="footer">
-        <p>&copy; 2017 Greben V</p>
-      </div>
+        <div class="footer">
+            <p>&copy; 2017 Greben V</p>
+        </div>
 
     </div> <!-- /container -->
 
