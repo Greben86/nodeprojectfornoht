@@ -13,10 +13,10 @@ and open the template in the editor.
     </home>
     <info>
         <label>О нас</label>
-        <uri>/info</uri>
+        <uri>/home/info</uri>
     </info>
     <about>
         <label>Контакты</label>
-        <uri>/about</uri>
+        <uri>/home/about</uri>
     </about>    
 </config>

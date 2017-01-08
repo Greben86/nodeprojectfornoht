@@ -15,7 +15,10 @@ class Register_Form_Index extends Zend_Form {
         ))
         -> setOptions(array('size' => '35'))
         -> setRequired(true)
-        -> addValidator('NotEmpty', false)
+        -> addValidator('NotEmpty', false, array(
+            'messages' => array(
+                Zend_Validate_NotEmpty::IS_EMPTY => 'Поле не может быть пустым'
+            )))
         -> addFilter('HtmlEntities')
         -> addFilter('StringTrim');
     
@@ -28,7 +31,10 @@ class Register_Form_Index extends Zend_Form {
         ))
         -> setOptions(array('size' => '35'))
         -> setRequired(true)
-        -> addValidator('NotEmpty', false)
+        -> addValidator('NotEmpty', false, array(
+            'messages' => array(
+                Zend_Validate_NotEmpty::IS_EMPTY => 'Поле не может быть пустым'
+            )))
         -> addFilter('HtmlEntities')
         -> addFilter('StringTrim');
 
@@ -41,7 +47,10 @@ class Register_Form_Index extends Zend_Form {
         ))
         -> setOptions(array('size' => '35'))
         -> setRequired(true)
-        -> addValidator('NotEmpty', false)
+        -> addValidator('NotEmpty', false, array(
+            'messages' => array(
+                Zend_Validate_NotEmpty::IS_EMPTY => 'Поле не может быть пустым'
+            )))
         -> addFilter('HtmlEntities')
         -> addFilter('StringTrim');
 
@@ -54,7 +63,10 @@ class Register_Form_Index extends Zend_Form {
         ))
         -> setOptions(array('size' => '35'))
         -> setRequired(true)
-        -> addValidator('NotEmpty', false)
+        -> addValidator('NotEmpty', false, array(
+            'messages' => array(
+                Zend_Validate_NotEmpty::IS_EMPTY => 'Поле не может быть пустым'
+            )))
         -> addFilter('HtmlEntities')
         -> addFilter('StringTrim');
 
@@ -67,7 +79,10 @@ class Register_Form_Index extends Zend_Form {
         ))
         -> setOptions(array('size' => '50'))
         -> setRequired(true)
-        -> addValidator('NotEmpty', true)
+        -> addValidator('NotEmpty', true, array(
+            'messages' => array(
+                Zend_Validate_NotEmpty::IS_EMPTY => 'Поле не может быть пустым'
+            )))
         -> addFilter('HtmlEntities')
         -> addFilter('StringTrim');
 
@@ -78,10 +93,24 @@ class Register_Form_Index extends Zend_Form {
             'class' => 'form-control',
             'placeholder'  => 'Укажите адрес email',
         ))
-        -> setOptions(array('size' => '50'))
+        -> setOptions(array('size' => '100'))
         -> setRequired(true)
-        -> addValidator('NotEmpty', true)
-        -> addValidator('EmailAddress', true)
+        -> addValidator('NotEmpty', true, array(
+            'messages' => array(
+                Zend_Validate_NotEmpty::IS_EMPTY => 'Поле не может быть пустым'
+            )))
+        -> addValidator('EmailAddress', true, array(
+            'messages' => array(
+                Zend_Validate_EmailAddress::DOT_ATOM => "'%localPart% не соответствует формату dot-atom",
+                Zend_Validate_EmailAddress::INVALID => "'%value%' неправильный адрес электронной почты. Введите его в формате имя@домен",
+                Zend_Validate_EmailAddress::INVALID_FORMAT => "'%value%' неправильный адрес электронной почты. Введите его в формате имя@домен",
+                Zend_Validate_EmailAddress::INVALID_HOSTNAME => "'%hostname%' недопустимое имя хоста для адреса '%value%'",
+                Zend_Validate_EmailAddress::INVALID_LOCAL_PART => "'%localPart%' недопустимое имя для адреса '%value%'",
+                Zend_Validate_EmailAddress::INVALID_MX_RECORD => "'%hostname%' не имеет корректной MX-записи об адресе '%value%'",
+                Zend_Validate_EmailAddress::INVALID_SEGMENT => "'%hostname%' не является маршрутизируемым сегментом сети. Адрес электронной почты '%value%' не может быть получен из публичной сети.",
+                Zend_Validate_EmailAddress::LENGTH_EXCEEDED => "'%value%' превышает допустимую длину",
+                Zend_Validate_EmailAddress::QUOTED_STRING => "'%localPart%' не соответствует формату quoted-string",
+            )))
         -> addFilter('HtmlEntities')
         -> addFilter('StringToLower')
         -> addFilter('StringTrim');
@@ -99,7 +128,7 @@ class Register_Form_Index extends Zend_Form {
         ->setDestination(APPLICATION_PATH . '/../public/upload')
         ->setAttrib('multiple', false)
         ->addValidator('Size', false, 1024000)
-        ->addValidator('Extension', false, 'jpg,png,gif');
+        ->addValidator('Extension', false, 'jpg,png,gif,bmp,tiff,pdf,doc,docx,odt');
     
     // Капча
     $captcha = new Zend_Form_Element_Captcha('captcha', array(
@@ -159,14 +188,14 @@ class Register_IndexController extends Zend_Controller_Action
             {   
                 // Переименуем файл
                 $originalFilename = pathinfo($form->image->getFileName());
-                $newFilename = 'file-' . uniqid() . '.' . $originalFilename['extension'];
+                $newFilename = 'skan-' . uniqid() . '.' . $originalFilename['extension'];
                 $form->image->addFilter('Rename', $newFilename);
                 $form->image->receive();
                 // Отправляем письмо
                 $this->sendMail(
                         'Заявка на вступление', 
                         $this->buildBody($form->getValues()), 
-                        'Скан' . '.' . $originalFilename['extension'], 
+                        'Скан' . '.' . $originalFilename['extension'],
                         APPLICATION_PATH . '/../public/upload/' . $newFilename);
                 // Сохраняем в базу
                 $this->saveStatement($form->getValues(), $newFilename);

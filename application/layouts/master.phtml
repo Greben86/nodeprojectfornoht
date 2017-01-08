@@ -28,6 +28,13 @@
             ?>
             <h3 class="text-muted">НПК Содействие</h3>
         </div>
+        
+        <?php 
+            echo $this->navigation()
+                    ->breadcrumbs()
+                    ->setLinkLast(true)
+                    ->setSeparator('/'); 
+        ?>
 
         <?php 
             echo $this->layout()->content;
@@ -36,7 +43,7 @@
         <div class="footer">
             <p>&copy; 2017 Greben V</p>
             <p class="text-right">
-                <a href="<?php echo $this->url(array(), 'admin'); ?>">
+                <a href="<?php echo $this->url(array(), 'admin-login'); ?>">
                     войти
                 </a>
             </p>
