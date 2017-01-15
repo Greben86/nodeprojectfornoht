@@ -42,13 +42,20 @@ body {
 }
 
 /* Customize container */
-@media (min-width: 768px) {
+@media (min-width: 1200px) {
   .container {
-    max-width: 730px;
+    width: 970px;
   }
 }
+
+.sidebar-module-inset {
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
 .container-narrow > hr {
-  margin: 30px 0;
+  margin: 10px 0;
 }
 
 /* Main marketing message and sign up button */
@@ -73,8 +80,7 @@ body {
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
   .header,
-  .marketing,
-  .footer {
+  .marketing {
     padding-right: 0;
     padding-left: 0;
   }
@@ -86,4 +92,16 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
+}
+
+/*
+ * Footer
+ */
+
+.blog-footer {
+  padding: 40px 0;
+  color: #999;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-top: 1px solid #e5e5e5;
 }

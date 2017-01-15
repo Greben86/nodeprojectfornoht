@@ -12,7 +12,7 @@ class First_Input_Form extends Zend_Form
         $family = new Zend_Form_Element_Text('family');
         $family -> setLabel('Фамилия')
             ->setAttribs(array(
-                'class' => 'form-control',
+                'class' => 'form-control input-sm',
                 'placeholder'  => 'Укажите фамилию',
             ))
             -> setOptions(array('size' => '35'))
@@ -28,7 +28,7 @@ class First_Input_Form extends Zend_Form
         $name = new Zend_Form_Element_Text('name');
         $name -> setLabel('Имя')
             ->setAttribs(array(
-                'class' => 'form-control',
+                'class' => 'form-control input-sm',
                 'placeholder'  => 'Укажите имя',
             ))
             -> setOptions(array('size' => '35'))
@@ -44,7 +44,7 @@ class First_Input_Form extends Zend_Form
         $name2 = new Zend_Form_Element_Text('name2');
         $name2 -> setLabel('Отчество')
             ->setAttribs(array(
-                'class' => 'form-control',
+                'class' => 'form-control input-sm',
                 'placeholder'  => 'Укажите отчество',
             ))
             -> setOptions(array('size' => '35'))
@@ -60,7 +60,7 @@ class First_Input_Form extends Zend_Form
         $phone = new Zend_Form_Element_Text('phone');
         $phone -> setLabel('Телефон')
             ->setAttribs(array(
-                'class' => 'form-control',
+                'class' => 'form-control input-sm',
                 'placeholder'  => 'Укажите контактный телефон',
             ))
             -> setOptions(array('size' => '50'))
@@ -76,7 +76,7 @@ class First_Input_Form extends Zend_Form
         $email = new Zend_Form_Element_Text('email');
         $email -> setLabel('Электронная почта')
             ->setAttribs(array(
-                'class' => 'form-control',
+                'class' => 'form-control input-sm',
                 'placeholder'  => 'Укажите адрес email',
             ))
             -> setOptions(array('size' => '100'))
@@ -103,8 +103,8 @@ class First_Input_Form extends Zend_Form
 
         // создаем кнопку отправки
         $submit = new Zend_Form_Element_Submit('submit');
-        $submit -> setLabel('Подать заявку')
-            -> setAttribs(array('class' => 'btn btn-success'));
+        $submit -> setLabel('Далее >>')
+            -> setAttribs(array('class' => 'btn btn-success btn-xs'));
 
         // добавляем элементы к форме
         $this -> addElement($family)
@@ -115,7 +115,7 @@ class First_Input_Form extends Zend_Form
 
         $this->addDisplayGroup(array('family', 'name', 'name2', 'phone', 'email'), 'zayavka');
         $this->getDisplayGroup('zayavka')
-            ->setLegend('Заявление на вступление');
+            ->setLegend('Регистрация');
         $this->addElement($submit);
     }
 }
@@ -148,7 +148,7 @@ class IndexController extends Zend_Controller_Action
 
     public function infoAction()
     {
-        // Заглушка
+        $this->indexAction();
     }
     
     public function aboutAction()

@@ -12,7 +12,7 @@ and open the template in the editor.
         <uri>/home</uri>
     </home>
     <info>
-        <label>О нас</label>
+        <label>Инструкция</label>
         <uri>/home/info</uri>
     </info>
     <about>
