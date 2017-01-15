@@ -181,6 +181,9 @@ class Register_IndexController extends Zend_Controller_Action
         // генерируем форму ввода
         $form = new Register_Form_Index();
         $this->view->form = $form;
+        
+        $session = new Zend_Session_Namespace('first.input');
+        $this->view->firstinput = $session->values;
 
         if ($this->getRequest()->isPost()) 
         {
