@@ -15,23 +15,30 @@
         <title>Содействие</title>
     </head>
     <body>
-        <div class="container-fluid">
-            <div class="page-header">                
-                <h1>ADMINKA <small>Панель администрирования</small></h1>                
-                <p class="text-right">
-                    <a href="<?php echo $this->url(array(), 'home'); ?>">
-                        На главную
-                    </a>
-                    <a href="<?php echo $this->url(array(), 'admin-logout'); ?>">
-                        Выйти
-                    </a>
-                </p>
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="<?php echo $this->url(array(), 'admin'); ?>">
+                  ПК ВО Содействие
+              </a>
             </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+                    <li><a href="<?php echo $this->url(array(), 'admin'); ?>">Заявки</a></li>
+                    <li><a href="<?php echo $this->url(array(), 'admin-resources'); ?>">Программы</a></li>
+                    <li><a href="<?php echo $this->url(array(), 'admin-logout'); ?>">Выйти</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="container-fluid">
             <div class="row-fluid">
                 <!--Body content-->
-                <?php
-                    echo $this->layout()->content;
-                ?>
+                <br>
+                <br>
+                <br>
+                <?php echo $this->layout()->content; ?>
             </div>
         </div>
     </body>

@@ -82,32 +82,37 @@ class Admin_LoginController extends Zend_Controller_Action
         // отключение макета для данного действия
         $this->_helper->layout->disableLayout();
     }
-
-    public function loginAction()
-    {
+    
+    public function preDispatch() 
+    {          
         // Проверяем аутентификацию
         if (Zend_Auth::getInstance()->hasIdentity())
         {
-            $this->_redirect('/admin');
-        } else {
-            // генерируем форму ввода
-            $form = new Auth_Form_Login();
-            $this->view->form = $form;
+            //$this->_redirect('/admin');
+        }
+        
+        return parent::preDispatch();
+    }
 
-            if ($this->getRequest()->isPost())
+    public function loginAction()
+    {
+        // генерируем форму ввода
+        $form = new Auth_Form_Login();
+        $this->view->form = $form;
+
+        if ($this->getRequest()->isPost())
+        {
+            if ($form->isValid($this->getRequest()->getPost()))
             {
-                if ($form->isValid($this->getRequest()->getPost()))
+                $values = $form->getValues();
+                $adapter = new My_Auth_Adapter($values['username'], $values['password']);
+                $auth = Zend_Auth::getInstance();
+                $result = $auth->authenticate($adapter);
+                if ($result->isValid())
                 {
-                    $values = $form->getValues();
-                    $adapter = new My_Auth_Adapter($values['username'], $values['password']);
-                    $auth = Zend_Auth::getInstance();
-                    $result = $auth->authenticate($adapter);
-                    if ($result->isValid())
-                    {
-                        $this->_redirect('/admin/login/success');
-                    } else {
-                        $this->view->message = '';
-                    }
+                    $this->_redirect('/admin/login/success');
+                } else {
+                    $this->view->message = '';
                 }
             }
         }
@@ -127,12 +132,9 @@ class Admin_LoginController extends Zend_Controller_Action
     public function logoutAction()
     {
         // Проверяем аутентификацию
-        if (Zend_Auth::getInstance()->hasIdentity())
-        {
-            Zend_Auth::getInstance()->clearIdentity();
-            Zend_Session::destroy();
-            $this->_redirect('/home');
-        }
+        Zend_Auth::getInstance()->clearIdentity();
+        Zend_Session::destroy();
+        $this->_redirect('/home');
     }
 
 }

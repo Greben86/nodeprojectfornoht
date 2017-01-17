@@ -12,6 +12,7 @@ and open the template in the editor.
 body {
   padding-top: 20px;
   padding-bottom: 20px;
+  background: url(/img/bacground.png); 
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -44,7 +45,9 @@ body {
 /* Customize container */
 @media (min-width: 1200px) {
   .container {
+    padding: 20px;
     width: 970px;
+    background: #ffffff; 
   }
 }
 
@@ -104,4 +107,30 @@ body {
   text-align: center;
   background-color: #f9f9f9;
   border-top: 1px solid #e5e5e5;
+}
+
+/* Carousel base class */
+.carousel {
+  height: 150px;
+  margin-bottom: 40px;
+  margin-top: 0px;
+  margin-right: 0px;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  height: 150px;
+  background-color: #777;
+  
+}
+.carousel-inner > .item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 150px;
 }

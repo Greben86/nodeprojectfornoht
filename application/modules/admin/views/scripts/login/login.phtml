@@ -12,23 +12,24 @@
 
     <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="/css/signin.css" rel="stylesheet">
   </head>
 
   <body>
 
     <div class="container">
+        <div class="col-md-4"></div>
         
-        <h2 class="form-signin-heading">Авторизация</h2>
-        <p class="text-right">
+        <div class="col-md-4">
+            <h2>Авторизация</h2>        
+
+            <?php echo $this->form; ?>
+
             <a href="<?php echo $this->url(array(), 'home'); ?>">
-                На главную
+                ← На главную
             </a>
-        </p>
+        </div>
         
-        <?php echo $this->form; ?>
+        <div class="col-md-4"></div>
 
     </div> <!-- /container -->
 
