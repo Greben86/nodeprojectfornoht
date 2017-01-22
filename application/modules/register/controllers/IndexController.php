@@ -169,9 +169,9 @@ class Register_IndexController extends Zend_Controller_Action
     {
         // Подключаемся к БД
         $db = Zend_Db::factory('Pdo_Mysql', array(
-            'host'     => '127.0.0.1',
-            'username' => 'root',
-            'password' => '123',
+            'host'     => 'localhost',
+            'username' => 'webapp',
+            'password' => 'ros1nf0rm',
             'dbname'   => 'webshop'
         ));
         // Формируем массив данных
