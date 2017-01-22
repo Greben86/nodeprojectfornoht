@@ -1,6 +1,6 @@
 <?php
 
-class Resource_Form_Add extends Zend_Form {
+class Resource_Form_Add extends Zend_Dojo_Form {
     
     public function init() {
         // инициализируем форму
@@ -22,19 +22,21 @@ class Resource_Form_Add extends Zend_Form {
         
         // создаем текстовое поле для ввода        
         $note = new Zend_Form_Element_Textarea('note');
-        $note -> setLabel('Описание')
+        $note -> setLabel('Краткое описание')
               ->setAttribs(array(
                 'class' => 'form-control',
-                'rows'  => '3',
                 'placeholder'  => 'Описание программы',
               ))
-              -> setOptions(array('rows' => '8', 'cols' => '40'))
+              -> setOptions(array('rows' => '2', 'cols' => '40'))
               -> setRequired(true)  
               -> addValidator('NotEmpty', true, array(
                   Zend_Validate_NotEmpty::IS_EMPTY => 'Заполните описание программы'
               ))
               -> addFilter('HtmlEntities')
               -> addFilter('StringTrim');
+        
+        $body = new Zend_Dojo_Form_Element_Editor('body');
+        $body->setLabel('Полное описание');
         
         // создаем кнопку отправки
         $submit = new Zend_Form_Element_Submit('submit');
@@ -47,9 +49,10 @@ class Resource_Form_Add extends Zend_Form {
         
         // добавляем элементы к форме
         $this -> addElement($name)
-              -> addElement($note);
+              -> addElement($note)
+              -> addElement($body);
         
-        $this->addDisplayGroup(array('name', 'note'), 'resource');
+        $this->addDisplayGroup(array('name', 'note', 'body'), 'resource');
         $this->getDisplayGroup('resource')
              ->setLegend('Новая программа');
         $this->addElement($submit);
@@ -86,7 +89,7 @@ class Resource_Form_Update extends Resource_Form_Add {
         // добавляем элементы к форме
         $this -> addElement($id);
         
-        $this->addDisplayGroup(array('id', 'name', 'note'), 'resource');
+        $this->addDisplayGroup(array('id', 'name', 'note', 'body'), 'resource');
         $this->getDisplayGroup('resource')
              ->setLegend('Программа');
         $this->addElement($submit);
@@ -151,7 +154,8 @@ class Admin_ResourcesController extends Zend_Controller_Action
                 // Формируем массив данных
                 $data = array(
                     'name'      => $values['name'],
-                    'note'      => $values['note']
+                    'note'      => $values['note'],
+                    'body'      => $values['body']
                 );
                 // Сохраняем данные
                 $db->insert('resources', $data);
@@ -186,7 +190,8 @@ class Admin_ResourcesController extends Zend_Controller_Action
                 // Формируем массив данных
                 $data = array(
                     'name'      => $values['name'],
-                    'note'      => $values['note']
+                    'note'      => $values['note'],
+                    'body'      => $values['body']
                 );
                 // Сохраняем данные
                 $db->update('resources', $data, $values['id']);

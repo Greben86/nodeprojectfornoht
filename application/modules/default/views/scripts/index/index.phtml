@@ -2,38 +2,37 @@
 
     <div class="col-sm-8 blog-main">
 
-        <div class="jumbotron">
-            <h1>ПК ВО Содействие</h1>
-            <p class="lead">
-                Cras justo odio, dapibus ac facilisis in, egestas eget quam. 
-                Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum 
-                nibh, ut fermentum massa justo sit amet risus.
-            </p>
+        <h2>Цели и задачи потребительского кооператива «Содействие»</h2>
+        <p>Главной целью ПК ВО «Содействие» является повышение благосостояния, качества и уровня жизни
+        членов кооператива и их семей путем объединения усилий и ресурсов.
+        Потребительский кооператив позволяет эффективно решать проблемы, стоящие перед его членами,
+        в первую очередь, связанные с обеспечением их товарами и услугами высокого качества,
+        минимизируя затраты и риски на их решение.</p>
+
+        <p>Для решения этих задач ПК ВО «Содействие» открывает для своих членов следующие программы:</p>
+        <?php if (count($this->resources)): ?>
+        <ol>
+            <?php foreach ($this->resources as $r): ?>
+            <li>
+                <dt>
+                    <a href="<?php echo $this->url(array('id' => $r['id']), 'resources'); ?>">
+                        Целевая программа "<?php echo $r['name']; ?>"
+                    </a>
+                </dt>
+                <dd>
+                    <?php echo $r['note']; ?>
+                </dd>
+            </li>
+            <?php endforeach; ?>
+        </ol>
+        <?php else: ?>
+        <div class="alert alert-info">
+            <strong>В системе не зарегестрировано программ</strong>
         </div>
+        <?php endif; ?>
 
-        <div class="row marketing">
-            <div class="col-lg-6">
-                <h4>Subheading</h4>
-                <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
- 
-                <h4>Subheading</h4>
-                <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-                <h4>Subheading</h4>
-                <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-            </div>
-
-            <div class="col-lg-6">
-                <h4>Subheading</h4>
-                <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-                <h4>Subheading</h4>
-                <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-                <h4>Subheading</h4>
-                <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-            </div>
-        </div>
+        <p>Хотите улучшить качество своей жизни и жизни Ваших детей?<br>
+        Приходите к нам, и мы вместе сделаем нашу жизнь лучше и достойнее!</p>
     </div>
 
     <div class="col-sm-4 blog-sidebar">

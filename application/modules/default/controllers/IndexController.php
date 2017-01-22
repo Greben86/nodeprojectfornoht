@@ -144,6 +144,18 @@ class IndexController extends Zend_Controller_Action
                 $this->_redirect('/register');
             }
         }
+        
+        // Подключаемся к БД
+        $db = Zend_Db::factory('Pdo_Mysql', array(
+            'host'     => '127.0.0.1',
+            'username' => 'root',
+            'password' => '123',
+            'dbname'   => 'webshop'
+        ));
+
+        $result = $db->fetchAll('SELECT * FROM resources ORDER BY id DESC');
+
+        $this->view->resources = $result;
     }
 
     public function infoAction()
