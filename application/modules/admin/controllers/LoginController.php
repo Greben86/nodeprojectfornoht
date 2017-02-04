@@ -4,6 +4,7 @@ class My_Auth_Adapter implements Zend_Auth_Adapter_Interface
 {
     private $username;
     private $password;
+    public $configs;
     
     public function __construct($username, $password) {
         $this->username = $username;
@@ -11,18 +12,15 @@ class My_Auth_Adapter implements Zend_Auth_Adapter_Interface
     }
     
     public function authenticate() {
-//        $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
-//        $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
+        $localConfig = new Zend_Config_Ini($this->configs['localConfigPath']);
         
-        $pass = md5(md5($this->password) + md5('mydarksoul'));
-        if ($this->username == 'admin' && 
-                $pass == '123')
-//        if ($this->username == $localConfig->admin->login && 
-//                $pass == $localConfig->admin->pass)
+        $pass = md5($this->password);
+        if ($this->username == $localConfig->admin->login && 
+                $pass == $localConfig->admin->pass)
         {
             return new Zend_Auth_Result(Zend_Auth_Result::SUCCESS, $this->username, array());
         } else {
-            return new Zend_Auth_Result(Zend_Auth_Result::FAILURE, null, array('Авторизация не пройдена '.$pass));
+            return new Zend_Auth_Result(Zend_Auth_Result::FAILURE, null, array('Авторизация не пройдена '));
         }
     }
 
@@ -113,6 +111,7 @@ class Admin_LoginController extends Zend_Controller_Action
             {
                 $values = $form->getValues();
                 $adapter = new My_Auth_Adapter($values['username'], $values['password']);
+                $adapter->configs = $this->getInvokeArg('bootstrap')->getOption('configs');
                 $auth = Zend_Auth::getInstance();
                 $result = $auth->authenticate($adapter);
                 if ($result->isValid())
