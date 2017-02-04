@@ -72,7 +72,7 @@ class Register_Form_Index extends Zend_Form {
 
 class Register_IndexController extends Zend_Controller_Action
 {
-
+    
     public function init()
     {
     /* Initialize action controller here */
@@ -118,17 +118,19 @@ class Register_IndexController extends Zend_Controller_Action
     
     private function sendMail($subject, $body, $filename, $filepath)
     {
+        $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
+        $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
         $config = array(
-            'ssl' => 'ssl',
-            'port' => 465,
-            'auth' => 'login', 
-            'username' => 'grebenvictor',
-            'password' => '21pnds73rdit'
+            'ssl' => 'ssl',             
+            'port' => $localConfig->email->port,
+            'auth' => 'login',
+            'username' => $localConfig->email->user,
+            'password' => $localConfig->email->pass
         );       
 
         $mail = new Zend_Mail();
         $mail->setBodyHtml($body);
-        $mail->setFrom('grebenvictor@yandex.ru', 'Система регистрации участников');
+        $mail->setFrom($localConfig->email->address, 'Система регистрации участников');
         $mail->addTo('grebenvictor@yandex.ru', 'Администратор кооператива');
         $mail->setSubject($subject);
 
@@ -139,7 +141,7 @@ class Register_IndexController extends Zend_Controller_Action
 
         $mail->addAttachment($at);
 
-        $transport = new Zend_Mail_Transport_Smtp('smtp.yandex.ru', $config);
+        $transport = new Zend_Mail_Transport_Smtp($localConfig->email->host, $config);
         
         $mail->send($transport);
     }
@@ -168,12 +170,15 @@ class Register_IndexController extends Zend_Controller_Action
     private function saveStatement($values, $file)
     {
         // Подключаемся к БД
+        $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
+        $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
         $db = Zend_Db::factory('Pdo_Mysql', array(
-            'host'     => 'localhost',
-            'username' => 'webapp',
-            'password' => 'ros1nf0rm',
-            'dbname'   => 'webshop'
+            'host'     => $localConfig->database->host,
+            'dbname'   => $localConfig->database->name,
+            'username' => $localConfig->database->user,
+            'password' => $localConfig->database->pass
         ));
+        
         // Формируем массив данных
         $data = array(
             'email'     => $values['email'],

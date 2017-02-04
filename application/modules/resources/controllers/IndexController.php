@@ -26,14 +26,16 @@ class Resources_IndexController extends Zend_Controller_Action
         $input = new Zend_Filter_Input($filters, $validators);
         $input->setData($this->getRequest()->getParams());
         if ($input->isValid()) {
+            $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
+            $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
             // Подключаемся к БД
             $db = Zend_Db::factory('Pdo_Mysql', array(
-                'host'     => 'localhost',
-                'username' => 'webapp',
-                'password' => 'ros1nf0rm',
-                'dbname'   => 'webshop'
+                'host'     => $localConfig->database->host,
+                'dbname'   => $localConfig->database->name,
+                'username' => $localConfig->database->user,
+                'password' => $localConfig->database->pass
             ));
-
+            
             $result = $db->fetchAll('SELECT body FROM resources WHERE id='.$input->id);
 
             $this->view->resource = $result[0]['body'];

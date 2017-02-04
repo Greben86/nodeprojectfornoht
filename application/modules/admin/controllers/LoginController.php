@@ -11,11 +11,18 @@ class My_Auth_Adapter implements Zend_Auth_Adapter_Interface
     }
     
     public function authenticate() {
-        if ($this->username == 'admin' && $this->password == '1')
+//        $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
+//        $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
+        
+        $pass = md5(md5($this->password) + md5('mydarksoul'));
+        if ($this->username == 'admin' && 
+                $pass == '123')
+//        if ($this->username == $localConfig->admin->login && 
+//                $pass == $localConfig->admin->pass)
         {
             return new Zend_Auth_Result(Zend_Auth_Result::SUCCESS, $this->username, array());
         } else {
-            return new Zend_Auth_Result(Zend_Auth_Result::FAILURE, null, array('Авторизация не пройдена'));
+            return new Zend_Auth_Result(Zend_Auth_Result::FAILURE, null, array('Авторизация не пройдена '.$pass));
         }
     }
 
