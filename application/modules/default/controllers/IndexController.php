@@ -155,6 +155,19 @@ class IndexController extends Zend_Controller_Action
     public function partnersAction()
     {
         $this->sidebar();
+        
+        // Получаем скидки
+        $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
+        $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
+        
+        $this->view->discounts = array(
+            'zolushka'  => $localConfig->discount->zolushka,
+            'noht'      => $localConfig->discount->noht,
+            'alidi'     => $localConfig->discount->alidi,
+            'ugdvor'    => $localConfig->discount->ugdvor,
+            'order'     => $localConfig->discount->order,
+            'metro'     => $localConfig->discount->metro
+        );
     }
     
     public function aboutAction()
