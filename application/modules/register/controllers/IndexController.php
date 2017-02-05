@@ -113,7 +113,8 @@ class Register_IndexController extends Zend_Controller_Action
     
     public function successAction()
     {
-        //
+        // Убиваем сессию
+        Zend_Session::destroy();
     }
     
     private function sendMail($subject, $body, $filename, $filepath)

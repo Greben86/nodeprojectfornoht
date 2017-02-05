@@ -15,6 +15,10 @@ and open the template in the editor.
         <label>Инструкция</label>
         <uri>/home/info</uri>
     </info>
+    <partners>
+        <label>Наши партнеры</label>
+        <uri>/home/partners</uri>
+    </partners>
     <about>
         <label>Контакты</label>
         <uri>/home/about</uri>

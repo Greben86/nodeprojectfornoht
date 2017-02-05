@@ -130,20 +130,7 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        // генерируем форму ввода
-        $form = new First_Input_Form();
-        $this->view->form = $form;
-
-        if ($this->getRequest()->isPost()) 
-        {
-            if ($form->isValid($this->getRequest()->getPost())) 
-            {
-                $session = new Zend_Session_Namespace('first.input');
-                $session->values = $form->getValues();
-                // Перенаправляем
-                $this->_redirect('/register');
-            }
-        }
+        $this->sidebar();
         
         // Подключаемся к БД
         $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
@@ -162,11 +149,34 @@ class IndexController extends Zend_Controller_Action
 
     public function infoAction()
     {
-        $this->indexAction();
+        $this->sidebar();
+    }
+    
+    public function partnersAction()
+    {
+        $this->sidebar();
     }
     
     public function aboutAction()
     {
-        // Заглушка
+        $this->sidebar();
+    }
+    
+    private function sidebar() 
+    {
+        // генерируем форму ввода
+        $form = new First_Input_Form();
+        $this->view->form = $form;
+
+        if ($this->getRequest()->isPost()) 
+        {
+            if ($form->isValid($this->getRequest()->getPost())) 
+            {
+                $session = new Zend_Session_Namespace('first.input');
+                $session->values = $form->getValues();
+                // Перенаправляем
+                $this->_redirect('/register');
+            }
+        }
     }
 }
