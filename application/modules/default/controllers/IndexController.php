@@ -170,6 +170,11 @@ class IndexController extends Zend_Controller_Action
         );
     }
     
+    public function detailsAction()
+    {
+        $this->sidebar();
+    }
+    
     public function aboutAction()
     {
         $this->sidebar();
