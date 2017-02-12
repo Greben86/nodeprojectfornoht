@@ -30,72 +30,7 @@
     </head>
 
     <body>
-        <div class="container">
-            <div class="header">
-                <?php
-                echo $this->navigation()
-                        ->menu()
-                        ->renderMenu(null, array('ulClass' => 'nav nav-pills pull-right'));
-                ?>
-
-                <h3 class="text-muted">ПК ВО Содействие</h3>
-            </div>
-
-            <?php
-            echo $this->layout()->content;
-            ?>
-
-            <div class="footer">
-                <div class="col-sm-8">
-                    &copy; ПК ВО Содействие 2017
-                    <br>
-                    <small>Все права защищены.</small>
-                </div>
-                <div class="col-sm-4">
-                    Дизайн и разработка сайта — 
-                    <br>
-                    <a href="http://regionsoft.ru/"><small>RegionSoft Developer Studio</small></a>
-                </div>
-            </div>        
-
-            <div class="row">
-                <div class="col-md-6"></div>
-                <div class="col-md-1">
-                    <a href="<?php echo $this->url(array(), 'admin-login'); ?>">
-                        <span class="glyphicon glyphicon-cog"></span>
-                    </a>
-                </div>
-            </div>
-
-        </div> <!-- /container -->
-
-        <!-- BEGIN JIVOSITE CODE -->
-        <script type='text/javascript'>
-            (function () {
-                var widget_id = 'uDzudLQqlo';
-                var d = document;
-                var w = window;
-                function l() {
-                    var s = document.createElement('script');
-                    s.type = 'text/javascript';
-                    s.async = true;
-                    s.src = '//code.jivosite.com/script/widget/' + widget_id;
-                    var ss = document.getElementsByTagName('script')[0];
-                    ss.parentNode.insertBefore(s, ss);
-                }
-                if (d.readyState === 'complete') {
-                    l();
-                } else {
-                    if (w.attachEvent) {
-                        w.attachEvent('onload', l);
-                    } else {
-                        w.addEventListener('load', l, false);
-                    }
-                }
-            })();
-        </script>
-        <!-- END JIVOSITE CODE --> 
-
+        
         <!-- Yandex.Metrika counter -->
         <script type="text/javascript">
             (function (d, w, c) {
@@ -129,7 +64,65 @@
         </script>
         <noscript><div><img src="https://mc.yandex.ru/watch/42754339" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
         <!-- /Yandex.Metrika counter -->
+        
+        <!-- BEGIN JIVOSITE CODE -->
+        <script type='text/javascript'>
+            (function () {
+                var widget_id = 'uDzudLQqlo';
+                var d = document;
+                var w = window;
+                function l() {
+                    var s = document.createElement('script');
+                    s.type = 'text/javascript';
+                    s.async = true;
+                    s.src = '//code.jivosite.com/script/widget/' + widget_id;
+                    var ss = document.getElementsByTagName('script')[0];
+                    ss.parentNode.insertBefore(s, ss);
+                }
+                if (d.readyState === 'complete') {
+                    l();
+                } else {
+                    if (w.attachEvent) {
+                        w.attachEvent('onload', l);
+                    } else {
+                        w.addEventListener('load', l, false);
+                    }
+                }
+            })();
+        </script>
+        <!-- END JIVOSITE CODE -->
+        
+        <div class="container">            
+            <div class="header">
+                <?php
+                echo $this->navigation()
+                        ->menu()
+                        ->renderMenu(null, array('ulClass' => 'nav nav-pills pull-right'));
+                ?>
+                <!--<img class="media-object" src="/img/logo.png" height="64">-->
+                <h3 class="text-muted">ПК ВО Содействие</h3>
+            </div>
 
+            <?php echo $this->layout()->content; ?>         
+        </div> <!-- /container -->
+        
+        <div class="footer">            
+            <div class="col-sm-7">
+                &copy; ПК ВО Содействие 2017
+                <br>
+                <small>Все права защищены.</small>
+            </div>
+            <div class="col-sm-2">
+                <a href="https://smsc.ru" target="_blank"><img src="https://smsc.ru/im/smsc_button2.gif" alt="SMS-центр" border="0" height="31"></a>
+            </div>
+            <div class="col-sm-3">
+                Дизайн и разработка сайта — 
+                <br>
+                <a href="http://regionsoft.ru/"><small>RegionSoft Developer Studio</small></a>
+            </div>
+            
+            <div style="clear:both;"></div>
+        </div> 
     </body>
 
 <!-- >>>>> Developer Greben Viсtor -> https://github.com/Greben86 <<<<< -->

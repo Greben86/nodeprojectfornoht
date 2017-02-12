@@ -11,14 +11,13 @@ and open the template in the editor.
 /* Space out content a bit */
 body {
   padding-top: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 5px;
   background: url(/img/bacground.png); 
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
-.marketing,
-.footer {
+.marketing {
   padding-right: 15px;
   padding-left: 15px;
 }
@@ -35,19 +34,30 @@ body {
   line-height: 40px;
 }
 
-/* Custom page footer */
-.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
-}
 
-/* Customize container */
 @media (min-width: 1200px) {
+  /* Customize container */
   .container {
     padding: 20px;
     width: 970px;
     background: #ffffff; 
+    border-radius: 5px;
+  }
+  
+  /* Custom page footer */
+  .footer {
+    padding: 20px;
+    color: #777;
+    width: 970px;
+    background: #ffffff; 
+    border-radius: 5px;
+ 
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 0px;
+    
+    
   }
 }
 
@@ -60,16 +70,6 @@ body {
 
 .container-narrow > hr {
   margin: 10px 0;
-}
-
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-}
-.jumbotron .btn {
-  padding: 14px 24px;
-  font-size: 21px;
 }
 
 /* Supporting marketing content */
@@ -98,36 +98,72 @@ body {
   }
 }
 
-/*
- * Footer
- */
 
-.blog-footer {
-  padding: 40px 0;
-  color: #999;
-  text-align: center;
-  background-color: #f9f9f9;
-  border-top: 1px solid #e5e5e5;
-}
-
-
-.resource ol {
-    /* убираем стандартную нумерацию */
-    list-style: none; 
+.livelist ol { 
     /* Идентифицируем счетчик и даем ему имя li. 
     Значение счетчика не указано - по умолчанию оно равно 0 */ 
-    counter-reset: li; 
+    counter-reset: number;    
+    margin-left: 0;
+    padding-left: 5px;
+    color: rgb(100,100,100);
 }
-.resource li:before {
+.livelist li {
+    /* убираем стандартную нумерацию */
+    list-style: none;    
+    position: relative;
+    padding-left: 3em;
+    margin: 0.45em 0;
+    line-height: 1.8em;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+.livelist li:before {
     /* Определяем элемент, который будет нумероваться — li. 
     Псевдоэлемент before указывает, что содержимое, вставляемое при помощи 
     свойства content, будет располагаться перед пунктами списка. 
     Здесь же устанавливается значение приращения счетчика (по умолчанию равно 1). */
-    counter-increment: li; 
+    counter-increment: number; 
     /* С помощью свойства content выводится номер пункта списка. 
     counters() означает, что генерируемый текст представляет собой значения 
     всех счетчиков с таким именем. Точка в кавычках добавляет разделяющую 
     точку между цифрами, а точка с пробелом добавляется перед 
-    содержимым каждого пункта списка */
-    content: counters(li,".") ". "; 
+    содержимым каждого пункта списка 
+    content: counters(number, ".") ". ";*/
+    
+    content: counter(number);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1.8em;
+    height: 1.8em;
+    line-height: 1.8em;
+    padding: 0px;
+    color: #fff;
+    background: #2980b9;
+    font-weight: bold;
+    text-align: center;
+    border-radius: .9em;
+    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.3);
+    z-index: 1;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+.livelist li::after {
+    position: absolute;
+    top: 2.1em;
+    left: 0.9em;
+    width: 2px;
+    height: calc(100% - 2em);
+    content: '';
+    background-color: rgb(203, 203, 203);
+    z-index: 0;
+}
+.livelist li:hover {
+    color: rgb(0,0,0);
+}
+.livelist li:hover:before {
+    background-color: #2ecc71;
+}
+.livelist li:hover:after {
+    background-color: #2ecc71;
 }

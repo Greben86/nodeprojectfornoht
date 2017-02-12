@@ -11,20 +11,22 @@
 
         <p>Для решения этих задач ПК ВО «Содействие» открывает для своих членов следующие программы:</p>
         <?php if (count($this->resources)): ?>
-        <ol>
-            <?php foreach ($this->resources as $r): ?>
-            <li>
-                <dt>
-                    <a href="<?php echo $this->url(array('id' => $r['id']), 'resources'); ?>">
-                        Целевая программа "<?php echo $r['name']; ?>"
-                    </a>
-                </dt>
-                <dd>
+        <ul class="media-list">
+            <?php 
+                foreach ($this->resources as $r): 
+                    $link = $this->url(array('id' => $r['id']), 'resources');                
+                ?>
+            <li class="media">
+                <a class="pull-left" href="<?php echo $link ?>">
+                    <img class="media-object" src="/img/link.png" alt="К страничке целевой программы" width="64" height="64">
+                </a>
+                <div class="media-body ">
+                    <h4><a href="<?php echo $link ?>">Целевая программа "<?php echo $r['name']; ?>"</a></h4>
                     <?php echo $r['note']; ?>
-                </dd>
+                </div>
             </li>
             <?php endforeach; ?>
-        </ol>
+        </ul>
         <?php else: ?>
         <div class="alert alert-info">
             <strong>В системе не зарегестрировано программ</strong>
@@ -46,15 +48,6 @@
             <div class="col-xs-6 col-sm-2 placeholder">
               <a href="img/reg-2.jpg" target="blank" data-lightbox="roadtrip" data-title="Свидетельство о регистрации">
                   <img src="img/reg-2.jpg" class="img-thumbnail" width="58" height="84">
-              </a>
-            </div>
-        </div>
-        <h4>Прочие документы</h4>
-        <div class="row placeholders">
-            <div class="col-xs-6 col-sm-4 placeholder">
-              <a href="/files/StolZakazov.pdf" target="blank">
-                  <img src="/img/docico.png" class="img-thumbnail" width="58" height="84">
-                  <div>Положение ЦП "Стол заказов"</div>
               </a>
             </div>
         </div>
