@@ -35,9 +35,6 @@ class Resource_Form_Add extends Zend_Dojo_Form {
               -> addFilter('HtmlEntities')
               -> addFilter('StringTrim');
         
-        $body = new Zend_Dojo_Form_Element_Editor('body');
-        $body->setLabel('Полное описание');
-        
         // создаем кнопку отправки
         $submit = new Zend_Form_Element_Submit('submit');
         $submit -> setLabel('Добавить')
@@ -49,10 +46,9 @@ class Resource_Form_Add extends Zend_Dojo_Form {
         
         // добавляем элементы к форме
         $this -> addElement($name)
-              -> addElement($note)
-              -> addElement($body);
+              -> addElement($note);
         
-        $this->addDisplayGroup(array('name', 'note', 'body'), 'resource');
+        $this->addDisplayGroup(array('name', 'note'), 'resource');
         $this->getDisplayGroup('resource')
              ->setLegend('Новая программа');
         $this->addElement($submit);
@@ -89,7 +85,7 @@ class Resource_Form_Update extends Resource_Form_Add {
         // добавляем элементы к форме
         $this -> addElement($id);
         
-        $this->addDisplayGroup(array('id', 'name', 'note', 'body'), 'resource');
+        $this->addDisplayGroup(array('id', 'name', 'note'), 'resource');
         $this->getDisplayGroup('resource')
              ->setLegend('Программа');
         $this->addElement($submit);
@@ -158,8 +154,7 @@ class Admin_ResourcesController extends Zend_Controller_Action
                 // Формируем массив данных
                 $data = array(
                     'name'      => $values['name'],
-                    'note'      => $values['note'],
-                    'body'      => $values['body']
+                    'note'      => $values['note']
                 );
                 // Сохраняем данные
                 $db->insert('resources', $data);
@@ -168,6 +163,7 @@ class Admin_ResourcesController extends Zend_Controller_Action
                 $this->_redirect('/admin/resources');
             }
         }
+        $this->render('edit');
     }
     
     public function editAction()
@@ -196,8 +192,7 @@ class Admin_ResourcesController extends Zend_Controller_Action
                 // Формируем массив данных
                 $data = array(
                     'name'      => $values['name'],
-                    'note'      => $values['note'],
-                    'body'      => $values['body']
+                    'note'      => $values['note']
                 );
                 // Сохраняем данные
                 $db->update('resources', $data, $values['id']);

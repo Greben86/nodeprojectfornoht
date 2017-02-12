@@ -16,8 +16,17 @@
         <!-- Custom styles for this template -->
         <link href="/css/styles.css" rel="stylesheet">
 
-        <script type="text/javascript" src="/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/jquery.js"></script>
         <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+        
+        <!-- Lightbox -->
+        <link href="/lightbox/css/lightbox.css" rel="stylesheet">
+        <script type="text/javascript" src="/lightbox/js/lightbox.js"></script>
+        <script>
+            lightbox.option({
+              'albumLabel': 'Изображение %1 из %2'
+            })
+        </script>
     </head>
 
     <body>
@@ -50,7 +59,7 @@
             </div>        
 
             <div class="row">
-                <div class="col-md-5"></div>
+                <div class="col-md-6"></div>
                 <div class="col-md-1">
                     <a href="<?php echo $this->url(array(), 'admin-login'); ?>">
                         <span class="glyphicon glyphicon-cog"></span>
