@@ -39,6 +39,7 @@ class Resources_IndexController extends Zend_Controller_Action
             $result = $db->fetchAll('SELECT body FROM resources WHERE id='.$input->id);
 
             $this->view->resource = $result[0]['body'];
+            $this->render('tableoforders');
         }
     }
 }
