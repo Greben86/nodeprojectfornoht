@@ -16,6 +16,42 @@
         
         <script type="text/javascript" src="/js/jquery.js"></script>
         <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+        
+        <style type="text/css">
+            /* Sticky footer styles
+            -------------------------------------------------- */
+            html {
+              position: relative;
+              min-height: 100%;
+            }
+            body {
+              /* Margin bottom by footer height */
+              margin-bottom: 60px;
+              background: url(/img/bacground.png);
+            }
+            #footer {
+              position: absolute;
+              bottom: 0;
+              width: 100%;
+              /* Set the fixed height of the footer here */
+              height: 60px;
+              background-color: #f5f5f5;
+            }
+
+
+            /* Custom page CSS
+            -------------------------------------------------- */
+            /* Not required for template or sticky footer method. */
+
+            .container {
+              width: auto;
+              max-width: 970px;
+              padding: 0 15px;
+            }
+            .container .text-muted {
+              margin: 20px 0;
+            }
+        </style>
     </head>
     <body>
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -43,6 +79,14 @@
                 <br>
                 <?php echo $this->layout()->content; ?>
             </div>
+        </div>
+        
+        <div id="footer">
+          <div class="container">
+            &copy; ПК ВО Содействие 2017
+            <br>
+            <small>Все права защищены.</small>
+          </div>
         </div>
     </body>
 </html>

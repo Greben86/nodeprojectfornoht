@@ -9,10 +9,18 @@ and open the template in the editor.
 */
 
 /* Space out content a bit */
+* { margin:0; padding:0; }
+
 body {
   padding-top: 20px;
   padding-bottom: 5px;
-  background: url(/img/bacground.png); 
+  background: url(/img/bacground.png) repeat scroll 0 0 #F2F2F2;; 
+  
+  color: #404040;
+  /*font: 11px/1.55 'Telex', sans-serif;*/
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: left;
+  /*font-size: 11px;*/
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -40,24 +48,25 @@ body {
   .container {
     padding: 20px;
     width: 970px;
+    min-height: 970px;
     background: #ffffff; 
     border-radius: 5px;
   }
   
   /* Custom page footer */
-  .footer {
+  footer.footer {
     padding: 20px;
     color: #777;
     width: 970px;
-    background: #ffffff; 
-    border-radius: 5px;
+    height: 100px;
+    background: #ffffff;
+    border-radius: 5px 5px 0 0;
+    display: table;
  
     margin-top: 10px;
     margin-right: auto;
     margin-left: auto;
-    margin-bottom: 0px;
-    
-    
+    margin-bottom: 0px;   
   }
 }
 
@@ -92,10 +101,23 @@ body {
   .header {
     margin-bottom: 30px;
   }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
+}
+
+.img-card {
+    -webkit-box-shadow: 4px 4px 10px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    4px 4px 10px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         4px 4px 10px 0px rgba(50, 50, 50, 0.75);
+    border-radius: 16px;
+}
+
+#toTop {
+    bottom: 0;
+    cursor: pointer;
+    display: none;
+    font-size: 150%;
+    position: fixed;
+    bottom:10px; /* отступ кнопки от нижнего края страницы*/
+    right:10px;
 }
 
 
@@ -166,4 +188,20 @@ body {
 }
 .livelist li:hover:after {
     background-color: #2ecc71;
+}
+
+.livetable tr {
+    color: rgb(100,100,100);
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.livetable tr:before {
+    color: #fff;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.livetable tr:hover {
+    color: rgb(0,0,0);
 }
