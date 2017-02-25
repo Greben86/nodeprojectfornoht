@@ -161,12 +161,13 @@ class IndexController extends Zend_Controller_Action
         $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
         
         $this->view->discounts = array(
-            'zolushka'  => $localConfig->discount->zolushka,
-            'noht'      => $localConfig->discount->noht,
-            'alidi'     => $localConfig->discount->alidi,
-            'ugdvor'    => $localConfig->discount->ugdvor,
-            'order'     => $localConfig->discount->order,
-            'metro'     => $localConfig->discount->metro
+            'pokrovgold'    => $localConfig->discount->pokrovgold,
+            'zolushka'      => $localConfig->discount->zolushka,
+            'noht'          => $localConfig->discount->noht,
+            'alidi'         => $localConfig->discount->alidi,
+            'ugdvor'        => $localConfig->discount->ugdvor,
+            'order'         => $localConfig->discount->order,
+            'metro'         => $localConfig->discount->metro
         );
     }
     

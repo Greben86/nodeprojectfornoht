@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="НПК Содействие">
         <meta name="author" content="Greben V">
+        <meta name="yandex-verification" content="d3a3aded422cf85d" />
         <link rel="shortcut icon" href="/img/favicon.ico">
 
         <title>Содействие</title>
@@ -16,50 +17,61 @@
         <!-- Custom styles for this template -->
         <link href="/css/styles.css" rel="stylesheet">
 
-        <script type="text/javascript" src="/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/jquery.js"></script>
         <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+        
+        <!-- Lightbox -->
+        <link href="/lightbox/css/lightbox.css" rel="stylesheet">
+        <script type="text/javascript" src="/lightbox/js/lightbox.js"></script>
+        <script>
+            lightbox.option({
+              'albumLabel': 'Изображение %1 из %2'
+            })
+        </script>
+        
+        <script type="text/javascript" src="/js/back-top.js"></script>
     </head>
 
     <body>
-        <div class="container">
-            <div class="header">
-                <?php
-                echo $this->navigation()
-                        ->menu()
-                        ->renderMenu(null, array('ulClass' => 'nav nav-pills pull-right'));
-                ?>
+        
+        <!-- Yandex.Metrika counter -->
+        <script type="text/javascript">
+            (function (d, w, c) {
+                (w[c] = w[c] || []).push(function () {
+                    try {
+                        w.yaCounter42754339 = new Ya.Metrika({
+                            id: 42754339,
+                            clickmap: true,
+                            trackLinks: true,
+                            accurateTrackBounce: true
+                        });
+                    } catch (e) {
+                    }
+                });
 
-                <h3 class="text-muted">ПК ВО Содействие</h3>
-            </div>
+                var n = d.getElementsByTagName("script")[0],
+                        s = d.createElement("script"),
+                        f = function () {
+                            n.parentNode.insertBefore(s, n);
+                        };
+                s.type = "text/javascript";
+                s.async = true;
+                s.src = "https://mc.yandex.ru/metrika/watch.js";
 
-            <?php
-            echo $this->layout()->content;
-            ?>
-
-            <div class="footer">
-                <div class="col-sm-8">
-                    &copy; ПК ВО Содействие 2017
-                    <br>
-                    <small>Все права защищены.</small>
-                </div>
-                <div class="col-sm-4">
-                    Дизайн и разработка сайта — 
-                    <br>
-                    <a href="http://regionsoft.ru/"><small>RegionSoft Developer Studio</small></a>
-                </div>
-            </div>        
-
-            <div class="row">
-                <div class="col-md-5"></div>
-                <div class="col-md-1">
-                    <a href="<?php echo $this->url(array(), 'admin-login'); ?>">
-                        <span class="glyphicon glyphicon-cog"></span>
-                    </a>
-                </div>
-            </div>
-
-        </div> <!-- /container -->
-
+                if (w.opera === "[object Opera]") {
+                    d.addEventListener("DOMContentLoaded", f, false);
+                } else {
+                    f();
+                }
+            })(document, window, "yandex_metrika_callbacks");
+        </script>
+        <noscript>
+        <div>
+            <img src="https://mc.yandex.ru/watch/42754339" style="position:absolute; left:-9999px;" alt="" />
+        </div>
+        </noscript>
+        <!-- /Yandex.Metrika counter -->
+        
         <!-- BEGIN JIVOSITE CODE -->
         <script type='text/javascript'>
             (function () {
@@ -85,42 +97,71 @@
                 }
             })();
         </script>
-        <!-- END JIVOSITE CODE --> 
+        <!-- END JIVOSITE CODE -->
+        
+        <div class="container"> 
+            
+            <div class="header">
+                <ul id="logo">
 
-        <!-- Yandex.Metrika counter -->
-        <script type="text/javascript">
-            (function (d, w, c) {
-                (w[c] = w[c] || []).push(function () {
-                    try {
-                        w.yaCounter42754339 = new Ya.Metrika({
-                            id: 42754339,
-                            clickmap: true,
-                            trackLinks: true,
-                            accurateTrackBounce: true
-                        });
-                    } catch (e) {
-                    }
-                });
+                    <li class="head-container"> 
+                        <div>
+                            <h2 class="title">«Содействие»</h2>
+                        </div> 
+                        <p class="classy">Потребительский кооператив взаимного обеспечения</p>
+                    </li>
 
-                var n = d.getElementsByTagName("script")[0],
-                        s = d.createElement("script"),
-                        f = function () {
-                            n.parentNode.insertBefore(s, n);
-                        };
-                s.type = "text/javascript";
-                s.async = true;
-                s.src = "https://mc.yandex.ru/metrika/watch.js";
-
-                if (w.opera == "[object Opera]") {
-                    d.addEventListener("DOMContentLoaded", f, false);
-                } else {
-                    f();
-                }
-            })(document, window, "yandex_metrika_callbacks");
-        </script>
-        <noscript><div><img src="https://mc.yandex.ru/watch/42754339" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-        <!-- /Yandex.Metrika counter -->
-
+                    <li class="logo-box">
+                        <img src="/img/logo.png" alt="ПК ВО Содействие" width="250" />
+                    </li>
+                    <li class="head-container">
+                        <div class="phone_top">
+                            <h2 class="classy"><b>8 (831) 216-27-12</b></h2>
+                            <br>
+                            <h2 class="classy"><b>8 (831) 411-11-40</b></h2>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="nav-container">
+                    <?php
+                    echo $this->navigation()
+                            ->menu()
+                            ->renderMenu(null, array());
+                    ?>
+                </div>
+            </div>
+            
+            <?php echo $this->layout()->content; ?>  
+            
+            <footer class="footer">
+                <div class="f-fix">
+                    <div class="frame"><img src="/img/frame.png" alt="ПК ВО Содействие" width="100" /></div>                  
+                </div>
+                
+                <div class="col-sm-7">
+                    &copy; ПК ВО Содействие 2017
+                    <br>
+                    <small>Все права защищены.</small>
+                </div>
+                <div class="col-sm-2">
+                    <a href="https://smsc.ru" target="_blank">
+                        <img src="https://smsc.ru/im/smsc_button3.gif" alt="SMS-центр" border="0" height="31">
+                    </a>
+                </div>
+                <div class="col-sm-3">
+                    Дизайн и разработка сайта — 
+                    <br>
+                    <a href="http://regionsoft.ru/">
+                        <small>RegionSoft Developer Studio</small>
+                    </a>
+                </div>
+            </footer>
+        </div> <!-- /container -->
+        
+        <a href="#" id="toTop">
+            <img alt="" src="/img/up.png">
+        </a>
     </body>
 
 <!-- >>>>> Developer Greben Viсtor -> https://github.com/Greben86 <<<<< -->

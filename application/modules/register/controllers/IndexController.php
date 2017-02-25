@@ -114,7 +114,7 @@ class Register_IndexController extends Zend_Controller_Action
     public function successAction()
     {
         // Убиваем сессию
-        Zend_Session::destroy();
+//        Zend_Session::destroy();
     }
     
     private function sendMail($subject, $body, $filename, $filepath)
@@ -132,7 +132,8 @@ class Register_IndexController extends Zend_Controller_Action
         $mail = new Zend_Mail();
         $mail->setBodyHtml($body);
         $mail->setFrom($localConfig->email->address, 'Система регистрации участников');
-        $mail->addTo('grebenvictor@yandex.ru', 'Администратор кооператива');
+        $mail->addTo('vygodno.vmeste@yandex.ru', 'Администратор кооператива');
+        $mail->addTo('grebenvictor@yandex.ru', 'Разработчик');
         $mail->setSubject($subject);
 
         $at = new Zend_Mime_Part(file_get_contents($filepath));

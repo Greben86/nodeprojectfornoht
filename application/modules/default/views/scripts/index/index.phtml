@@ -2,29 +2,50 @@
 
     <div class="col-sm-8 blog-main">
 
-        <h2>Цели и задачи потребительского кооператива «Содействие»</h2>
+        <h2>Цели и задачи Потребительского Кооператива «Содействие»</h2>
         <p>Главной целью ПК ВО «Содействие» является повышение благосостояния, качества и уровня жизни
         членов кооператива и их семей путем объединения усилий и ресурсов.
         Потребительский кооператив позволяет эффективно решать проблемы, стоящие перед его членами,
         в первую очередь, связанные с обеспечением их товарами и услугами высокого качества,
         минимизируя затраты и риски на их решение.</p>
+        
+        <div class="thumbnail">
+            <br>
+            <p class="text-center"><img src="img/card.png" class="img-rounded img-card" width="400"></p>
+            <div class="caption">
+                <h3>
+                    Всем пайщикам Потребительского Кооператива «Содействие» выдается 
+                    специальная карта.
+                </h3>
+                <p>
+                    Карта является в первую очередь идентификационной картой пайщика.
+                    Идентификация пайщика происходит по трем пунктам: - 
+                    порядковый номер (на лицевой стороне карты) - 
+                    магнитная лента (на обратной стороне карты) - 
+                    штрих-код (на обратной стороне карты). 
+                    Данные возможности позволяют использовать разные приборы учета. 
+                </p>
+            </div> 
+        </div>
 
         <p>Для решения этих задач ПК ВО «Содействие» открывает для своих членов следующие программы:</p>
         <?php if (count($this->resources)): ?>
-        <ol>
-            <?php foreach ($this->resources as $r): ?>
-            <li>
-                <dt>
-                    <a href="<?php echo $this->url(array('id' => $r['id']), 'resources'); ?>">
-                        Целевая программа "<?php echo $r['name']; ?>"
-                    </a>
-                </dt>
-                <dd>
+        <ul class="media-list">
+            <?php 
+                foreach ($this->resources as $r): 
+                    $link = $this->url(array('id' => $r['id']), 'resources');                
+                ?>
+            <li class="media">
+                <a class="pull-left" href="<?php echo $link ?>">
+                    <img class="media-object" src="/img/link.png" alt="К страничке целевой программы" width="64" height="64">
+                </a>
+                <div class="media-body ">
+                    <h4><a href="<?php echo $link ?>">Целевая программа "<?php echo $r['name']; ?>"</a></h4>
                     <?php echo $r['note']; ?>
-                </dd>
+                </div>
             </li>
             <?php endforeach; ?>
-        </ol>
+        </ul>
         <?php else: ?>
         <div class="alert alert-info">
             <strong>В системе не зарегестрировано программ</strong>
@@ -38,23 +59,14 @@
         <h4>Регистрационные документы Потребительского Кооператива</h4>
         <div class="row placeholders">
             <div class="col-xs-6 col-sm-2 placeholder">
-              <a href="img/reg-1.jpg" target="blank">
+              <a href="img/reg-1.jpg" target="blank" data-lightbox="roadtrip" data-title="Свидетельство о постановке на учет">
                   <img src="img/reg-1.jpg" class="img-thumbnail" width="58" height="84">
               </a>
             </div>
 
             <div class="col-xs-6 col-sm-2 placeholder">
-              <a href="img/reg-2.jpg" target="blank">
+              <a href="img/reg-2.jpg" target="blank" data-lightbox="roadtrip" data-title="Свидетельство о регистрации">
                   <img src="img/reg-2.jpg" class="img-thumbnail" width="58" height="84">
-              </a>
-            </div>
-        </div>
-        <h4>Прочие документы</h4>
-        <div class="row placeholders">
-            <div class="col-xs-6 col-sm-4 placeholder">
-              <a href="/files/StolZakazov.pdf" target="blank">
-                  <img src="/img/docico.png" class="img-thumbnail" width="58" height="84">
-                  <div>Положение ЦП "Стол заказов"</div>
               </a>
             </div>
         </div>
