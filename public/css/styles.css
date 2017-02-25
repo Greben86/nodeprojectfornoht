@@ -12,34 +12,137 @@ and open the template in the editor.
 * { margin:0; padding:0; }
 
 body {
-  padding-top: 20px;
+  padding-top: 0px;
   padding-bottom: 5px;
-  background: url(/img/bacground.png) repeat scroll 0 0 #F2F2F2;; 
-  
+  background: url(/img/background.jpg) repeat scroll 0 0 #F2F2F2;  
   color: #404040;
-  /*font: 11px/1.55 'Telex', sans-serif;*/
+  font: 14px/1.55 'Telex', sans-serif;
   font-family: Arial, Helvetica, sans-serif;
-  text-align: left;
-  /*font-size: 11px;*/
+  text-align: left;  
+  border-top: 6px solid #BCA474;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing {
+/*.header {
   padding-right: 15px;
   padding-left: 15px;
 }
 
-/* Custom page header */
+ Custom page header 
 .header {
   border-bottom: 1px solid #e5e5e5;
 }
-/* Make the masthead heading the same height as the navigation */
+ Make the masthead heading the same height as the navigation 
 .header h3 {
   padding-bottom: 19px;
   margin-top: 0;
   margin-bottom: 0;
   line-height: 40px;
+}*/
+
+/*.header-container { 
+    width:960px; 
+    margin:0px auto;
+}*/
+
+/* Header =================================================================== */
+
+.header {
+    float:left;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-bottom: 30px;
+}
+
+#logo {
+    clear: both;
+    float: left;
+    height: 140px;
+    margin: 24px 0;
+    position: relative;
+}
+
+#logo li.head-container {
+    margin-top: 14px;
+    height: 70px;
+    padding-top: 18px;
+    text-align: center;
+}
+
+#logo > li {
+    display: inline;
+    float: left;
+    width: 310px;
+    text-align: center;
+}
+
+.header h2.classy {
+    text-transform: uppercase;
+    text-decoration: none; 
+    display: inline;
+    font-weight: normal;
+    padding: 0 12px;
+    font-size: 13px;
+    color: #777;
+}
+
+.header h2.title {
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline;
+    font-weight: normal;
+    padding: 0 12px;
+    font-size: 30px;
+    color: #777;
+}
+
+.logo-box {
+    border-left: 1px solid #bababa;
+    border-right: 1px solid #bababa;
+    height: 140px;
+    margin: 0;
+    padding: 0px 0 10px;
+    width: 200px;
+}
+
+/********** < Navigation */
+.nav-container { 
+    width:100%; 
+    float:left;  
+    position:relative; 
+    border-bottom: 1px solid #BABABA;
+    border-top: 1px solid #BABABA;
+}
+.nav-container ul {
+    display: -webkit-flex; 
+    display: flex;
+    padding-left: 0;
+    list-style: none; 
+    margin: 0 auto;
+}
+.nav-container a {
+    color: #404040;
+    float: left;
+    font-size: 11px;
+    font-weight: normal;
+    padding: 12px 12px 12px 12px;
+    text-transform: uppercase;
+    text-decoration: none;    
+    display: block;    
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+}
+.nav-container li a:hover {
+    background: #BCA474;
+    /*background: #bababa*/
+}
+.nav-container li.active a{
+    /*background: #BCA474;*/
+    text-decoration: underline;
+    color: rgb(0,0,0);
 }
 
 
@@ -48,27 +151,43 @@ body {
   .container {
     padding: 20px;
     width: 970px;
-    min-height: 970px;
+    min-height: 960px;
     background: #ffffff; 
-    border-radius: 5px;
+    border-radius: 0px;
+    box-shadow: 0 1px 10px #ADACAC; 
+    -moz-box-shadow: 0 1px 10px #ADACAC;
+    -webkit-box-shadow: 0 1px 10px #ADACAC;
+    
+    margin-bottom: 10px;
   }
   
   /* Custom page footer */
   footer.footer {
-    padding: 20px;
+    padding: 0px;
     color: #777;
-    width: 970px;
-    height: 100px;
-    background: #ffffff;
-    border-radius: 5px 5px 0 0;
+    width: 100%;
     display: table;
  
     margin-top: 10px;
-    margin-right: auto;
-    margin-left: auto;
+    margin-right: 0;
+    margin-left: 0;
     margin-bottom: 0px;   
   }
 }
+
+.f-fix {
+    border-top: 1px solid #BABABA;
+    float: left;
+    width: 100%;
+}
+  
+  .frame {
+    background: #ffffff;
+    left: 430px;
+    position: relative;
+    top: -25px;
+    width: 100px;
+  }
 
 .sidebar-module-inset {
   padding: 15px;
@@ -79,28 +198,6 @@ body {
 
 .container-narrow > hr {
   margin: 10px 0;
-}
-
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
-}
-.marketing p + h4 {
-  margin-top: 28px;
-}
-
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing {
-    padding-right: 0;
-    padding-left: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
 }
 
 .img-card {
@@ -119,7 +216,6 @@ body {
     bottom:10px; /* отступ кнопки от нижнего края страницы*/
     right:10px;
 }
-
 
 .livelist ol { 
     /* Идентифицируем счетчик и даем ему имя li. 
