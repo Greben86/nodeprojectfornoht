@@ -1,0 +1,45 @@
+<div class="row">
+    
+    <?php if (count($this->records)): ?>
+    <table class="table table-striped">
+        <col width="20%">
+        <col width="70%">
+        <col width="10%">
+        <caption></caption>
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>#</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->records as $r): ?>
+
+        <tr>        
+            <td>
+                <?php echo $r['name']; ?>
+            </td>
+            <td>
+                <?php echo $r['note']; ?>
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+    <?php else: ?>
+    <div class="alert alert-info">
+        <strong>Нет прайс-листов</strong>
+    </div>
+    <?php endif; ?>
+    
+    <div class="col-sm-4 blog-sidebar">
+      <div class="sidebar-module sidebar-module-inset">
+        <?php echo $this->form; ?>
+      </div>
+    </div><!-- /.blog-sidebar -->
+</div>

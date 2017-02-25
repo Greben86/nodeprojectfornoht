@@ -22,29 +22,6 @@ body {
   border-top: 6px solid #BCA474;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-/*.header {
-  padding-right: 15px;
-  padding-left: 15px;
-}
-
- Custom page header 
-.header {
-  border-bottom: 1px solid #e5e5e5;
-}
- Make the masthead heading the same height as the navigation 
-.header h3 {
-  padding-bottom: 19px;
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-}*/
-
-/*.header-container { 
-    width:960px; 
-    margin:0px auto;
-}*/
-
 /* Header =================================================================== */
 
 .header {
@@ -137,11 +114,10 @@ body {
 }
 .nav-container li a:hover {
     background: #BCA474;
-    /*background: #bababa*/
 }
 .nav-container li.active a{
-    /*background: #BCA474;*/
     text-decoration: underline;
+    /*font-weight: bold;*/
     color: rgb(0,0,0);
 }
 
@@ -168,10 +144,8 @@ body {
     width: 100%;
     display: table;
  
-    margin-top: 10px;
-    margin-right: 0;
-    margin-left: 0;
-    margin-bottom: 0px;   
+    margin-top: 10px; 
+    font-size: 12px;
   }
 }
 
@@ -179,15 +153,59 @@ body {
     border-top: 1px solid #BABABA;
     float: left;
     width: 100%;
+    margin-top: 50px;
+    margin-bottom: 0px;
 }
   
-  .frame {
+.frame {
     background: #ffffff;
     left: 430px;
     position: relative;
     top: -25px;
     width: 100px;
-  }
+}
+
+/* Footer =================================================================== */
+.footer h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 2.25;
+    margin-top: 0;
+    margin-bottom: .45em;
+}
+
+.footer ul {
+    clear: both;
+    float: left;
+    height: 100px;
+    position: relative;
+}
+
+.footer li {
+    margin-top: 0px;
+    height: 70px;
+    padding-top: 0px;
+    text-align: left;
+    display: inline;
+    float: left;
+    width: 310px;
+}
+
+.footer-copy { 
+    padding-top:25px; 
+    padding-bottom:10px; 
+}
+.footer-copy address {
+    color: #404040;
+    font-style: normal;
+    height: 20px;
+    line-height: 1.35;
+    padding: 0px 0px 5px 0px;
+    font-size:10px;
+    text-align: center;
+    font-family:Arial, Helvetica, sans-serif;
+}
 
 .sidebar-module-inset {
   padding: 15px;
@@ -256,15 +274,11 @@ body {
     height: 1.8em;
     line-height: 1.8em;
     padding: 0px;
-    color: #fff;
-    background: #2980b9;
-    font-weight: bold;
+    color: #404040;
     text-align: center;
-    border-radius: .9em;
-    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.3);
-    z-index: 1;
     -webkit-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
+    border: 1px solid #BABABA;
 }
 .livelist li::after {
     position: absolute;
@@ -275,17 +289,19 @@ body {
     content: '';
     background-color: rgb(203, 203, 203);
     z-index: 0;
+    color: #fff;
 }
 .livelist li:hover {
-    color: rgb(0,0,0);
+    color: rgb(0,0,0);    
 }
 .livelist li:hover:before {
-    background-color: #2ecc71;
+    background-color: #BCA474;
 }
 .livelist li:hover:after {
-    background-color: #2ecc71;
+    background-color: #BCA474
 }
 
+/* Оформление таблицы */
 .livetable tr {
     color: rgb(100,100,100);
     -webkit-transition: all 0.2s ease-in-out;

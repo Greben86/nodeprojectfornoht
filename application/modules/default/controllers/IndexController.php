@@ -171,6 +171,25 @@ class IndexController extends Zend_Controller_Action
         );
     }
     
+    public function pricesAction()
+    {
+        $this->sidebar();
+        
+        // Подключаемся к БД
+        $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
+        $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
+        $db = Zend_Db::factory('Pdo_Mysql', array(
+            'host'     => $localConfig->database->host,
+            'dbname'   => $localConfig->database->name,
+            'username' => $localConfig->database->user,
+            'password' => $localConfig->database->pass
+        ));
+
+        $result = $db->fetchAll('SELECT * FROM pricelists ORDER BY id DESC');
+
+        $this->view->resources = $result;
+    }
+    
     public function detailsAction()
     {
         $this->sidebar();
