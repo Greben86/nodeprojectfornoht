@@ -34,7 +34,7 @@ class Register_Form_Index extends Zend_Form {
     $image->setLabel('Отсканированный бланк заявления')
         ->setDestination(APPLICATION_PATH . '/../public/upload')
         ->setAttrib('multiple', false)
-        ->addValidator('Size', false, 1024000)
+        ->addValidator('Size', false, 2e+7)
         ->addValidator('Extension', false, 'jpg,png,gif,bmp,tiff,pdf,doc,docx,odt');
     
     // Капча

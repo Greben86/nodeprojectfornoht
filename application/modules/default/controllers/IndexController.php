@@ -167,8 +167,55 @@ class IndexController extends Zend_Controller_Action
             'alidi'         => $localConfig->discount->alidi,
             'ugdvor'        => $localConfig->discount->ugdvor,
             'order'         => $localConfig->discount->order,
-            'metro'         => $localConfig->discount->metro
+            'metro'         => $localConfig->discount->metro,
+            'femida'        => $localConfig->discount->femida
         );
+    }
+    
+    private function get_filesize($file)
+    {
+        // идем файл
+        $filepath = APPLICATION_PATH . '/../public/pricelists/' . $file;
+        if(!file_exists($filepath)) 
+        { 
+            return 'Файл '.$filepath.' не найден';
+        }
+       // теперь определяем размер файла в несколько шагов
+      $filesize = filesize($filepath);
+       // Если размер больше 1 Кб
+       if($filesize > 1024)
+       {
+           $filesize = ($filesize/1024);
+           // Если размер файла больше Килобайта
+           // то лучше отобразить его в Мегабайтах. Пересчитываем в Мб
+           if($filesize > 1024)
+           {
+                $filesize = ($filesize/1024);
+               // А уж если файл больше 1 Мегабайта, то проверяем
+               // Не больше ли он 1 Гигабайта
+               if($filesize > 1024)
+               {
+                   $filesize = ($filesize/1024);
+                   $filesize = round($filesize, 1);
+                   return $filesize." ГБ";       
+               }
+               else
+               {
+                   $filesize = round($filesize, 1);
+                   return $filesize." MБ";   
+               }       
+           }
+           else
+           {
+               $filesize = round($filesize, 1);
+               return $filesize." Кб";   
+           }  
+       }
+       else
+       {
+           $filesize = round($filesize, 1);
+           return $filesize." байт";   
+       }
     }
     
     public function pricesAction()
@@ -186,8 +233,18 @@ class IndexController extends Zend_Controller_Action
         ));
 
         $result = $db->fetchAll('SELECT * FROM pricelists ORDER BY id DESC');
+        
+        $pricelists = array();
+        foreach ($result as $r) 
+        {
+            $pricelists[] = array(
+                'name' => $r['name'],
+                'filename' => $r['filename'],
+                'filesize' => $this->get_filesize($r['filename'])
+            );
+        }
 
-        $this->view->resources = $result;
+        $this->view->prices = $pricelists;
     }
     
     public function detailsAction()

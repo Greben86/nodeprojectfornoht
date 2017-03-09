@@ -1,10 +1,10 @@
 <?php
 
-class Resource_Form_Add extends Zend_Dojo_Form {
+class Program_Form_Add extends Zend_Form {
     
     public function init() {
         // инициализируем форму
-        $this->setAction('/admin/resources/add')
+        $this->setAction('/admin/programs/add')
              ->setMethod('post');
         
         // создаем текстовое поле для ввода названия
@@ -20,7 +20,7 @@ class Resource_Form_Add extends Zend_Dojo_Form {
               -> addFilter('HtmlEntities')
               -> addFilter('StringTrim');
         
-        // создаем текстовое поле для ввода        
+        // создаем текстовое поле для ввода описания        
         $note = new Zend_Form_Element_Textarea('note');
         $note -> setLabel('Краткое описание')
               ->setAttribs(array(
@@ -35,6 +35,19 @@ class Resource_Form_Add extends Zend_Dojo_Form {
               -> addFilter('HtmlEntities')
               -> addFilter('StringTrim');
         
+        // создаем текстовое поле для ввода названия
+        $page = new Zend_Form_Element_Text('page');
+        $page -> setLabel('Страница')
+              ->setAttribs(array(
+                'class' => 'form-control',
+                'placeholder'  => 'Укажите название страницы',
+              ))
+              -> setOptions(array('size' => '50'))
+              -> setRequired(true)  
+              -> addValidator('NotEmpty', true)
+              -> addFilter('HtmlEntities')
+              -> addFilter('StringTrim');
+        
         // создаем кнопку отправки
         $submit = new Zend_Form_Element_Submit('submit');
         $submit -> setLabel('Добавить')
@@ -46,22 +59,23 @@ class Resource_Form_Add extends Zend_Dojo_Form {
         
         // добавляем элементы к форме
         $this -> addElement($name)
-              -> addElement($note);
+              -> addElement($note)
+              -> addElement($page);
         
-        $this->addDisplayGroup(array('name', 'note'), 'resource');
+        $this->addDisplayGroup(array('name', 'note', 'page'), 'resource');
         $this->getDisplayGroup('resource')
              ->setLegend('Новая программа');
         $this->addElement($submit);
     }
 }
 
-class Resource_Form_Update extends Resource_Form_Add {
+class Program_Form_Update extends Program_Form_Add {
     
     public function init() {
         parent::init();
         
         // инициализируем форму
-        $this->setAction('/admin/resources/edit')
+        $this->setAction('/admin/programs/edit')
              ->setMethod('post');
 
         $this->removeElement('submit');
@@ -85,14 +99,14 @@ class Resource_Form_Update extends Resource_Form_Add {
         // добавляем элементы к форме
         $this -> addElement($id);
         
-        $this->addDisplayGroup(array('id', 'name', 'note'), 'resource');
+        $this->addDisplayGroup(array('id', 'name', 'note', 'page'), 'resource');
         $this->getDisplayGroup('resource')
              ->setLegend('Программа');
         $this->addElement($submit);
     }
 }
 
-class Admin_ResourcesController extends Zend_Controller_Action
+class Admin_ProgramsController extends Zend_Controller_Action
 {
     public function init()
     {
@@ -131,7 +145,7 @@ class Admin_ResourcesController extends Zend_Controller_Action
     public function addAction() 
     {      
         // генерируем форму ввода       
-        $form = new Resource_Form_Add();
+        $form = new Program_Form_Add();
         $this->view->form = $form;
         
         // проверяем корректность введенных данных
@@ -154,13 +168,14 @@ class Admin_ResourcesController extends Zend_Controller_Action
                 // Формируем массив данных
                 $data = array(
                     'name'      => $values['name'],
-                    'note'      => $values['note']
+                    'note'      => $values['note'],
+                    'page'      => $values['page']
                 );
                 // Сохраняем данные
                 $db->insert('resources', $data);
                 
                 $this->_helper->getHelper('FlashMessenger')->addMessage('Программа сохранена');
-                $this->_redirect('/admin/resources');
+                $this->_redirect('/admin/programs');
             }
         }
         $this->render('edit');
@@ -169,7 +184,7 @@ class Admin_ResourcesController extends Zend_Controller_Action
     public function editAction()
     {
         // генерируем форму ввода       
-        $form = new Resource_Form_Update();
+        $form = new Program_Form_Update();
         $this->view->form = $form;
         
         // проверяем корректность введенных данных
@@ -192,13 +207,14 @@ class Admin_ResourcesController extends Zend_Controller_Action
                 // Формируем массив данных
                 $data = array(
                     'name'      => $values['name'],
-                    'note'      => $values['note']
+                    'note'      => $values['note'],
+                    'page'      => $values['page']
                 );
                 // Сохраняем данные
-                $db->update('resources', $data, $values['id']);
+                $db->update('resources', $data, 'id='.$values['id']);
                 
                 $this->_helper->getHelper('FlashMessenger')->addMessage('Программа сохранена');
-                $this->_redirect('/admin/resources');                
+                $this->_redirect('/admin/programs');                
             }
         } else {
             // устанавливаем фильтры и валидаторы для входных данных
@@ -263,7 +279,7 @@ class Admin_ResourcesController extends Zend_Controller_Action
             $db->delete('resources', 'id='.$input->id);
             
             $this->_helper->getHelper('FlashMessenger')->addMessage('Программа удалена');
-            $this->_redirect('/admin/resources');
+            $this->_redirect('/admin/programs');
         }
     }
 

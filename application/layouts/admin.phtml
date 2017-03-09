@@ -27,18 +27,7 @@
             body {
               /* Margin bottom by footer height */
               margin-bottom: 60px;
-              background: url(/img/bacground.png);
             }
-            #footer {
-              position: absolute;
-              bottom: 0;
-              width: 100%;
-              /* Set the fixed height of the footer here */
-              height: 60px;
-              background-color: #f5f5f5;
-            }
-
-
             /* Custom page CSS
             -------------------------------------------------- */
             /* Not required for template or sticky footer method. */
@@ -64,7 +53,8 @@
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">
                     <li><a href="<?php echo $this->url(array(), 'admin'); ?>">Заявки</a></li>
-                    <li><a href="<?php echo $this->url(array(), 'admin-resources'); ?>">Программы</a></li>
+                    <li><a href="<?php echo $this->url(array(), 'admin-programs'); ?>">Программы</a></li>
+                    <li><a href="<?php echo $this->url(array(), 'admin-pricelists'); ?>">Прайс-листы</a></li>
                     <li><a href="<?php echo $this->url(array(), 'admin-logout'); ?>">Выйти</a></li>
               </ul>
             </div>
@@ -79,14 +69,6 @@
                 <br>
                 <?php echo $this->layout()->content; ?>
             </div>
-        </div>
-        
-        <div id="footer">
-          <div class="container">
-            &copy; ПК ВО Содействие 2017
-            <br>
-            <small>Все права защищены.</small>
-          </div>
         </div>
     </body>
 </html>

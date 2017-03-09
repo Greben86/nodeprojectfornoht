@@ -20,7 +20,7 @@ and open the template in the editor.
         <uri>/home/partners</uri>
     </partners>
     <prices>
-        <label>Прайс-листы</label>
+        <label>Акции</label>
         <uri>/home/prices</uri>
     </prices>
     <details>
