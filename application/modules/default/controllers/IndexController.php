@@ -156,20 +156,19 @@ class IndexController extends Zend_Controller_Action
     {
         $this->sidebar();
         
-        // Получаем скидки
+        // Подключаемся к БД
         $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
         $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
+        $db = Zend_Db::factory('Pdo_Mysql', array(
+            'host'     => $localConfig->database->host,
+            'dbname'   => $localConfig->database->name,
+            'username' => $localConfig->database->user,
+            'password' => $localConfig->database->pass
+        ));
+
+        $result = $db->fetchAll('SELECT * FROM partners ORDER BY id DESC');
         
-        $this->view->discounts = array(
-            'pokrovgold'    => $localConfig->discount->pokrovgold,
-            'zolushka'      => $localConfig->discount->zolushka,
-            'noht'          => $localConfig->discount->noht,
-            'alidi'         => $localConfig->discount->alidi,
-            'ugdvor'        => $localConfig->discount->ugdvor,
-            'order'         => $localConfig->discount->order,
-            'metro'         => $localConfig->discount->metro,
-            'femida'        => $localConfig->discount->femida
-        );
+        $this->view->records = $result;
     }
     
     private function get_filesize($file)
@@ -216,6 +215,11 @@ class IndexController extends Zend_Controller_Action
            $filesize = round($filesize, 1);
            return $filesize." байт";   
        }
+    }
+    
+    public function promoAction()
+    {
+        $this->sidebar();
     }
     
     public function pricesAction()

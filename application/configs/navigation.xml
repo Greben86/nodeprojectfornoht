@@ -19,8 +19,12 @@ and open the template in the editor.
         <label>Наши партнеры</label>
         <uri>/home/partners</uri>
     </partners>
-    <prices>
+    <promo>
         <label>Акции</label>
+        <uri>/home/promo</uri>
+    </promo>
+    <prices>
+        <label>Прайс-листы</label>
         <uri>/home/prices</uri>
     </prices>
     <details>

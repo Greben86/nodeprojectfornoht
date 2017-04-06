@@ -1,165 +1,34 @@
 <div class="row">
 
     <div class="col-sm-8 blog-main">      
-      <h2>Наши партнеры</h2>
+      <h2>Наши партнеры</h2>      
+      <?php if (count($this->records)): ?>
       <p>Участникам кооператива нашими партнерами предоставлены скидки</p>
       <table class="livetable">
+          <?php foreach ($this->records as $r): ?>
           <tr>
               <td style="vertical-align: top">
                   <br>
-                  <a href="http://www.pokrovgold.ru/">
-                      <img width="180" src="/img/logo_pokrovgold.png">
+                  <a href="<?php echo $r['link']; ?>">
+                      <img width="180" src="/img/partners/<?php echo $r['file']; ?>">
                   </a>
               </td>
               <td style="padding-left: 10px">
                   <br>
                   <p>
-                      «Золотые купола» — это надежное партнерство и взаимовыгодное 
-                      сотрудничество. Предлагая гибкую систему скидок, 
-                      мы осуществляем индивидуальный подход, как к крупным, 
-                      так и к малым предприятиям. 
+                      <?php echo $r['note']; ?>
                   </p>
-                  <span class="label label-info">Скидка до <?php echo $this->discounts['pokrovgold']; ?>% от цены розничных магазинов</span>
-                  <a href="http://www.pokrovgold.ru/" class="btn btn-link">www.pokrovgold.ru</a>
+                  <span class="label label-info"><?php echo $r['discount']; ?></span>
+                  <a href="<?php echo $r['link']; ?>" class="btn btn-link"><?php echo $r['link']; ?></a>
               </td>
           </tr>
-          <tr>
-              <td style="vertical-align: top">
-                  <br>
-                  <a href="http://zolushka52.ru/">
-                      <img width="180" src="/img/logo_zolushka.png">
-                  </a>
-              </td>
-              <td style="padding-left: 10px">
-                  <br>
-                  <p>
-                      Оптово-розничная компания по продаже 
-                      бытовой химии, косметики, парфюмерии, хозтоваров и канцтоваров. 
-                      Оптово-розничный склад компании в Нижнем Новгороде 
-                      называется "Торговый дом Золушка".
-                  </p>
-                  <span class="label label-info">Скидка до <?php echo $this->discounts['zolushka']; ?>%</span>
-                  <a href="http://www.zolushka52.ru/" class="btn btn-link">www.zolushka52.ru</a>
-              </td>
-          </tr>
-          <tr>
-              <td style="vertical-align: top">
-                  <br>
-                  <a href="http://www.hoztovary.nnov.ru/">
-                      <img width="180" src="/img/logo_noht.png">
-                  </a>                  
-              </td>
-              <td style="padding-left: 10px">
-                  <br>
-                  <p>
-                      Розничная торговля - хозтовары, мебель "НОХТ" 58 лет на рынке
-                      хозтоваров. Ассортимент 50тысяч наименований товаров. Представляет
-                      прдукцию более 750 производителей. Изделия из пластмасс,
-                      садово-огородный инвентарь, посуда, электробытовые и
-                      электроустановочные товары, зеркала, строительные материалы,
-                      сантехника, метизы, замки. Фирменная сеть магазинов.
-                  </p>
-                  <span class="label label-info">Скидка до <?php echo $this->discounts['noht']; ?>%</span>
-                  <a href="http://www.hoztovary.nnov.ru/" class="btn btn-link">www.hoztovary.nnov.ru</a>
-              </td>
-          </tr>
-          <tr>
-              <td style="vertical-align: top">
-                  <br>
-                  <a href="http://www.alidi.ru/">
-                      <img width="180" src="/img/logo_alidi.png">
-                  </a>
-              </td>
-              <td style="padding-left: 10px">
-                  <br>
-                  <p>
-                      АЛИДИ – ведущая Российская дистрибьюторская и логистическая 
-                      компания, основанная в 1992 году в Нижнем Новгороде. 
-                      Сегодня АЛИДИ имеет филиалы в 21 регионе России, включая 
-                      Москву и Санкт-Петербург, а также в Республике Беларусь и в Кении.
-                  </p>
-                  <span class="label label-info">Скидка до <?php echo $this->discounts['alidi']; ?>%</span>
-                  <a href="http://www.alidi.ru/" class="btn btn-link">www.alidi.ru</a>
-              </td>
-          </tr>
-          <tr>
-              <td style="vertical-align: top">
-                  <br>
-                  <a href="http://www.ugdvor.nnov.ru/">
-                      <img width="180" src="/img/logo_ugdvor.jpg">
-                  </a>
-              </td>
-              <td style="padding-left: 10px">
-                  <br>
-                  <p>
-                      “Южный Двор” - один из крупнейших дистрибьютеров отечественных 
-                      и зарубежных производителей бытовой химии, парфюмерии, 
-                      средств гигиены и товаров повседневного спроса.
-                  </p>
-                  <span class="label label-info">Скидка до <?php echo $this->discounts['ugdvor']; ?>%</span>
-                  <a href="http://www.ugdvor.nnov.ru/" class="btn btn-link">www.ugdvor.nnov.ru</a>
-              </td>
-          </tr>
-          <tr>
-              <td style="vertical-align: top">
-                  <br>
-                  <a href="http://order-nn.ru/">
-                      <img width="180" src="/img/logo_order.png">
-                  </a>
-              </td>
-              <td style="padding-left: 10px">
-                  <br>
-                  <p>
-                      Компания занимается оптово-розничной торговлей строительным инструментом и материалами.
-                      Известность брэнда ОРДЕР‚ который является зарегистрированным 
-                      товарным знаком‚ в Нижнем Новгороде составляет не менее 70% 
-                      для всего населения города и 95% в профессиональном сегменте.
-                      Основной ассортимент компании: лакокрасочная продукция‚ 
-                      сухие смеси и инструмент.
-                  </p>
-                  <span class="label label-info">Скидка до <?php echo $this->discounts['order']; ?>%</span>
-                  <a href="http://order-nn.ru/" class="btn btn-link">order-nn.ru</a>
-              </td>
-          </tr>
-          <tr>
-              <td style="vertical-align: top">
-                  <br>
-                  <a href="https://www.metro-cc.ru/">
-                      <img width="180" src="/img/logo_metro.jpg">
-                  </a>
-              </td>
-              <td style="padding-left: 10px">
-                  <br>
-                  <p>
-                      Компания МЕТРО Кэш энд Керри в составе международного торгового холдинга МЕТРО ГРУП.
-                      На сегодняшний день российское подразделение компании 
-                      МЕТРО Кэш энд Керри открыло 68 торговых центра в 45 регионах страны. 
-                      Продажи МЕТРО Кэш энд Керри, Россия за 2012 год составили 
-                      4, 121 млрд. евро (рост по сравнению с предыдущим годом – более 20 %). 
-                      Количество сотрудников превышает 19 200 человек.
-                  </p>
-                  <span class="label label-info">Скидка до <?php echo $this->discounts['metro']; ?>%</span>
-                  <a href="http://www.metro-cc.ru/" class="btn btn-link">www.metro-cc.ru</a>
-              </td>
-          </tr>
-          <tr>
-              <td style="vertical-align: top">
-                  <br>
-                  <img width="180" src="/img/logo_femida.jpg">
-              </td>
-              <td style="padding-left: 10px">
-                  <br>
-                  <p>
-                      Юридическая компания – команда профессионалов с опытом 
-                      работы более 15 лет в области гражданских, семейных, 
-                      арбитражных дел. Составление и оформление любых документов, 
-                      ведение переговоров, адвокатские услуги любой степени сложности. 
-                      Тел. +79159566147 
-                  </p>
-                  <span class="label label-info">Скидка до <?php echo $this->discounts['femida']; ?>%</span>
-              </td>
-          </tr>
+          <?php endforeach; ?>
       </table>
+      <?php else: ?>
+      <div class="alert alert-info">
+          <strong>Нет партнеров</strong>
+      </div>
+      <?php endif; ?>
       <br>
       <br>
     </div>

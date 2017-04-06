@@ -1,0 +1,53 @@
+<a href="<?php echo $this->url(array(), 'admin-partners-add'); ?>" class="btn btn-default">
+    <span class="glyphicon glyphicon-plus"></span>
+    Новый партнер
+</a>
+
+<?php if (count($this->records)): ?>
+<table class="table table-striped">
+    <col width="50%">
+    <col width="20%">
+    <col width="15%">
+    <col width="15%">
+    <caption></caption>
+    <thead>
+        <tr>
+            <th>Описание</th>
+            <th>Страница</th>
+            <th>#</th>
+            <th>#</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($this->records as $r): ?>
+
+    <tr>     
+        <td>
+            <?php echo $r['note']; ?>
+        </td>
+        <td>
+            <?php echo $r['link']; ?>
+        </td>
+        <td>
+            <a href="<?php echo $this->url(array('id' => $r['id']), 'admin-partners-edit'); ?>" class="btn btn-primary">
+                <span class="glyphicon glyphicon-pencil"></span>
+                Редактировать
+            </a>
+        </td>
+        <td>
+            <a href="<?php echo $this->url(array('id' => $r['id']), 'admin-partners-del'); ?>" class="btn btn-danger">
+                <span class="glyphicon glyphicon-remove"></span>
+                Удалить
+            </a>
+        </td>
+    </tr>
+
+    <?php endforeach; ?>
+    </tbody>
+</table>
+<?php else: ?>
+<div class="alert alert-info">
+    <strong>Нет партнеров</strong>
+</div>
+<?php endif; ?>
+
