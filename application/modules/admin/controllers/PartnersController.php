@@ -14,13 +14,13 @@ class Partner_Form_Add extends Zend_Form {
                 'class' => 'form-control',
                 'placeholder'  => 'Описание партнера',
               ))
-              -> setOptions(array('rows' => '3', 'cols' => '40'))
+              -> setOptions(array('rows' => '5', 'cols' => '40'))
               -> setRequired(true)  
               -> addValidator('NotEmpty', true, array(
                   Zend_Validate_NotEmpty::IS_EMPTY => 'Заполните описание партнера'
               ))
-              -> addFilter('HtmlEntities')
-              -> addFilter('StringTrim');
+              -> addFilter('StringTrim')
+              -> addFilter('StripTags');
         
         // создаем текстовое поле для ввода названия
         $link = new Zend_Form_Element_Text('link');
