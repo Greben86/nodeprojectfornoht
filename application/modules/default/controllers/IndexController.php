@@ -122,12 +122,6 @@ class First_Input_Form extends Zend_Form
 
 class IndexController extends Zend_Controller_Action
 {
-
-    public function init()
-    {
-    /* Initialize action controller here */
-    }
-
     public function indexAction()
     {
         $this->sidebar();
@@ -166,7 +160,7 @@ class IndexController extends Zend_Controller_Action
             'password' => $localConfig->database->pass
         ));
 
-        $result = $db->fetchAll('SELECT * FROM partners ORDER BY id DESC');
+        $result = $db->fetchAll('SELECT * FROM partners ORDER BY ordr ASC');
         
         $this->view->records = $result;
     }

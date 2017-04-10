@@ -31,6 +31,8 @@
         
         <script type="text/javascript" src="/js/back-top.js"></script>
         <script type="text/javascript" src="/js/inputform.js"></script>
+        
+        <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
 
     <body>
@@ -113,19 +115,26 @@
                     </li>
 
                     <li class="logo-box">
-                        <img src="/img/logo.png" alt="ПК ВО Содействие" width="250" />
+                        <img src="/img/logo.png" alt="ПК ВО Содействие" width="250"/>
                     </li>
                     <li class="head-container">
                         <div class="phone_top">
                             <h2 class="classy">
-                                <span class="glyphicon glyphicon-phone-alt"></span>
-                                <b>8 (831) 216-27-12</b>
+                                <span class="glyphicon glyphicon-phone-alt"/>
+                                <b>8(831)216-27-12</b>
                             </h2>
                             <br>
                             <h2 class="classy">
-                                <span class="glyphicon glyphicon-phone-alt"></span>
-                                <b>8 (831) 411-11-40</b>
+                                <span class="glyphicon glyphicon-phone-alt"/>
+                                <b>8(831)411-11-40</b>
                             </h2>
+                        </div>
+                        <div class="register_bar">
+                            <a href="<?php echo $this->url(array(), 'register'); ?>" class="btn btn-warning">
+                                Регистриция
+                            </a>
+                            <br>
+                            <small>Подайте заявку на регистрацию в кооперативе</small>
                         </div>
                     </li>
                 </ul>
@@ -143,35 +152,28 @@
             
             <footer class="footer">
                 <div class="f-fix">
-                    <div class="frame"><img src="/img/frame.png" alt="ПК ВО Содействие" width="100" /></div>                  
+                    <div class="frame">
+                        <img src="/img/frame.png" alt="ПК ВО Содействие" width="100" />
+                    </div>                  
                 </div>                
                 
                 <ul>
                     <li> 
-                        <h3>Контакты</h3>
-                        
-                        8 (831) 216-27-12, 8 (831) 411-11-40
-                        
-                        <br>
-                        
+                        <h3>Контакты</h3>                        
+                        8 (831) 216-27-12, 8 (831) 411-11-40                        
+                        <br>                        
                         <a href="mailto:vygodno.vmeste@yandex.ru?subject=Письмо с сайта">vygodno.vmeste@yandex.ru</a><br>
                     </li>
                     <li>
-                        <h3>Прайс-листы</h3>                        
-                        
+                        <h3>Прайс-листы</h3>
                         <a href="/pricelists/pricelists.zip">Zip-архив&nbsp;(122 Кб)</a>
-
                         <br>
-
                         <small>Обновлен&nbsp;03.03.2017</small>
                     </li>                    
                     <li>
-                        <h3>Ссылки</h3>
-                        
-                        <a href="https://smsc.ru" target="_blank">Наш SMS-провайдер</a>
-                        
-                        <br>
-                                                
+                        <h3>Ссылки</h3>                        
+                        <a href="https://smsc.ru" target="_blank">Наш SMS-провайдер</a>                        
+                        <br>                                                
                         <a href="http://regionsoft.ru/">Сайт разработан RegionSoft</a>
                     </li>
                 </ul>    
