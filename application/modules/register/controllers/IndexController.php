@@ -125,11 +125,11 @@ class Register_Form_Index extends Zend_Form {
 //            'timeout' => 300,
 //        ),
 //    ));
-    $captcha->setLabel('Пожалуйста подтвердите что вы человек')
-        ->setAttribs(array(
-            'class' => 'form-control',
-            'placeholder'  => 'Введите текст с картинки',
-        ));
+//    $captcha->setLabel('Пожалуйста подтвердите что вы человек')
+//        ->setAttribs(array(
+//            'class' => 'form-control',
+//            'placeholder'  => 'Введите текст с картинки',
+//        ));
 
     // создаем кнопку отправки
     $submit = new Zend_Form_Element_Submit('submit');
