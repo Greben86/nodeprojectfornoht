@@ -7,6 +7,7 @@
         <meta name="description" content="НПК Содействие">
         <meta name="author" content="Greben V">
         <meta name="yandex-verification" content="d3a3aded422cf85d" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="/img/favicon.png">
 
         <title>Содействие</title>
@@ -30,7 +31,7 @@
         </script>
         
         <script type="text/javascript" src="/js/back-top.js"></script>
-        <script type="text/javascript" src="/js/inputform.js"></script>
+        <script type="text/javascript" src="/js/mobile-nav.js"></script>
         
         <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
@@ -103,10 +104,9 @@
         <!-- END JIVOSITE CODE -->
         
         <div class="container"> 
-            
-            <div class="header">
-                <ul id="logo">
 
+            <div class="header">
+                <ul id="logo" class="hidden-xs hidden-sm">
                     <li class="head-container"> 
                         <div>
                             <h2 class="title">«Содействие»</h2>
@@ -140,25 +140,46 @@
                         </div>
                     </li>
                 </ul>
-                
-                <div class="nav-container">
+
+                <div class="nav-container hidden-xs hidden-sm">
                     <?php
                     echo $this->navigation()
                             ->menu()
                             ->renderMenu(null, array());
                     ?>
                 </div>
+                
+                <div class="col-lg-1">
+                    <a href="#" data-toggle=".container" class="sidebar-toggle hidden-md hidden-lg">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </a>
+                </div>
             </div>
             
+            <div class="nav-mobile hidden-md hidden-lg">
+                <?php
+                echo $this->navigation()
+                        ->menu()
+                        ->renderMenu(null, array());
+                ?>
+                <br>
+                <br>
+                <a href="<?php echo $this->url(array(), 'register'); ?>" class="btn btn-warning btn-lg">
+                    Регистриция
+                </a>
+            </div>
+
             <?php echo $this->layout()->content; ?>  
-            
-            <footer class="footer">
+
+            <footer class="footer hidden-xs hidden-sm">
                 <div class="f-fix">
                     <div class="frame">
                         <img src="/img/frame.png" alt="ПК ВО Содействие" width="100" />
                     </div>                  
                 </div>                
-                
+
                 <ul>
                     <li> 
                         <h3>Контакты</h3>                        
@@ -179,14 +200,14 @@
                         <a href="http://regionsoft.ru/">Сайт разработан RegionSoft</a>
                     </li>
                 </ul>    
-                
+
                 <div class="footer-copy">
                     <address>&copy; ПК ВО «Содействие» 2017</address>
                 </div>                
             </footer>            
-        </div> <!-- /container -->
+        </div> 
         
-        <a href="#" id="toTop">
+        <a href="#" id="toTop" class="hidden-xs hidden-sm">
             <img alt="" src="/img/up.png">
         </a>
     </body>
