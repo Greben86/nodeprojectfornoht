@@ -18,8 +18,8 @@ class Pricelist_Form_Add extends Zend_Form {
               -> setOptions(array('size' => '30'))
               -> setRequired(true)  
               -> addValidator('NotEmpty', true)
-              -> addFilter('HtmlEntities')
-              -> addFilter('StringTrim');
+              -> addFilter('StringTrim')
+              -> addFilter('StripTags');
         
         $filename = new Zend_Form_Element_File('filename');
         $filename->setLabel('Файл прайс-листа')
@@ -56,14 +56,15 @@ class Pricelist_Form_Update extends Pricelist_Form_Add {
         $this->setAction('/admin/pricelists/edit')
              ->setMethod('post');
 
+        $this->removeElement('filename');
         $this->removeElement('submit');
-        $this->removeDisplayGroup('newpricelist');
+        $this->removeDisplayGroup('pricelist');
         
         // создаем скрытое поле для идентификатора элемента
         $id = new Zend_Form_Element_Hidden('id');
         $id -> addValidator('Int')
-            -> addFilter('HtmlEntities')
-            -> addFilter('StringTrim');
+            -> addFilter('StringTrim')
+            -> addFilter('StripTags');
         
         // создаем кнопку отправки
         $submit = new Zend_Form_Element_Submit('submit');
@@ -183,8 +184,7 @@ class Admin_PricelistsController extends Zend_Controller_Action
                 ));
                 // Формируем массив данных
                 $data = array(
-                    'name'      => $values['name'],
-                    'filename'  => $values['filename']
+                    'name'      => $values['name']
                 );
                 // Сохраняем данные
                 $db->update('pricelists', $data, 'id='.$values['id']);
@@ -196,7 +196,7 @@ class Admin_PricelistsController extends Zend_Controller_Action
             // устанавливаем фильтры и валидаторы для входных данных
             // полученных в запросе
             $filters = array(
-                'id' => array('HtmlEntities', 'StripTags', 'StringTrim')
+                'id' => array('StripTags', 'StringTrim')
             );
             $validators = array(
                 'id' => array('NotEmpty', 'Int')
