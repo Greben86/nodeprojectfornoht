@@ -111,27 +111,15 @@ class Register_Form_Index extends Zend_Form {
     
     // Капча
     $recaptcha = new Google_Service_ReCaptcha('6LeZVhwUAAAAAN8NQnoxHWD6xxTKmmZ6GeDiqDhz', '6LeZVhwUAAAAAP_Ey3EbH8L1u_gKLngjgpW4x-hN');
+//    $recaptcha = new Zend_Service_ReCaptcha('6LeZVhwUAAAAAN8NQnoxHWD6xxTKmmZ6GeDiqDhz', '6LeZVhwUAAAAAP_Ey3EbH8L1u_gKLngjgpW4x-hN');
+    $recaptcha->setOption('theme', 'clean');
+    $recaptcha->setOption('lang', 'ru');
     $captcha = new Zend_Form_Element_Captcha('captcha',
               array('captcha'        => 'ReCaptcha',
                     'captchaOptions' => array(
-                        'captcha' => 'ReCaptcha', 
+                        'captcha' => 'ReCaptcha',
                         'service' => $recaptcha)
                   ));
-//    $captcha = new Zend_Form_Element_Captcha('captcha', array(
-//        'captcha' => 'Figlet',
-////        'captcha' => 'Image',
-//        'captchaOptions' => array(
-//            'captcha' => 'Figlet',
-////            'captcha' => 'Image',
-//            'wordLen' => 6,
-//            'timeout' => 300,
-//        ),
-//    ));
-//    $captcha->setLabel('Пожалуйста подтвердите что вы человек')
-//        ->setAttribs(array(
-//            'class' => 'form-control',
-//            'placeholder'  => 'Введите текст с картинки',
-//        ));
 
     // создаем кнопку отправки
     $submit = new Zend_Form_Element_Submit('submit');
@@ -164,6 +152,13 @@ class Register_IndexController extends Zend_Controller_Action
 
         if ($this->getRequest()->isPost()) 
         {
+//            var_dump($form->getElement('captcha'));
+//            var_dump($_POST);
+//            echo 'captcha: ' . $form->getElement('captcha')->getBelongsTo();
+//            foreach ($_POST as $key => $value) {
+//                echo '<p><strong>' . $key.':</strong> '.$value.'</p>';
+//            }
+//            exit();
             if ($form->isValid($this->getRequest()->getPost())) 
             {                   
                 $values = $form->getValues();
@@ -202,7 +197,7 @@ class Register_IndexController extends Zend_Controller_Action
         $mail = new Zend_Mail();
         $mail->setBodyHtml($body);
         $mail->setFrom($localConfig->email->address, 'Система регистрации участников');
-        $mail->addTo('vygodno.vmeste@yandex.ru', 'Администратор кооператива');
+//        $mail->addTo('vygodno.vmeste@yandex.ru', 'Администратор кооператива');
         $mail->addTo('grebenvictor@yandex.ru', 'Разработчик');
         $mail->setSubject($subject);
 
