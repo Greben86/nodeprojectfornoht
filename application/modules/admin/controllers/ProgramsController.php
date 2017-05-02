@@ -17,8 +17,8 @@ class Program_Form_Add extends Zend_Form {
               -> setOptions(array('size' => '35'))
               -> setRequired(true)  
               -> addValidator('NotEmpty', true)
-              -> addFilter('HtmlEntities')
-              -> addFilter('StringTrim');
+              -> addFilter('StringTrim')
+              -> addFilter('StripTags');
         
         // создаем текстовое поле для ввода описания        
         $note = new Zend_Form_Element_Textarea('note');
@@ -32,8 +32,8 @@ class Program_Form_Add extends Zend_Form {
               -> addValidator('NotEmpty', true, array(
                   Zend_Validate_NotEmpty::IS_EMPTY => 'Заполните описание программы'
               ))
-              -> addFilter('HtmlEntities')
-              -> addFilter('StringTrim');
+              -> addFilter('StringTrim')
+              -> addFilter('StripTags');
         
         // создаем текстовое поле для ввода названия
         $page = new Zend_Form_Element_Text('page');
@@ -45,8 +45,8 @@ class Program_Form_Add extends Zend_Form {
               -> setOptions(array('size' => '50'))
               -> setRequired(true)  
               -> addValidator('NotEmpty', true)
-              -> addFilter('HtmlEntities')
-              -> addFilter('StringTrim');
+              -> addFilter('StringTrim')
+              -> addFilter('StripTags');
         
         // создаем кнопку отправки
         $submit = new Zend_Form_Element_Submit('submit');

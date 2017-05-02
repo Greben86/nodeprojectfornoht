@@ -1,3 +1,5 @@
+<h1 class="page-header">Заявки на вступление в кооператив</h1>
+
 <?php if (count($this->records)): ?>
 <table class="table table-striped">
     <caption></caption>
@@ -9,7 +11,6 @@
             <th>Телефон</th>                
             <th>Email</th>
             <th>Описание</th>
-            <th>Файл</th>
         </tr>
     </thead>
     <tbody>
@@ -33,11 +34,6 @@
         </td>
         <td>
             <?php echo $r['note']; ?>
-        </td>
-        <td>
-            <a href="/upload/<?php echo $r['filename']; ?>" title="<?php echo $r['filename']; ?>">
-                <span class="glyphicon glyphicon-paperclip"></span>
-            </a>            
         </td>
     </tr>
 

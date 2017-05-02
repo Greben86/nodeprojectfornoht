@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-
-
 <config>
     <home>
         <label>Главная</label>
@@ -31,6 +24,10 @@ and open the template in the editor.
         <label>Реквизиты</label>
         <uri>/home/details</uri>
     </details>
+    <payment>
+        <label>Платеж</label>
+        <uri>/payment</uri>
+    </payment>
     <about>
         <label>Контакты</label>
         <uri>/home/about</uri>
