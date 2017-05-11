@@ -45,7 +45,7 @@ body {
 #logo li.head-container {
     /*margin-top: 14px;*/
     height: 70px;
-    padding-top: 18px;
+    padding-top: 10px;
     text-align: center;
 }
 
@@ -58,7 +58,7 @@ body {
 
 .header h2.classy {
     text-transform: uppercase;
-    text-decoration: none; 
+    text-decoration: none;
     display: inline;
     font-weight: normal;
     padding: 0 12px;
@@ -85,18 +85,26 @@ body {
     width: 200px;
 }
 
-.phone_top {
+.bar_top {
     /*margin: 32px 0 0;*/
+    text-align: left;
 }
 
-.register_bar {
+.bar_bottom {
     margin: 14px 0 0;
     border-top: 1px solid #bababa;
     padding: 10px 0 0;
     line-height:21px;
+    text-align: left;
 }
 
-.register_bar small {
+.bar_panel {
+    margin-left: 20px;
+    text-align: left;
+}
+
+.head-container small {
+    margin-left: 20px;
     color: #777;
 }
 
@@ -250,6 +258,13 @@ footer.footer {
     position: relative;
     top: -25px;
     width: 100px;
+}
+
+.carousel-caption h3, .carousel-caption p {
+    text-shadow: black 1px 0px, black 1px 1px, black 0px 1px, black -1px 1px, 
+        black -1px 0px, black -1px -1px, black 0px -1px, black 1px -1px, 
+        black 0 0 3px, black 0 0 3px, black 0 0 3px, black 0 0 3px, 
+        black 0 0 3px, black 0 0 3px, black 0 0 3px, black 0 0 3px;
 }
 
 /* Footer =================================================================== */

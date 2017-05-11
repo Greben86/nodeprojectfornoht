@@ -24,10 +24,6 @@
         <label>Реквизиты</label>
         <uri>/home/details</uri>
     </details>
-    <payment>
-        <label>Платеж</label>
-        <uri>/payment</uri>
-    </payment>
     <about>
         <label>Контакты</label>
         <uri>/home/about</uri>

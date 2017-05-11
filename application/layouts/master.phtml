@@ -120,23 +120,21 @@
                         </a>
                     </li>
                     <li class="head-container">
-                        <div class="phone_top">
-                            <h2 class="classy">
-                                <span class="glyphicon glyphicon-phone-alt"/>
-                                <b>8(831)216-27-12</b>
-                            </h2>
-                            <br>
-                            <h2 class="classy">
-                                <span class="glyphicon glyphicon-phone-alt"/>
-                                <b>8(831)411-11-40</b>
-                            </h2>
-                        </div>
-                        <div class="register_bar">
-                            <a href="<?php echo $this->url(array(), 'register'); ?>" class="btn btn-warning">
-                                Регистриция
-                            </a>
-                            <br>
+                        <div class="bar_top">
+                            <div class="bar_panel">
+                                <a href="<?php echo $this->url(array(), 'register'); ?>" class="btn btn-warning">
+                                    Регистриция
+                                </a>
+                            </div>  
                             <small>Подайте заявку на регистрацию в кооперативе</small>
+                        </div>
+                        <div class="bar_bottom">
+                            <div class="bar_panel">
+                                <a href="<?php echo $this->url(array(), 'payment'); ?>" class="btn btn-success">
+                                    Оплатить
+                                </a>
+                            </div>  
+                            <small>Оплатите членские взносы online</small>
                         </div>
                     </li>
                 </ul>
@@ -166,19 +164,51 @@
                 ?>
                 <br>
                 <br>
-                <a href="<?php echo $this->url(array(), 'register'); ?>" class="btn btn-warning btn-lg">
+                <a href="<?php echo $this->url(array(), 'register'); ?>" class="btn btn-warning">
                     Регистриция
+                </a>
+                <a href="<?php echo $this->url(array(), 'payment'); ?>" class="btn btn-success">
+                    Оплатить
                 </a>
             </div>
 
-            <?php echo $this->layout()->content; ?>  
+            <div class="row">
+                <div class="col-sm-9">
+                    <?php echo $this->layout()->content; ?>
+                </div>
+                <div class="col-sm-3 hidden-xs hidden-sm">
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                      <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                      </ol>
+                      <div class="carousel-inner">
+                        <div class="item active">
+                          <img src="/img/carousel/slide1.png">
+                          <div class="carousel-caption">
+                              <h3>Приглашаем</h3>
+                              <p>к сотрудничеству производителей и поставщиков товаров народного потребления</p>                            
+                          </div>
+                        </div>
+                          <div class="item">
+                          <img src="/img/carousel/slide2.png">
+                          <div class="carousel-caption">
+                              <h3>Приглашаем</h3>
+                              <p>к сотрудничеству менеджеров отделов снабжения предприятий</p>                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            
 
             <footer class="footer hidden-xs hidden-sm">
                 <div class="f-fix">
                     <div class="frame">
                         <img src="/img/frame.png" alt="ПК ВО Содействие" width="100" />
-                    </div>                  
-                </div>                
+                    </div>
+                </div>
 
                 <ul>
                     <li> 

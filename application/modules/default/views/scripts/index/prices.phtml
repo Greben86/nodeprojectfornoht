@@ -1,24 +1,19 @@
-<div class="row">
-    
-    <div class="col-sm-8 blog-main">      
-        <h2>Актуальные предложения</h2>
-        <p>Далее представлены доступные прайс-листы</p>
-        <?php if (count($this->prices)): ?>
-        <ul class="list-unstyled">
-            <?php foreach ($this->prices as $r): ?>
+<h2>Актуальные предложения</h2>
+<p>Далее представлены доступные прайс-листы</p>
+<?php if (count($this->prices)): ?>
+<ul class="list-unstyled">
+    <?php foreach ($this->prices as $r): ?>
 
-            <li>                    
-                <a href="/pricelists/<?php echo $r['filename']; ?>" title="<?php echo $r['filename']; ?>">
-                    <?php echo $r['name']; ?> (<?php echo $r['filesize']; ?>)
-                </a> 
-            </li>
+    <li>                    
+        <a href="/pricelists/<?php echo $r['filename']; ?>" title="<?php echo $r['filename']; ?>">
+            <?php echo $r['name']; ?> (<?php echo $r['filesize']; ?>)
+        </a> 
+    </li>
 
-            <?php endforeach; ?>
-        </ul>
-        <?php else: ?>
-        <div class="alert alert-info">
-            <strong>Нет прайс-листов</strong>
-        </div>
-        <?php endif; ?>
-    </div>
+    <?php endforeach; ?>
+</ul>
+<?php else: ?>
+<div class="alert alert-info">
+    <strong>Нет прайс-листов</strong>
 </div>
+<?php endif; ?>
