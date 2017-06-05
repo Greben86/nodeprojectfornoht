@@ -197,7 +197,7 @@ class Register_IndexController extends Zend_Controller_Action
         $mail = new Zend_Mail();
         $mail->setBodyHtml($body);
         $mail->setFrom($localConfig->email->address, 'Система регистрации участников');
-//        $mail->addTo('vygodno.vmeste@yandex.ru', 'Администратор кооператива');
+        $mail->addTo('vygodno.vmeste@yandex.ru', 'Администратор кооператива');
         $mail->addTo('grebenvictor@yandex.ru', 'Разработчик');
         $mail->setSubject($subject);
 
