@@ -1,0 +1,50 @@
+<h1 class="page-header">Промо-акции</h1>
+
+<a href="<?php echo $this->url(array(), 'admin-promo-add'); ?>" class="btn btn-default">
+    <span class="glyphicon glyphicon-plus"></span>
+    Новая промо-акция
+</a>
+
+<?php if (count($this->records)): ?>
+<table class="table table-striped">
+    <col width="70%">
+    <col width="15%">
+    <col width="15%">
+    <caption></caption>
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th>#</th>
+            <th>#</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($this->records as $r): ?>
+
+    <tr>        
+        <td>
+            <?php echo $r['name']; ?>
+        </td>
+        <td>
+            <a href="<?php echo $this->url(array('id' => $r['id']), 'admin-promo-edit'); ?>" class="btn btn-primary">
+                <span class="glyphicon glyphicon-pencil"></span>
+                Редактировать
+            </a>
+        </td>
+        <td>
+            <a href="<?php echo $this->url(array('id' => $r['id']), 'admin-promo-del'); ?>" class="btn btn-danger">
+                <span class="glyphicon glyphicon-remove"></span>
+                Удалить
+            </a>
+        </td>
+    </tr>
+
+    <?php endforeach; ?>
+    </tbody>
+</table>
+<?php else: ?>
+<div class="alert alert-info">
+    <strong>Нет промо-акций</strong>
+</div>
+<?php endif; ?>
+

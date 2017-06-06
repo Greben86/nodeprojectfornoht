@@ -1,6 +1,31 @@
 <h2>Действующие акции</h2> 
 <p>Участникам кооператива нашими партнерами предоставляются <a href="#bottom">акции*</a></p>
-<table class="livetable">
+
+<?php 
+if (count($this->promos)):
+    $i = 0;
+    foreach ($this->promos as $r):        
+    ?>
+<?php if ($i==0): ?><div class="row"><?php endif; ?>
+    <div class="col-md-4">
+        <a href="<?php echo $r['file']; ?>" target="blank" data-lightbox="roadtrip" data-title="Акция">
+            <img src="<?php echo $r['file']; ?>" class="img-thumbnail" width="100%">
+        </a>
+        <p><?php echo $r['name']; ?></p>
+    </div>
+<?php if ($i==3): ?></div><?php $i = 0; endif; ?>
+
+<?php 
+    endforeach;
+else:
+        ?>
+<div class="alert alert-info">
+    <strong>Промо-акции отсутствуют</strong>
+</div>
+<?php endif; ?>
+
+
+<!--<table class="livetable">
     <tr>
         <td style="vertical-align: top; padding-bottom: 15px;">
             <img width="70%" src="/img/promo/promo0.png">
@@ -16,5 +41,7 @@
             <img width="70%" src="/img/promo/promo2.jpg">
         </td>
     </tr>
-</table>
-<small><a name="bottom"></a>* - партнерами кооператива не гарантируется постоянное наличие акционных товаров в точках продаж</small>
+</table>-->
+<div  class="col-md-12">
+    <small><a name="bottom"></a>* - партнерами кооператива не гарантируется постоянное наличие акционных товаров в точках продаж</small>
+</div>

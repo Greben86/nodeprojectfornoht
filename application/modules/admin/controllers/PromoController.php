@@ -4,7 +4,7 @@ class Promo_Form_Add extends Zend_Form {
     
     public function init() {
         // инициализируем форму
-        $this->setAction('/admin/programs/add')
+        $this->setAction('/admin/promo/add')
              ->setMethod('post');
         
         // создаем текстовое поле для ввода названия
@@ -12,7 +12,7 @@ class Promo_Form_Add extends Zend_Form {
         $name -> setLabel('Название')
               ->setAttribs(array(
                 'class' => 'form-control',
-                'placeholder'  => 'Укажите название программы',
+                'placeholder'  => 'Укажите название промо-акции',
               ))
               -> setOptions(array('size' => '35'))
               -> setRequired(true)  
@@ -20,35 +20,14 @@ class Promo_Form_Add extends Zend_Form {
               -> addFilter('StringTrim')
               -> addFilter('StripTags');
         
-        // создаем текстовое поле для ввода описания        
-        $note = new Zend_Form_Element_Textarea('note');
-        $note -> setLabel('Краткое описание')
-              ->setAttribs(array(
-                'class' => 'form-control',
-                'placeholder'  => 'Описание программы',
-              ))
-              -> setOptions(array('rows' => '2', 'cols' => '40'))
-              -> setRequired(true)  
-              -> addValidator('NotEmpty', true, array(
-                  Zend_Validate_NotEmpty::IS_EMPTY => 'Заполните описание программы'
-              ))
-              -> addFilter('StringTrim')
-              -> addFilter('StripTags');
+        $filename = new Zend_Form_Element_File('filename');
+        $filename->setLabel('Изображение')
+            ->setDestination(APPLICATION_PATH . '/../public/img/promo')
+            ->setAttrib('multiple', false)
+            ->addValidator('Size', false, 5e+7)
+            ->addValidator('Extension', false, 'jpg,png,gif');
         
-        // создаем текстовое поле для ввода названия
-        $page = new Zend_Form_Element_Text('page');
-        $page -> setLabel('Страница')
-              ->setAttribs(array(
-                'class' => 'form-control',
-                'placeholder'  => 'Укажите название страницы',
-              ))
-              -> setOptions(array('size' => '50'))
-              -> setRequired(true)  
-              -> addValidator('NotEmpty', true)
-              -> addFilter('StringTrim')
-              -> addFilter('StripTags');
-        
-        // создаем кнопку отправки
+        // создаем кнопку добавления
         $submit = new Zend_Form_Element_Submit('submit');
         $submit -> setLabel('Добавить')
                 -> setOptions(array('class' => 'btn btn-primary'))
@@ -59,27 +38,27 @@ class Promo_Form_Add extends Zend_Form {
         
         // добавляем элементы к форме
         $this -> addElement($name)
-              -> addElement($note)
-              -> addElement($page);
+              -> addElement($filename);
         
-        $this->addDisplayGroup(array('name', 'note', 'page'), 'resource');
-        $this->getDisplayGroup('resource')
-             ->setLegend('Новая программа');
+        $this->addDisplayGroup(array('name', 'filename'), 'promo');
+        $this->getDisplayGroup('promo')
+             ->setLegend('Новая промо-акция');
         $this->addElement($submit);
     }
 }
 
-class Promo_Form_Update extends Program_Form_Add {
+class Promo_Form_Update extends Promo_Form_Add {
     
     public function init() {
         parent::init();
         
         // инициализируем форму
-        $this->setAction('/admin/programs/edit')
+        $this->setAction('/admin/promo/edit')
              ->setMethod('post');
 
+        $this->removeElement('filename');
         $this->removeElement('submit');
-        $this->removeDisplayGroup('resource');
+        $this->removeDisplayGroup('promo');
         
         // создаем скрытое поле для идентификатора элемента
         $id = new Zend_Form_Element_Hidden('id');
@@ -99,9 +78,9 @@ class Promo_Form_Update extends Program_Form_Add {
         // добавляем элементы к форме
         $this -> addElement($id);
         
-        $this->addDisplayGroup(array('id', 'name', 'note', 'page'), 'resource');
-        $this->getDisplayGroup('resource')
-             ->setLegend('Программа');
+        $this->addDisplayGroup(array('id', 'name'), 'promo');
+        $this->getDisplayGroup('promo')
+             ->setLegend('Промо-акция');
         $this->addElement($submit);
     }
 }
@@ -153,7 +132,12 @@ class Admin_PromoController extends Zend_Controller_Action
         // присваиваем некоторым из полей значения по умолчанию
         // сохраняем в БД
         if ($this->getRequest()->isPost()) {
-            if ($form->isValid($this->getRequest()->getPost())) {
+            if ($form->isValid($this->getRequest()->getPost())) {                
+                // Переименуем файл
+                $originalFilename = pathinfo($form->filename->getFileName());
+-               $newFilename = 'file-' . uniqid() . '.' . $originalFilename['extension'];
+                $form->filename->addFilter('Rename', $newFilename);
+                $form->filename->receive();
                 $values = $form->getValues();
                 
                 // Подключаемся к БД
@@ -168,14 +152,13 @@ class Admin_PromoController extends Zend_Controller_Action
                 // Формируем массив данных
                 $data = array(
                     'name'      => $values['name'],
-                    'note'      => $values['note'],
-                    'page'      => $values['page']
+                    'file'      => $values['filename']
                 );
                 // Сохраняем данные
-                $db->insert('resources', $data);
+                $db->insert('promos', $data);
                 
-                $this->_helper->getHelper('FlashMessenger')->addMessage('Программа сохранена');
-                $this->_redirect('/admin/programs');
+                $this->_helper->getHelper('FlashMessenger')->addMessage('Промо-акция сохранена');
+                $this->_redirect('/admin/promo');
             }
         }
         $this->render('edit');
@@ -206,15 +189,13 @@ class Admin_PromoController extends Zend_Controller_Action
                 ));
                 // Формируем массив данных
                 $data = array(
-                    'name'      => $values['name'],
-                    'note'      => $values['note'],
-                    'page'      => $values['page']
+                    'name'      => $values['name']
                 );
                 // Сохраняем данные
-                $db->update('resources', $data, 'id='.$values['id']);
+                $db->update('promos', $data, 'id='.$values['id']);
                 
-                $this->_helper->getHelper('FlashMessenger')->addMessage('Программа сохранена');
-                $this->_redirect('/admin/programs');                
+                $this->_helper->getHelper('FlashMessenger')->addMessage('Промо-акция сохранена');
+                $this->_redirect('/admin/promo');                
             }
         } else {
             // устанавливаем фильтры и валидаторы для входных данных
@@ -242,7 +223,7 @@ class Admin_PromoController extends Zend_Controller_Action
                     'password' => $localConfig->database->pass
                 ));
 
-                $result = $db->fetchAll('SELECT * FROM resources WHERE id='.$input->id);
+                $result = $db->fetchAll('SELECT * FROM promos WHERE id='.$input->id);
                 
                 $this->view->form->populate($result[0]);
             }
@@ -252,7 +233,7 @@ class Admin_PromoController extends Zend_Controller_Action
     public function deleteAction() 
     {
         // Устанавливаем фильтры и валидаторы для данных, полученных из POST
-        $filters = array( 
+        $filters = array(
             'id' => array('HtmlEntities', 'StripTags', 'StringTrim')
         );
         $validators = array(
@@ -275,13 +256,14 @@ class Admin_PromoController extends Zend_Controller_Action
                 'username' => $localConfig->database->user,
                 'password' => $localConfig->database->pass
             ));
-            // Удаляем данные
-            $db->delete('resources', 'id='.$input->id);
             
-            $this->_helper->getHelper('FlashMessenger')->addMessage('Программа удалена');
-            $this->_redirect('/admin/programs');
+            // Удаляем данные            
+            $row = $db->delete('promos', 'id='.$input->id);
+            unlink(APPLICATION_PATH . '/../public/img/promo/' . $row['file']);
+            
+            $this->_helper->getHelper('FlashMessenger')->addMessage('Промо-акция удалена');
+            $this->_redirect('/admin/promo');
         }
     }
-
 }
 
