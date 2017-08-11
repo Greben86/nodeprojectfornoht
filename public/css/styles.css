@@ -107,7 +107,11 @@ body {
     margin-left: 20px;
     color: #777;
 }
-
+.promoimage {
+    width: 100%;
+    height: 300px;
+    background: url(/img/loading.gif) 50% no-repeat;
+}
 /********** < Navigation */
 .nav-container { 
     width:100%; 

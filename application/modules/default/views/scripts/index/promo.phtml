@@ -9,9 +9,11 @@ if (count($this->promos)):
     ?>
 <?php if (($i-1)%3==0): ?><div class="row"><?php endif; ?>
     <div class="col-md-4">
-        <a href="<?php echo $r['file']; ?>" target="blank" data-lightbox="roadtrip" data-title="<?php echo $r['name']; ?>">
-            <img src="<?php echo $r['file']; ?>" class="img-thumbnail" width="100%">
-        </a>
+        <div class="img-thumbnail promoimage">
+            <a href="<?php echo $r['file']; ?>" target="blank" data-lightbox="roadtrip" data-title="<?php echo $r['name']; ?>">
+                <img data-src="<?php echo $r['file']; ?>" width="100%">
+            </a>
+        </div>
         <p><?php echo $r['name']; ?></p>
     </div>
 <?php if ($i%3==0): ?></div><?php endif; ?>
@@ -23,6 +25,15 @@ if (count($this->promos)):
     <strong>Промо-акции отсутствуют</strong>
 </div>
 <?php endif; ?>
+
+<script type='text/javascript'>
+    [].forEach.call(document.querySelectorAll('img[data-src]'),    function(img) {
+      img.setAttribute('src', img.getAttribute('data-src'));
+      img.onload = function() {
+        img.removeAttribute('data-src');
+      };
+    });
+</script>
 
 <div  class="col-md-12">
     <small><a name="bottom"></a>* - партнерами кооператива не гарантируется постоянное наличие акционных товаров в точках продаж</small>
