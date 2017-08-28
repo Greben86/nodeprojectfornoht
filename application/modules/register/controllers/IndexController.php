@@ -251,11 +251,5 @@ class Register_IndexController extends Zend_Controller_Action
         // Сохраняем данные
         $db->insert('statements', $data);
     }
-    
-    public function loginAction()
-    {
-        //
-    }
-
 }
 

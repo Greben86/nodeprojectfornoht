@@ -123,13 +123,19 @@
                         <div class="bar_top">
                             <div class="bar_panel">
                                 
-                                <a href="<?php echo $this->url(array(), 'login'); ?>">
+                                <?php if (!Zend_Auth::getInstance()->hasIdentity()):?>                                
+                                <a href="<?php echo $this->url(array(), 'register-login'); ?>">
                                     <b>Войти</b>
                                 </a>
                                 или 
                                 <a href="<?php echo $this->url(array(), 'register'); ?>">
                                     <b>Зарегистрироваться</b>
                                 </a>
+                                <?php else: ?>
+                                <a href="<?php echo $this->url(array(), 'register-logout'); ?>">
+                                    <b>Выйти</b>
+                                </a>
+                                <?php endif;?>
                             </div>  
                             <small>Подайте заявку на регистрацию в кооперативе</small>
                         </div>

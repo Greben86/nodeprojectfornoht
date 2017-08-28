@@ -6,7 +6,7 @@ if (count($this->promos)):
     $i = 0;
     foreach ($this->promos as $r):
     $i++;
-    ?>
+?>
 <?php if (($i-1)%3==0): ?><div class="row"><?php endif; ?>
     <div class="col-md-4">
         <div class="img-thumbnail promoimage">
@@ -27,7 +27,7 @@ if (count($this->promos)):
 <?php endif; ?>
 
 <script type='text/javascript'>
-    [].forEach.call(document.querySelectorAll('img[data-src]'),    function(img) {
+    [].forEach.call(document.querySelectorAll('img[data-src]'), function(img) {
       img.setAttribute('src', img.getAttribute('data-src'));
       img.onload = function() {
         img.removeAttribute('data-src');
