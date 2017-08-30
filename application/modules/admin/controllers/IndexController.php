@@ -15,6 +15,10 @@ class Admin_IndexController extends Zend_Controller_Action
         {
             $this->_redirect('/admin/login');
         }
+        if (Zend_Auth::getInstance()->getIdentity() != 'admin')
+        {
+            $this->_redirect('/admin/login');
+        }
         
         return parent::preDispatch();
     }

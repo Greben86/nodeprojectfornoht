@@ -95,8 +95,7 @@ class Register_AuthController extends Zend_Controller_Action
                 $values = $form->getValues();
                 $adapter = new Customer_Auth_Adapter($values['username'], $values['password']);
                 $adapter->configs = $this->getInvokeArg('bootstrap')->getOption('configs');
-                $auth = Zend_Auth::getInstance();
-                
+                $auth = Zend_Auth::getInstance();                
                 $result = $auth->authenticate($adapter);
                 if ($result->isValid())
                 {
