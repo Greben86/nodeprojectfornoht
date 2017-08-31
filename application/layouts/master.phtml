@@ -121,23 +121,29 @@
                     </li>
                     <li class="head-container">
                         <div class="bar_top">
-                            <div class="bar_panel">
-                                
-                                <?php if (!Zend_Auth::getInstance()->hasIdentity()):?>                                
-                                <a href="<?php echo $this->url(array(), 'register-login'); ?>">
+                            <?php if (!Zend_Auth::getInstance()->hasIdentity()):?> 
+                            <div class="bar_panel">                              
+                                <a href="<?php echo $this->url(array(), 'account-login'); ?>">
                                     <b>Войти</b>
                                 </a>
                                 или 
                                 <a href="<?php echo $this->url(array(), 'register'); ?>">
                                     <b>Зарегистрироваться</b>
                                 </a>
-                                <?php else: ?>
-                                <a href="<?php echo $this->url(array(), 'register-logout'); ?>">
-                                    <b>Выйти</b>
-                                </a>
-                                <?php endif;?>
-                            </div>  
+                            </div> 
                             <small>Подайте заявку на регистрацию в кооперативе</small>
+                            <?php else: ?>
+                            <div class="bar_panel">                              
+                                <a href="<?php echo $this->url(array(), 'account'); ?>">
+                                    <b>Личный кабинет</b>
+                                </a>
+                                 ( 
+                                <a href="<?php echo $this->url(array(), 'account-logout'); ?>">
+                                    <b>Выйти</b>
+                                </a>)
+                            </div>
+                            <small>Зайдите в личный кабинет пайщика</small>
+                            <?php endif;?>
                         </div>
                         <div class="bar_bottom">
                             <div class="bar_panel">
