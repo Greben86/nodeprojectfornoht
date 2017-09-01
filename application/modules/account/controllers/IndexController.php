@@ -21,6 +21,7 @@ class Account_IndexController extends Zend_Controller_Action
         $db = Zend_Db::factory('Pdo_Mysql', array(
             'host'     => $localConfig->database->host,
             'dbname'   => $localConfig->database->name,
+            'charset'  => 'utf8',
             'username' => $localConfig->database->user,
             'password' => $localConfig->database->pass
         ));

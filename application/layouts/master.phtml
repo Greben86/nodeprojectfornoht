@@ -181,9 +181,24 @@
                 ?>
                 <br>
                 <br>
-                <a href="<?php echo $this->url(array(), 'register'); ?>" class="btn btn-warning">
-                    Регистрация
+                <?php if (!Zend_Auth::getInstance()->hasIdentity()):?>                             
+                <a href="<?php echo $this->url(array(), 'account-login'); ?>" class="btn btn-default">
+                    <b>Войти</b>
                 </a>
+                или 
+                <a href="<?php echo $this->url(array(), 'register'); ?>" class="btn btn-info">
+                    <b>Зарегистрироваться</b>
+                </a>
+                <?php else: ?>                              
+                <a href="<?php echo $this->url(array(), 'account'); ?>" class="btn btn-default">
+                    <b>Личный кабинет</b>
+                </a>
+                 ( 
+                <a href="<?php echo $this->url(array(), 'account-logout'); ?>" class="btn btn-warning">
+                    <b>Выйти</b>
+                </a>)
+                <?php endif;?>
+                <br>
                 <a href="<?php echo $this->url(array(), 'payment'); ?>" class="btn btn-success">
                     Оплатить
                 </a>

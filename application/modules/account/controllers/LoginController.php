@@ -10,7 +10,7 @@ class Customer_Auth_Adapter implements Zend_Auth_Adapter_Interface
     public function __construct($username, $password) {
         $this->username = $username;
         $this->password = $password;
-        $this->url = 'http://127.0.0.1:8080/shop/customers/checkpass?in='.$username.'&pass='.md5($password);
+        $this->url = 'http://127.0.0.1:8080/shop/customers/checkpass?in='.urlencode($username).'&pass='.md5($password);
     }
     
     public function authenticate() {
