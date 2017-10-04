@@ -20,6 +20,10 @@
         <label>Прайс-листы</label>
         <uri>/home/prices</uri>
     </prices>
+    <catalog>
+        <label>Каталог</label>
+        <uri>/catalog</uri>
+    </catalog>
     <details>
         <label>Реквизиты</label>
         <uri>/home/details</uri>
