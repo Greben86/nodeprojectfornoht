@@ -116,7 +116,7 @@ class Admin_LoginController extends Zend_Controller_Action
                 $result = $auth->authenticate($adapter);
                 if ($result->isValid())
                 {
-                    $this->_redirect('/admin/login/success');
+                    $this->redirect('/admin/login/success');
                 } else {
                     $this->view->message = '';
                 }
@@ -129,9 +129,9 @@ class Admin_LoginController extends Zend_Controller_Action
         // Проверяем аутентификацию
         if (!Zend_Auth::getInstance()->hasIdentity())
         {
-            $this->_redirect('/admin/login');
+            $this->redirect('/admin/login');
         } else {
-            $this->_redirect('/admin');
+            $this->redirect('/admin');
         }
     }
     
@@ -140,7 +140,7 @@ class Admin_LoginController extends Zend_Controller_Action
         // Проверяем аутентификацию
         Zend_Auth::getInstance()->clearIdentity();
         Zend_Session::destroy();
-        $this->_redirect('/home');
+        $this->redirect('/home');
     }
 
 }

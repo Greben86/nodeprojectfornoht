@@ -14,7 +14,15 @@ class Customer_Auth_Adapter implements Zend_Auth_Adapter_Interface
     }
     
     public function authenticate() {
-        $result = file_get_contents($this->url);
+        // Делаем запрос к API
+        $ch = curl_init(); 
+        curl_setopt($ch, CURLOPT_URL, $this->url); 
+        curl_setopt($ch, CURLOPT_HEADER, false); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30); 
+        curl_setopt($ch, CURLOPT_USERAGENT, 'sodeystvie'); 
+        $result = curl_exec($ch); 
+        curl_close($ch);
         
         if ($result == 'Ok')
         {
@@ -82,7 +90,7 @@ class Auth_Form_Login extends Zend_Form
 class Account_LoginController extends Zend_Controller_Action
 {               
     public function loginAction()
-    {        
+    {
         // генерируем форму ввода
         $form = new Auth_Form_Login();
         $this->view->form = $form;
