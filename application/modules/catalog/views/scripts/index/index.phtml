@@ -7,14 +7,16 @@ if (count($this->goods)):
     foreach ($this->goods as $r):
     $i++;
 ?>
+<ul>
 <?php if (($i-1)%3==0): ?><div class="row"><?php endif; ?>
-    <div class="col-md-4">
+    <li class="inner_sections">
         <div class="img-thumbnail promoimage">
             
         </div>
         <p><?php echo $r['name']; ?></p>
     </div>
 <?php if ($i%3==0): ?></div><?php endif; ?>
+</ul>
 
 <?php endforeach; ?>
 <?php if ($i%3!=0): ?></div><?php endif; ?>

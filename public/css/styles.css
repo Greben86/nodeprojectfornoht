@@ -416,3 +416,14 @@ footer.footer {
 .livetable tr:hover {
     color: rgb(0,0,0);
 }
+
+li.inner_sections{
+    display: inline-block;
+    /* height: 180px; */
+    min-height: 222px;
+    width: 180px;
+    border: #354F96 5px solid;
+    vertical-align: top;
+    margin-left: 20px;
+    margin-top: 26px;
+}
