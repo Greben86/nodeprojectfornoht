@@ -4,19 +4,20 @@ class Customer_Auth_Adapter implements Zend_Auth_Adapter_Interface
 {
     private $username;
     private $password;
-    private $url;
-    public $configs;
     
     public function __construct($username, $password) {
         $this->username = $username;
         $this->password = $password;
-        $this->url = 'http://127.0.0.1:8080/shop/customers/checkpass?in='.urlencode($username).'&pass='.md5($password);
+    }
+    
+    private function getUrl() {
+        return 'http://127.0.0.1:8080/shop/customers/checkpass?in='.urlencode($this->username).'&pass='.md5($this->password);
     }
     
     public function authenticate() {
         // Делаем запрос к API
         $ch = curl_init(); 
-        curl_setopt($ch, CURLOPT_URL, $this->url); 
+        curl_setopt($ch, CURLOPT_URL, $this->getUrl()); 
         curl_setopt($ch, CURLOPT_HEADER, false); 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30); 
@@ -26,7 +27,7 @@ class Customer_Auth_Adapter implements Zend_Auth_Adapter_Interface
         
         if ($result == 'Ok')
         {
-            return new Zend_Auth_Result(Zend_Auth_Result::SUCCESS, $this->username, array());
+            return new Zend_Auth_Result(Zend_Auth_Result::SUCCESS, $this->username);
         } else {
             return new Zend_Auth_Result(Zend_Auth_Result::FAILURE, null, array($result));
         }
@@ -106,7 +107,7 @@ class Account_LoginController extends Zend_Controller_Action
                 $result = $auth->authenticate($adapter);
                 if ($result->isValid())
                 {
-                    $this->_redirect('/account');
+                    $this->redirect('/account');
                 } else {
                     $this->view->message = $result->getMessages()[0];
                 }
@@ -119,7 +120,7 @@ class Account_LoginController extends Zend_Controller_Action
         // Аннулируем аутентификацию
         Zend_Auth::getInstance()->clearIdentity();
         Zend_Session::destroy();
-        $this->_redirect('/home');
+        $this->redirect('/home');
     }
 
 }

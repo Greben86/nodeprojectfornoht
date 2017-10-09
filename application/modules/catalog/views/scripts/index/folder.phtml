@@ -1,0 +1,40 @@
+<h2>Каталог товаров</h2>
+<p>Далее представлены товары каталога</p>
+
+<div class="col-md-12">
+<?php if (count($this->goods)):?>
+    <div class="catalog_block">
+        <ul class="catalog_list clearfix">
+<?php $I=0; foreach ($this->goods as $r): $I++; if ($I>20) break; ?>
+            <li class="cat_l_item">
+                <a href="/catalog/item/<?php echo $r['id']; ?>">
+                    <div class="cat_l_i_wrap">
+                        <div class="cat_l_item_img">
+                            <img src="#" alt="<?php echo $r['name']; ?>" title="<?php echo $r['name']; ?>">
+                        </div>
+                        <div class="cat_l_item_slider">&nbsp;</div>
+                        <div class="cat_l_item_hline"><?php echo $r['name']; ?></div>
+                        <div class="cat_l_item_wp_price">
+                            <span class="cat_l_item_price"><?php echo $r['price']; ?></span> р.
+                        </div>
+                    </div>
+                </a>
+            </li>
+<?php endforeach; ?>
+        </ul>
+    </div>
+<?php else: ?>
+    <div class="alert alert-info">
+        <strong>Товары отсутствуют</strong>
+    </div>
+<?php endif; ?>
+</div>
+
+<script type='text/javascript'>
+//    [].forEach.call(document.querySelectorAll('img[data-src]'), function(img) {
+//      img.setAttribute('src', img.getAttribute('data-src'));
+//      img.onload = function() {
+//        img.removeAttribute('data-src');
+//      };
+//    });
+</script>
