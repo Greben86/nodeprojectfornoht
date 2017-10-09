@@ -9,9 +9,9 @@ class Catalog_IndexController extends Zend_Controller_Action
         curl_setopt($ch, CURLOPT_URL, 'http://localhost:8080/shop/goods/catalog'); 
         curl_setopt($ch, CURLOPT_HEADER, false); 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30); 
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
         curl_setopt($ch, CURLOPT_USERAGENT, 'sodeystvie'); 
-        $result = curl_exec($ch); 
+        $result = curl_exec($ch);
         curl_close($ch);
 
         $this->view->goods = json_decode($result, true);
@@ -30,6 +30,20 @@ class Catalog_IndexController extends Zend_Controller_Action
         $input = new Zend_Filter_Input($filters, $validators);
         $input -> setData($this->getRequest()->getParams());
         
+        if (empty($input->folder)||($input->folder!='0')) {
+            // Делаем запрос к API
+            $ch = curl_init(); 
+            curl_setopt($ch, CURLOPT_URL, 'http://localhost:8080/shop/goods/get/'.$input->folder); 
+            curl_setopt($ch, CURLOPT_HEADER, false); 
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30); 
+            curl_setopt($ch, CURLOPT_USERAGENT, 'sodeystvie'); 
+            $result = curl_exec($ch); 
+            curl_close($ch);
+
+            $this->view->folder = json_decode($result, true);
+        }
+
         // Делаем запрос к API
         $ch = curl_init(); 
         curl_setopt($ch, CURLOPT_URL, 'http://localhost:8080/shop/goods/catalog/'.$input->folder); 

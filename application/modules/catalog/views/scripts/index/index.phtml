@@ -1,36 +1,46 @@
-<h2>Каталог товаров</h2>
-<p>Далее представлены товары</p>
-
-<?php 
-if (count($this->goods)):
-    $i = 0;
-    foreach ($this->goods as $r):
-    $i++;
-?>
-<ul>
-<?php if (($i-1)%3==0): ?><div class="row"><?php endif; ?>
-    <li class="inner_sections">
-        <div class="img-thumbnail promoimage">
-            
-        </div>
-        <p><?php echo $r['name']; ?></p>
-    </div>
-<?php if ($i%3==0): ?></div><?php endif; ?>
-</ul>
-
-<?php endforeach; ?>
-<?php if ($i%3!=0): ?></div><?php endif; ?>
+<?php if (isset($this->folder)):?>
+<h2><?php echo $this->folder["name"];?></h2>
+<a href="/catalog/<?php echo $this->folder["owner"];?>"><span class="glyphicon glyphicon-arrow-left"></span> Вернуться</a>
 <?php else: ?>
-<div class="alert alert-info">
-    <strong>Товары отсутствуют</strong>
-</div>
+<h2>Стол заказов</h2>
 <?php endif; ?>
 
-<script type='text/javascript'>
-//    [].forEach.call(document.querySelectorAll('img[data-src]'), function(img) {
-//      img.setAttribute('src', img.getAttribute('data-src'));
-//      img.onload = function() {
-//        img.removeAttribute('data-src');
-//      };
-//    });
-</script>
+<div class="col-md-12">
+    <?php if (count($this->goods)):?>
+    <div class="catalog_block">
+        <ul class="catalog_list clearfix">
+            <?php foreach ($this->goods as $r): ?>
+            <li class="cat_l_item">
+                <?php if (!$r['folder']||empty($r['folder'])):?>
+                <a href="/catalog/item/<?php echo $r['id']; ?>">
+                <?php else:?>
+                <a href="/catalog/<?php echo $r['id']; ?>">
+                <?php endif;?>
+                    <div class="cat_l_i_wrap">
+                        <div class="cat_l_item_img">
+                            <?php if (!$r['folder']||empty($r['folder'])):?>
+                            <img src="<?php echo empty($r['filename'])? '/img/good.png' : '/img/goods/'.$r['filename']; ?>" alt="<?php echo $r['name']; ?>" title="<?php echo $r['name']; ?>" height="150">
+                            <?php else:?>
+                            <img src="/img/folder.png" alt="<?php echo $r['name']; ?>" title="<?php echo $r['name']; ?>">
+                            <?php endif;?>
+                        </div>
+                        <div class="cat_l_item_slider">&nbsp;</div>
+                        <div class="cat_l_item_hline"><?php echo $r['name']; ?></div>
+                        <?php if (!$r['folder']||empty($r['folder'])):?>
+                        <small><?php  echo $r['exist'] ? 'В наличии' : 'Под заказ';?></small>
+                        <div class="cat_l_item_wp_price">
+                            <span class="cat_l_item_price"><?php echo $r['price']; ?></span> р.
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                </a>
+            </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <?php else: ?>
+    <div class="alert alert-info">
+        <strong>Папка пуста</strong>
+    </div>
+    <?php endif; ?>
+</div>

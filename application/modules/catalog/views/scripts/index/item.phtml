@@ -1,4 +1,23 @@
-<h2>Товар</h2>
-<p>Товар</p>
+<h4><?php echo $this->item['name']; ?></h4>
+<a href="/catalog/<?php echo $this->item["owner"];?>"><span class="glyphicon glyphicon-arrow-left"></span> Вернуться</a>
 
-<?php var_dump($this->item); ?>
+<div class="cat_l_item_img">
+    <img src="<?php echo empty($this->item['filename'])? '/img/good.png' : '/img/goods/'.$this->item['filename']; ?>" alt="<?php echo $this->item['name']; ?>" title="<?php echo $this->item['name']; ?>">
+</div>
+
+<dl class="dl-horizontal">
+    <dt>Название</dt>
+    <dd><?php echo $this->item['name']; ?></dd>
+
+    <dt>Описание</dt>
+    <dd><?php echo $this->item['description']; ?></dd>
+
+    <dt>Артикул</dt>
+    <dd><?php echo $this->item['articul']; ?></dd>
+
+    <dt>Цена</dt>
+    <dd><span><?php echo $this->item['price']; ?></span> р.</dd>
+
+    <dt>Наличие</dt>
+    <dd><small><?php  echo $this->item['exist'] ? 'в наличии' : 'под заказ';?></small></dd>
+</dl>

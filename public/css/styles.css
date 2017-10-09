@@ -445,8 +445,8 @@ footer.footer {
     position: relative;
     width: 100%;
     height: 357px;
-    border: 1px solid #edecec;
-    border-radius: 5px;
+    border: 1px solid #bababa;
+    border-radius: 3px;
     overflow: visible;
     -webkit-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
