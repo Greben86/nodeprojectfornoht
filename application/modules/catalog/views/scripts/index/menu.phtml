@@ -1,0 +1,19 @@
+<style type="text/css"> @import "/css/tree.css"; </style>
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/tree.js"></script>
+
+<ul class="Container" id="tree">
+  <li id="0" class="Node IsRoot IsLast ExpandClosed">
+    <div class="Expand" onclick="clickExpand()"></div>
+    <div class="Content"><a href="/catalog">Каталог товаров</a></div>
+    <ul class="Container">
+        <?php foreach ($this->folders as $f): ?>
+        <li id="<?php echo $f['id']; ?>" class="Node ExpandClosed">
+            <div class="Expand" onclick="clickExpand()"></div>
+            <div class="Content"><a href="/catalog/folder/<?php echo $f['id']; ?>"><?php echo $f['name']; ?></a></div>
+            <ul class="Container"></ul>
+        </li>
+        <?php endforeach; ?>
+    </ul>
+  </li>
+</ul>

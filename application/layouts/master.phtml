@@ -24,10 +24,24 @@
         <!-- Lightbox -->
         <link href="/lightbox/css/lightbox.css" rel="stylesheet">
         <script type="text/javascript" src="/lightbox/js/lightbox.js"></script>
+        <script type="text/javascript" src="/js/tree.js"></script>
         <script>
             lightbox.option({
               'albumLabel': 'Изображение %1 из %2'
             });
+            window.onload = function() {
+                function onSuccess(data) {
+                    var cont = document.getElementById('good_tree'); 
+                    cont.innerHTML = data;
+                    tree();
+                }
+                $.ajax({
+                    url: "/catalog/menu",
+                    dataType: "html",
+                    success: onSuccess,
+                    cache: false
+                });
+            };
         </script>
         
         <script type="text/javascript" src="/js/back-top.js"></script>
@@ -247,6 +261,7 @@
                         </div>
                       </div>
                     </div>
+                    <div id="good_tree" onshow="loadmenu()">123</div>
                 </div>
             </div>
             

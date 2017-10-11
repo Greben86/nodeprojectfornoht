@@ -1,6 +1,6 @@
 <?php if (isset($this->folder)):?>
 <h2><?php echo $this->folder["name"];?></h2>
-<a href="/catalog/<?php echo $this->folder["owner"];?>"><span class="glyphicon glyphicon-arrow-left"></span> Вернуться</a>
+<a href="/catalog/folder/<?php echo $this->folder["owner"];?>"><span class="glyphicon glyphicon-arrow-left"></span> Вернуться</a>
 <?php else: ?>
 <h2>Стол заказов</h2>
 <?php endif; ?>
@@ -14,7 +14,7 @@
                 <?php if (!$r['folder']||empty($r['folder'])):?>
                 <a href="/catalog/item/<?php echo $r['id']; ?>">
                 <?php else:?>
-                <a href="/catalog/<?php echo $r['id']; ?>">
+                <a href="/catalog/folder/<?php echo $r['id']; ?>">
                 <?php endif;?>
                     <div class="cat_l_i_wrap">
                         <div class="cat_l_item_img">
