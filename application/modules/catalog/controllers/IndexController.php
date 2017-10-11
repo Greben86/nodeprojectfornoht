@@ -2,6 +2,39 @@
 
 class Catalog_IndexController extends Zend_Controller_Action
 {    
+    private function buildBreadCrumps($id, $active)
+    {
+        if (($id!=='0')&&!empty($id))
+        {
+            // Делаем запрос к API
+            $ch = curl_init(); 
+            curl_setopt($ch, CURLOPT_URL, 'http://localhost:8080/shop/goods/get/'.$id); 
+            curl_setopt($ch, CURLOPT_HEADER, false); 
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30); 
+            curl_setopt($ch, CURLOPT_USERAGENT, 'sodeystvie'); 
+            $result = curl_exec($ch); 
+            curl_close($ch);
+
+            $folder = json_decode($result, true);
+            if ($active)
+            {
+                return $this->buildBreadCrumps($folder['owner'], false) . 
+                    '<li class="active">' . $folder['name'] . '</li>';
+            } else {
+                return $this->buildBreadCrumps($folder['owner'], false) . 
+                    '<li><a href="/catalog/folder/' . $folder['id'] . '">' . $folder['name'] . '</a></li>';
+            }
+        } else {
+            if ($active)
+            {
+                return '<li class="active"><span class="glyphicon glyphicon-home"></span></li>';
+            } else {
+                return '<li><a href="/catalog/folder/0"><span class="glyphicon glyphicon-home"></span></a></li>';
+            }
+        }
+    }
+    
     public function indexAction()
     {
         // Делаем запрос к API
@@ -15,6 +48,7 @@ class Catalog_IndexController extends Zend_Controller_Action
         curl_close($ch);
 
         $this->view->goods = json_decode($result, true);
+        $this->view->crumps = $this->buildBreadCrumps(0, true);
     }
     
     public function menuAction()
@@ -91,6 +125,7 @@ class Catalog_IndexController extends Zend_Controller_Action
             curl_close($ch);
 
             $this->view->folder = json_decode($result, true);
+            $this->view->crumps = $this->buildBreadCrumps($input->id, true);
         }
 
         // Делаем запрос к API
@@ -130,5 +165,6 @@ class Catalog_IndexController extends Zend_Controller_Action
         curl_close($ch);
 
         $this->view->item = json_decode($result, true);
+        $this->view->crumps = $this->buildBreadCrumps($this->view->item['owner'], false);
     }
 }

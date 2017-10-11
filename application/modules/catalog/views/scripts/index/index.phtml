@@ -1,11 +1,20 @@
-<?php if (isset($this->folder)):?>
-<h2><?php echo $this->folder["name"];?></h2>
-<a href="/catalog/folder/<?php echo $this->folder["owner"];?>"><span class="glyphicon glyphicon-arrow-left"></span> Вернуться</a>
-<?php else: ?>
-<h2>Стол заказов</h2>
-<?php endif; ?>
-
 <div class="col-md-12">
+    <ol class="breadcrumb">
+        <?php echo $this->crumps;?>
+    </ol>
+</div>
+
+<div class="col-sm-3 hidden-xs hidden-sm">
+    <div id="good_tree" onshow="loadmenu()">Каталог товаров</div>
+</div>
+
+<div class="col-md-9">
+    <?php if (isset($this->folder)):?>
+    <h2><?php echo $this->folder["name"];?></h2>
+    <?php else: ?>
+    <h2>Стол заказов</h2>
+    <?php endif; ?>
+    
     <?php if (count($this->goods)):?>
     <div class="catalog_block">
         <ul class="catalog_list clearfix">
@@ -43,4 +52,10 @@
         <strong>Папка пуста</strong>
     </div>
     <?php endif; ?>
+</div>
+
+<div class="col-md-12">
+    <ol class="breadcrumb">
+        <?php echo $this->crumps;?>
+    </ol>
 </div>

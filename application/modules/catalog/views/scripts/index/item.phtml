@@ -1,23 +1,45 @@
-<h4><?php echo $this->item['name']; ?></h4>
-<a href="/catalog/<?php echo $this->item["owner"];?>"><span class="glyphicon glyphicon-arrow-left"></span> Вернуться</a>
-
-<div class="cat_l_item_img">
-    <img src="<?php echo empty($this->item['filename'])? '/img/good.png' : '/img/goods/'.$this->item['filename']; ?>" alt="<?php echo $this->item['name']; ?>" title="<?php echo $this->item['name']; ?>">
+<div class="col-md-12">
+    <ol class="breadcrumb">
+        <?php echo $this->crumps;?>
+    </ol>
 </div>
 
-<dl class="dl-horizontal">
-    <dt>Название</dt>
-    <dd><?php echo $this->item['name']; ?></dd>
+<div class="col-sm-3 hidden-xs hidden-sm">
+    <div id="good_tree" onshow="loadmenu()">Каталог товаров</div>
+</div>
 
-    <dt>Описание</dt>
-    <dd><?php echo $this->item['description']; ?></dd>
+<div class="col-md-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><?php echo $this->item['name']; ?></h3>
+        </div>
+        <div class="panel-body">
+            <div class="cat_l_item_img">
+                <img src="<?php echo empty($this->item['filename'])? '/img/good.png' : '/img/goods/'.$this->item['filename']; ?>" alt="<?php echo $this->item['name']; ?>" title="<?php echo $this->item['name']; ?>">
+            </div>
 
-    <dt>Артикул</dt>
-    <dd><?php echo $this->item['articul']; ?></dd>
+            <dl class="dl-horizontal">
+                <dt>Код товара</dt>
+                <dd><?php echo $this->item['id']; ?></dd>
 
-    <dt>Цена</dt>
-    <dd><span><?php echo $this->item['price']; ?></span> р.</dd>
+                <dt>Описание</dt>
+                <dd><?php echo $this->item['description']; ?></dd>
 
-    <dt>Наличие</dt>
-    <dd><small><?php  echo $this->item['exist'] ? 'в наличии' : 'под заказ';?></small></dd>
-</dl>
+                <dt>Артикул</dt>
+                <dd><?php echo $this->item['articul']; ?></dd>
+
+                <dt>Цена</dt>
+                <dd><span><?php echo $this->item['price']; ?></span> р.</dd>
+
+                <dt>Наличие</dt>
+                <dd><small><?php  echo $this->item['exist'] ? 'в наличии' : 'под заказ';?></small></dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <ol class="breadcrumb">
+        <?php echo $this->crumps;?>
+    </ol>
+</div>
