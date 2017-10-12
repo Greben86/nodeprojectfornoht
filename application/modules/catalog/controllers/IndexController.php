@@ -2,13 +2,21 @@
 
 class Catalog_IndexController extends Zend_Controller_Action
 {    
+    private $_config;
+    
+    public function init()
+    {
+        $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
+        $this->_config = new Zend_Config_Ini($configs['localConfigPath']);
+    }
+    
     private function buildBreadCrumps($id, $active)
     {
         if (($id!=='0')&&!empty($id))
         {
             // Делаем запрос к API
             $ch = curl_init(); 
-            curl_setopt($ch, CURLOPT_URL, 'http://localhost:8080/shop/goods/get/'.$id); 
+            curl_setopt($ch, CURLOPT_URL, $this->_config->api->host.'/goods/get/'.$id); 
             curl_setopt($ch, CURLOPT_HEADER, false); 
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30); 
@@ -39,7 +47,7 @@ class Catalog_IndexController extends Zend_Controller_Action
     {
         // Делаем запрос к API
         $ch = curl_init(); 
-        curl_setopt($ch, CURLOPT_URL, 'http://localhost:8080/shop/goods/list/0'); 
+        curl_setopt($ch, CURLOPT_URL, $this->_config->api->host.'/goods/list/0'); 
         curl_setopt($ch, CURLOPT_HEADER, false); 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
@@ -57,7 +65,7 @@ class Catalog_IndexController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout(true);
         // Делаем запрос к API
         $ch = curl_init(); 
-        curl_setopt($ch, CURLOPT_URL, 'http://localhost:8080/shop/goods/folders/0'); 
+        curl_setopt($ch, CURLOPT_URL, $this->_config->api->host.'/goods/folders/0'); 
         curl_setopt($ch, CURLOPT_HEADER, false); 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
@@ -88,7 +96,7 @@ class Catalog_IndexController extends Zend_Controller_Action
         
         // Делаем запрос к API
         $ch = curl_init(); 
-        curl_setopt($ch, CURLOPT_URL, 'http://localhost:8080/shop/goods/folders/'.$input->id); 
+        curl_setopt($ch, CURLOPT_URL, $this->_config->api->host.'/goods/folders/'.$input->id); 
         curl_setopt($ch, CURLOPT_HEADER, false); 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
@@ -116,7 +124,7 @@ class Catalog_IndexController extends Zend_Controller_Action
         } else {
             // Делаем запрос к API
             $ch = curl_init(); 
-            curl_setopt($ch, CURLOPT_URL, 'http://localhost:8080/shop/goods/get/'.$input->id); 
+            curl_setopt($ch, CURLOPT_URL, $this->_config->api->host.'/goods/get/'.$input->id); 
             curl_setopt($ch, CURLOPT_HEADER, false); 
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30); 
@@ -130,7 +138,7 @@ class Catalog_IndexController extends Zend_Controller_Action
 
         // Делаем запрос к API
         $ch = curl_init(); 
-        curl_setopt($ch, CURLOPT_URL, 'http://localhost:8080/shop/goods/list/'.$input->id); 
+        curl_setopt($ch, CURLOPT_URL, $this->_config->api->host.'/goods/list/'.$input->id); 
         curl_setopt($ch, CURLOPT_HEADER, false); 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30); 
@@ -156,7 +164,7 @@ class Catalog_IndexController extends Zend_Controller_Action
         
         // Делаем запрос к API
         $ch = curl_init(); 
-        curl_setopt($ch, CURLOPT_URL, 'http://localhost:8080/shop/goods/get/'.$input->id); 
+        curl_setopt($ch, CURLOPT_URL, $this->_config->api->host.'/goods/get/'.$input->id); 
         curl_setopt($ch, CURLOPT_HEADER, false); 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30); 

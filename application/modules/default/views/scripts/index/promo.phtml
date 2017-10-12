@@ -1,40 +1,83 @@
-<h2>Действующие акции</h2> 
-<p>Участникам кооператива нашими партнерами предоставляются <a href="#bottom">акции*</a></p>
+<div class="col-sm-9">
+    <h2>Действующие акции</h2> 
+    <p>Участникам кооператива нашими партнерами предоставляются <a href="#bottom">акции*</a></p>
 
-<?php 
-if (count($this->promos)):
-    $i = 0;
-    foreach ($this->promos as $r):
-    $i++;
-?>
-<?php if (($i-1)%3==0): ?><div class="row"><?php endif; ?>
-    <div class="col-md-4">
-        <div class="img-thumbnail promoimage">
-            <a href="<?php echo $r['file']; ?>" target="blank" data-lightbox="roadtrip" data-title="<?php echo $r['name']; ?>">
-                <img data-src="<?php echo $r['file']; ?>" width="100%">
-            </a>
+    <?php 
+    if (count($this->promos)):
+        $i = 0;
+        foreach ($this->promos as $r):
+        $i++;
+    ?>
+    <?php if (($i-1)%3==0): ?><div class="row"><?php endif; ?>
+        <div class="col-md-4">
+            <div class="img-thumbnail promoimage">
+                <a href="<?php echo $r['file']; ?>" target="blank" data-lightbox="roadtrip" data-title="<?php echo $r['name']; ?>">
+                    <img data-src="<?php echo $r['file']; ?>" width="100%">
+                </a>
+            </div>
+            <p><?php echo $r['name']; ?></p>
         </div>
-        <p><?php echo $r['name']; ?></p>
+    <?php if ($i%3==0): ?></div><?php endif; ?>
+
+    <?php endforeach; ?>
+    <?php if ($i%3!=0): ?><?php endif; ?>
+    <?php else: ?>
+    <div class="alert alert-info">
+        <strong>Промо-акции отсутствуют</strong>
     </div>
-<?php if ($i%3==0): ?></div><?php endif; ?>
+    <?php endif; ?>
 
-<?php endforeach; ?>
-<?php if ($i%3!=0): ?></div><?php endif; ?>
-<?php else: ?>
-<div class="alert alert-info">
-    <strong>Промо-акции отсутствуют</strong>
+    <script type='text/javascript'>
+        [].forEach.call(document.querySelectorAll('img[data-src]'), function(img) {
+          img.setAttribute('src', img.getAttribute('data-src'));
+          img.onload = function() {
+            img.removeAttribute('data-src');
+          };
+        });
+    </script>
+
+    <div  class="col-md-12">
+        <small><a name="bottom"></a>* - партнерами кооператива не гарантируется постоянное наличие акционных товаров в точках продаж</small>
+    </div>
 </div>
-<?php endif; ?>
 
-<script type='text/javascript'>
-    [].forEach.call(document.querySelectorAll('img[data-src]'), function(img) {
-      img.setAttribute('src', img.getAttribute('data-src'));
-      img.onload = function() {
-        img.removeAttribute('data-src');
-      };
-    });
-</script>
-
-<div  class="col-md-12">
-    <small><a name="bottom"></a>* - партнерами кооператива не гарантируется постоянное наличие акционных товаров в точках продаж</small>
+<div class="col-sm-3 hidden-xs hidden-sm">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="/img/carousel/slide1.png">
+          <div class="carousel-caption">
+              <h3>Приглашаем</h3>
+              <p>к сотрудничеству производителей и поставщиков товаров народного потребления</p>                            
+          </div>
+        </div>
+        <div class="item">
+          <img src="/img/carousel/slide2.png">
+          <div class="carousel-caption">
+              <h3>Приглашаем</h3>
+              <p>к сотрудничеству менеджеров отделов снабжения предприятий</p>                            
+          </div>
+        </div>
+        <div class="item">
+          <img src="/img/carousel/slide3.png">
+          <div class="carousel-caption">
+              <h3>Приглашаем</h3>
+              <p>к сотрудничеству менеджеров активных продаж</p>                            
+          </div>
+        </div>
+        <div class="item">
+          <img src="/img/carousel/slide4.png">
+          <div class="carousel-caption">
+              <h3>Приглашаем</h3>
+              <p>предпринимателей к совместной закупке</p>                            
+          </div>
+        </div>
+      </div>
+    </div>
 </div>

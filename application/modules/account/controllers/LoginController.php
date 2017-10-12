@@ -11,17 +11,19 @@ class Customer_Auth_Adapter implements Zend_Auth_Adapter_Interface
     }
     
     private function getUrl() {
-        return 'http://127.0.0.1:8080/shop/customers/checkpass?in='.urlencode($this->username).'&pass='.md5($this->password);
+        $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
+        $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
+        return $localConfig->api->host.'/customers/checkpass?in='.urlencode($this->username).'&pass='.md5($this->password);
     }
     
     public function authenticate() {
         // Делаем запрос к API
         $ch = curl_init(); 
-        curl_setopt($ch, CURLOPT_URL, $this->getUrl()); 
-        curl_setopt($ch, CURLOPT_HEADER, false); 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30); 
-        curl_setopt($ch, CURLOPT_USERAGENT, 'sodeystvie'); 
+        curl_setopt($ch, CURLOPT_URL, $this->getUrl());
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'sodeystvie');
         $result = curl_exec($ch); 
         curl_close($ch);
         

@@ -1,19 +1,62 @@
-<h2>Актуальные предложения</h2>
-<p>Далее представлены доступные прайс-листы</p>
-<?php if (count($this->prices)): ?>
-<ul class="list-unstyled">
-    <?php foreach ($this->prices as $r): ?>
+<div class="col-sm-9">
+    <h2>Актуальные предложения</h2>
+    <p>Далее представлены доступные прайс-листы</p>
+    <?php if (count($this->prices)): ?>
+    <ul class="list-unstyled">
+        <?php foreach ($this->prices as $r): ?>
 
-    <li>                    
-        <a href="/pricelists/<?php echo $r['filename']; ?>" title="<?php echo $r['filename']; ?>">
-            <?php echo $r['name']; ?> (<?php echo $r['filesize']; ?>)
-        </a> 
-    </li>
+        <li>                    
+            <a href="/pricelists/<?php echo $r['filename']; ?>" title="<?php echo $r['filename']; ?>">
+                <?php echo $r['name']; ?> (<?php echo $r['filesize']; ?>)
+            </a> 
+        </li>
 
-    <?php endforeach; ?>
-</ul>
-<?php else: ?>
-<div class="alert alert-info">
-    <strong>Нет прайс-листов</strong>
+        <?php endforeach; ?>
+    </ul>
+    <?php else: ?>
+    <div class="alert alert-info">
+        <strong>Нет прайс-листов</strong>
+    </div>
+    <?php endif; ?>
 </div>
-<?php endif; ?>
+
+<div class="col-sm-3 hidden-xs hidden-sm">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="/img/carousel/slide1.png">
+          <div class="carousel-caption">
+              <h3>Приглашаем</h3>
+              <p>к сотрудничеству производителей и поставщиков товаров народного потребления</p>                            
+          </div>
+        </div>
+        <div class="item">
+          <img src="/img/carousel/slide2.png">
+          <div class="carousel-caption">
+              <h3>Приглашаем</h3>
+              <p>к сотрудничеству менеджеров отделов снабжения предприятий</p>                            
+          </div>
+        </div>
+        <div class="item">
+          <img src="/img/carousel/slide3.png">
+          <div class="carousel-caption">
+              <h3>Приглашаем</h3>
+              <p>к сотрудничеству менеджеров активных продаж</p>                            
+          </div>
+        </div>
+        <div class="item">
+          <img src="/img/carousel/slide4.png">
+          <div class="carousel-caption">
+              <h3>Приглашаем</h3>
+              <p>предпринимателей к совместной закупке</p>                            
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

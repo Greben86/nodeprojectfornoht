@@ -1,40 +1,83 @@
-<div>
-    <address>
-        <strong>Контактная информация:</strong><br>
-        Телефон: 8 (831) 216-27-12, 8 (831) 411-11-40<br>
-        Email: <a href="mailto:vygodno.vmeste@yandex.ru?subject=Письмо с сайта">vygodno.vmeste@yandex.ru</a><br>
-        Почтовый адрес: г. Нижний Новгород, ул. Советская д. 20, помещение П9, офис 6<br>
-        Пункт выдачи товара: г. Нижний Новгород, ул. Бекетова, 3А, к33, территория Овощной базы №4<br>
-        Проезд любым транспортом до ост. "Музыкальное училище", "Дворец Спорта"
-    </address>
+<div class="col-sm-9">
+    <div>
+        <address>
+            <strong>Контактная информация:</strong><br>
+            Телефон: 8 (831) 216-27-12, 8 (831) 411-11-40<br>
+            Email: <a href="mailto:vygodno.vmeste@yandex.ru?subject=Письмо с сайта">vygodno.vmeste@yandex.ru</a><br>
+            Почтовый адрес: г. Нижний Новгород, ул. Советская д. 20, помещение П9, офис 6<br>
+            Пункт выдачи товара: г. Нижний Новгород, ул. Бекетова, 3А, к33, территория Овощной базы №4<br>
+            Проезд любым транспортом до ост. "Музыкальное училище", "Дворец Спорта"
+        </address>
+    </div>
+
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script type="text/javascript">
+        ymaps.ready(init);
+        var myMap, 
+            myPlacemark;
+
+        function init(){ 
+            myMap = new ymaps.Map("map", {
+                center: [56.28972796, 43.98710038],
+                zoom: 17
+            }, {
+                searchControlProvider: 'yandex#search'
+            }); 
+
+            myPlacemark = new ymaps.Placemark([56.28972796, 43.98710038], {
+                hintContent: 'Пункт выдачи товара', 
+                balloonContent: 'ПК ВО Содействие' 
+            });
+
+            myMap.geoObjects.add(myPlacemark);
+        }
+    </script>
+
+    <div id="map" style="width: 100%; height: 500px; margin-bottom: 30px"></div>
+
+    <noscript style="color:#c00;font-size:16px;font-weight:bold;">
+        Виджет карты использует JavaScript. Включите его в настройках вашего браузера.
+    </noscript>
 </div>
 
-<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
-<script type="text/javascript">
-    ymaps.ready(init);
-    var myMap, 
-        myPlacemark;
-
-    function init(){ 
-        myMap = new ymaps.Map("map", {
-            center: [56.28972796, 43.98710038],
-            zoom: 17
-        }, {
-            searchControlProvider: 'yandex#search'
-        }); 
-
-        myPlacemark = new ymaps.Placemark([56.28972796, 43.98710038], {
-            hintContent: 'Пункт выдачи товара', 
-            balloonContent: 'ПК ВО Содействие' 
-        });
-
-        myMap.geoObjects.add(myPlacemark);
-    }
-</script>
-
-<div id="map" style="width: 100%; height: 500px; margin-bottom: 30px"></div>
-
-<noscript style="color:#c00;font-size:16px;font-weight:bold;">
-    Виджет карты использует JavaScript. Включите его в настройках вашего браузера.
-</noscript>
+<div class="col-sm-3 hidden-xs hidden-sm">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="/img/carousel/slide1.png">
+          <div class="carousel-caption">
+              <h3>Приглашаем</h3>
+              <p>к сотрудничеству производителей и поставщиков товаров народного потребления</p>                            
+          </div>
+        </div>
+        <div class="item">
+          <img src="/img/carousel/slide2.png">
+          <div class="carousel-caption">
+              <h3>Приглашаем</h3>
+              <p>к сотрудничеству менеджеров отделов снабжения предприятий</p>                            
+          </div>
+        </div>
+        <div class="item">
+          <img src="/img/carousel/slide3.png">
+          <div class="carousel-caption">
+              <h3>Приглашаем</h3>
+              <p>к сотрудничеству менеджеров активных продаж</p>                            
+          </div>
+        </div>
+        <div class="item">
+          <img src="/img/carousel/slide4.png">
+          <div class="carousel-caption">
+              <h3>Приглашаем</h3>
+              <p>предпринимателей к совместной закупке</p>                            
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
 

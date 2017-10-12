@@ -30,7 +30,7 @@
                             <?php if (!$r['folder']||empty($r['folder'])):?>
                             <img src="<?php echo empty($r['filename'])? '/img/good.png' : '/img/goods/'.$r['filename']; ?>" alt="<?php echo $r['name']; ?>" title="<?php echo $r['name']; ?>" height="150">
                             <?php else:?>
-                            <img src="/img/folder.png" alt="<?php echo $r['name']; ?>" title="<?php echo $r['name']; ?>">
+                            <img src="<?php echo empty($r['filename'])? '/img/folder.png' : '/img/goods/'.$r['filename']; ?>" alt="<?php echo $r['name']; ?>" title="<?php echo $r['name']; ?>">
                             <?php endif;?>
                         </div>
                         <div class="cat_l_item_slider">&nbsp;</div>
