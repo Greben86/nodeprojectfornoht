@@ -483,6 +483,15 @@ footer.footer {
     bottom: 0;
 }
 
+.cat_l_item_img img {
+    object-fit: cover;
+    height: 150px;
+    margin: 0;
+    padding: 0;
+    max-width: 180px;
+    vertical-align: middle;
+}
+
 .cat_l_item_slider {
     position: relative;
     height: 20px;

@@ -55,6 +55,7 @@ class Catalog_IndexController extends Zend_Controller_Action
         $result = curl_exec($ch);
         curl_close($ch);
 
+        $this->view->imagehost = $this->_config->api->host.'/goods/image/';
         $this->view->goods = json_decode($result, true);
         $this->view->crumps = $this->buildBreadCrumps(0, true);
     }
@@ -72,7 +73,7 @@ class Catalog_IndexController extends Zend_Controller_Action
         curl_setopt($ch, CURLOPT_USERAGENT, 'sodeystvie'); 
         $result = curl_exec($ch);
         curl_close($ch);
-
+        
         $this->view->folders = json_decode($result, true);
     }
     
@@ -146,6 +147,7 @@ class Catalog_IndexController extends Zend_Controller_Action
         $result = curl_exec($ch); 
         curl_close($ch);
 
+        $this->view->imagehost = $this->_config->api->host.'/goods/image/';
         $this->view->goods = json_decode($result, true);
     }
     
@@ -172,6 +174,7 @@ class Catalog_IndexController extends Zend_Controller_Action
         $result = curl_exec($ch); 
         curl_close($ch);
 
+        $this->view->imagehost = $this->_config->api->host.'/goods/image/';
         $this->view->item = json_decode($result, true);
         $this->view->crumps = $this->buildBreadCrumps($this->view->item['owner'], false);
     }
