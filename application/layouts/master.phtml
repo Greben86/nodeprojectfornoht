@@ -33,7 +33,9 @@
                 function onSuccess(data) {
                     var cont = document.getElementById('good_tree'); 
                     cont.innerHTML = data;
-                    tree();
+                    var scriptEl = document.createElement('script');
+                    scriptEl.src = '/js/tree_1.js';
+                    document.body.appendChild(scriptEl);
                 }
                 $.ajax({
                     url: "/catalog/menu",
@@ -222,47 +224,6 @@
                 <div class="col-sm-12">
                     <?php echo $this->layout()->content; ?>
                 </div>
-<!--                <div class="col-sm-3 hidden-xs hidden-sm">
-                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                      <ol class="carousel-indicators">
-                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-                      </ol>
-                      <div class="carousel-inner">
-                        <div class="item active">
-                          <img src="/img/carousel/slide1.png">
-                          <div class="carousel-caption">
-                              <h3>Приглашаем</h3>
-                              <p>к сотрудничеству производителей и поставщиков товаров народного потребления</p>                            
-                          </div>
-                        </div>
-                        <div class="item">
-                          <img src="/img/carousel/slide2.png">
-                          <div class="carousel-caption">
-                              <h3>Приглашаем</h3>
-                              <p>к сотрудничеству менеджеров отделов снабжения предприятий</p>                            
-                          </div>
-                        </div>
-                        <div class="item">
-                          <img src="/img/carousel/slide3.png">
-                          <div class="carousel-caption">
-                              <h3>Приглашаем</h3>
-                              <p>к сотрудничеству менеджеров активных продаж</p>                            
-                          </div>
-                        </div>
-                        <div class="item">
-                          <img src="/img/carousel/slide4.png">
-                          <div class="carousel-caption">
-                              <h3>Приглашаем</h3>
-                              <p>предпринимателей к совместной закупке</p>                            
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div id="good_tree" onshow="loadmenu()">123</div>
-                </div>-->
             </div>
             
 
