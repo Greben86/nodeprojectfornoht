@@ -26,13 +26,13 @@
                 <dd><?php echo $this->item['description']; ?></dd>
 
                 <dt>Артикул</dt>
-                <dd><?php echo $this->item['articul']; ?></dd>
+                <dd><?php echo $this->item['article']; ?></dd>
 
                 <dt>Цена</dt>
                 <dd><span><?php echo $this->item['price']; ?></span> р.</dd>
 
                 <dt>Наличие</dt>
-                <dd><small><?php  echo $this->item['exist'] ? 'в наличии' : 'под заказ';?></small></dd>
+                <dd><small><?php  echo $this->item['instock'] ? 'в наличии' : 'под заказ';?></small></dd>
             </dl>
         </div>
     </div>

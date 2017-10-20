@@ -30,13 +30,13 @@
                             <?php if (!$r['folder']||empty($r['folder'])):?>
                             <img src="<?php echo $this->imagehost . $r['id']; ?>" alt="<?php echo $r['name']; ?>" title="<?php echo $r['name']; ?>" height="150">
                             <?php else:?>
-                            <img src="<?php echo empty($r['filename'])? '/img/folder.png' : $this->imagehost . $r['id']; ?>" alt="<?php echo $r['name']; ?>" title="<?php echo $r['name']; ?>">
+                            <img src="/img/folder.png" alt="<?php echo $r['name']; ?>" title="<?php echo $r['name']; ?>">
                             <?php endif;?>
                         </div>
                         <div class="cat_l_item_slider">&nbsp;</div>
                         <div class="cat_l_item_hline"><?php echo $r['name']; ?></div>
                         <?php if (!$r['folder']||empty($r['folder'])):?>
-                        <small><?php  echo $r['exist'] ? 'В наличии' : 'Под заказ';?></small>
+                        <small><?php  echo $r['instock']>0 ? 'В наличии' : 'Под заказ';?></small>
                         <div class="cat_l_item_wp_price">
                             <span class="cat_l_item_price"><?php echo $r['price']; ?></span> р.
                         </div>
