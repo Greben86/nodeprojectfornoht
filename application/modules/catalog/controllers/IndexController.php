@@ -74,6 +74,7 @@ class Catalog_IndexController extends Zend_Controller_Action
         $result = curl_exec($ch);
         curl_close($ch);
         
+        $this->view->imagehost = $this->_config->api->host.'/goods/image/';
         $this->view->folders = json_decode($result, true);
     }
     
