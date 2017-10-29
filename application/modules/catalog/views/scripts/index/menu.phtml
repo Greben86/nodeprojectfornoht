@@ -1,19 +1,5 @@
 <style type="text/css">@import "/css/tree.css";</style>
 
 <div class="catalog_sidebar">
-    <ul class="Container" id="tree">
-      <?php foreach ($this->folders as $f): ?>
-      <li data-submenu-id="submenu-<?php echo $f['id']; ?>" id="<?php echo $f['id']; ?>" class="catalog_sidebar_node Node IsRoot ExpandClosed">
-        <div class="Expand" onclick="clickExpand()"></div>
-        <a href="/catalog/folder/<?php echo $f['id']; ?>">
-            <?php echo $f['name']; ?>
-        </a>
-        <ul class="Container"></ul>
-        <div id="submenu-<?php echo $f['id']; ?>" class="popover">
-            <h3 class="popover-title"><?php echo $f['name']; ?></h3>
-            <div class="popover-content"><img src="<?php echo $this->imagehost . $f['id']; ?>"></div>
-        </div>
-      </li>
-      <?php endforeach; ?>
-    </ul>
+    <?php echo $this->menu; ?>
 </div>
