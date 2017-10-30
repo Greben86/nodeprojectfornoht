@@ -32,24 +32,32 @@
               'albumLabel': 'Изображение %1 из %2'
             });
             window.onload = function() {
-                function onSuccess(data) {
-                    var cont = document.getElementById('good_tree'); 
-                    if (cont!==null) {
-                        cont.innerHTML = data;
-
-                        var libTree = document.createElement('script');
-                        libTree.src = '/js/jquery.menu-aim.js';
-                        document.body.appendChild(libTree);
-
-                        var scriptTree = document.createElement('script');
-                        scriptTree.src = '/js/tree.js';
-                        document.body.appendChild(scriptTree);
-                    }
-                }
                 $.ajax({
                     url: "/catalog/menu",
                     dataType: "html",
-                    success: onSuccess,
+                    success: function (data) {
+                        var cont = document.getElementById('good_tree'); 
+                        if (cont!==null) {
+                            cont.innerHTML = data;
+
+                            var libTree = document.createElement('script');
+                            libTree.src = '/js/jquery.menu-aim.js';
+                            document.body.appendChild(libTree);
+
+                            var scriptTree = document.createElement('script');
+                            scriptTree.src = '/js/tree.js';
+                            document.body.appendChild(scriptTree);
+                        }
+                    },
+                    cache: false
+                });
+                $.ajax({
+                    url: "/basket/vidjet",
+                    dataType: "html",
+                    success: function (data) {
+                        var cont = document.getElementById('basket_vidjet'); 
+                        cont.innerHTML = data;
+                    },
                     cache: false
                 });
             };
@@ -132,6 +140,7 @@
                             <h2 class="title">«Содействие»</h2>
                         </div> 
                         <p class="classy">Потребительский кооператив взаимного обеспечения</p>
+                        <div id="basket_vidjet">Корзина</div>
                     </li>
 
                     <li class="logo-box">
