@@ -1,8 +1,17 @@
+<?php if (Zend_Auth::getInstance()->hasIdentity()):?>
+<div class="col-md-10">
+    <ol class="breadcrumb">
+        <?php echo $this->crumps;?>
+    </ol>    
+</div>
+<div class="col-md-2"><div id="basket_widget"></div></div>
+<?php else: ?>
 <div class="col-md-12">
     <ol class="breadcrumb">
         <?php echo $this->crumps;?>
-    </ol>
+    </ol>    
 </div>
+<?php endif; ?>
 
 <div class="col-sm-3 hidden-xs hidden-sm">
     <div id="good_tree" onshow="loadmenu()">Каталог товаров</div>
@@ -34,6 +43,11 @@
                 <dt>Наличие</dt>
                 <dd><small><?php  echo $this->item['instock'] ? 'в наличии' : 'под заказ';?></small></dd>
             </dl>
+            <?php if (Zend_Auth::getInstance()->hasIdentity()):?>
+            <button type="button" class="btn btn-success" onclick="addToBasket(<?php echo $this->item['id']; ?>)">
+                <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
+            </button>
+            <?php endif; ?>
         </div>
     </div>
 </div>

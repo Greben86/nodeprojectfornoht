@@ -11,9 +11,10 @@ class Customer_Auth_Adapter implements Zend_Auth_Adapter_Interface
     }
     
     private function getUrl() {
-        $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
-        $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
-        return $localConfig->api->host.'/customers/checkpass?in='.urlencode($this->username).'&pass='.md5($this->password);
+//        $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
+//        $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
+//        return $localConfig->api->host.'/customers/checkpass?in='.urlencode($this->username).'&pass='.md5($this->password);
+        return 'http://localhost:8080/shop/customers/checkpass?in='.urlencode($this->username).'&pass='.md5($this->password);
     }
     
     public function authenticate() {
@@ -109,6 +110,7 @@ class Account_LoginController extends Zend_Controller_Action
                 $result = $auth->authenticate($adapter);
                 if ($result->isValid())
                 {
+                    Zend_Session::start();
                     $this->redirect('/account');
                 } else {
                     $this->view->message = $result->getMessages()[0];

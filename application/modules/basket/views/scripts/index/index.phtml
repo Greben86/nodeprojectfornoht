@@ -1,0 +1,64 @@
+<div class="col-sm-12">
+    <h2>Корзина</h2>
+    <?php if (count($this->records)): ?>
+    <form role="form" action="<?php echo $this->url(array(), 'basket-send'); ?>">
+        <table class="table table-bordered">
+            <col width="10%">
+            <col width="50%">
+            <col width="15%">
+            <col width="15%">
+            <col width="10%">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <th>Код</th>
+                    <th>Товар</th>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($this->records as $r): ?>
+
+            <tr>        
+                <td>
+                    <?php echo $r['good']; ?>
+                </td>
+                <td>
+                    <?php echo $r['name']; ?>
+                </td>
+                <td>
+                    <a href="<?php echo $this->url(array('id' => $r['good']), 'basket-update'); ?>" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </a>
+                    <?php echo $r['count']; ?>
+                    <a href="<?php echo $this->url(array('id' => $r['good']), 'basket-add'); ?>" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
+                </td>
+                <td>
+                    <?php echo $r['count'] * $r['price']; ?>
+                </td>
+                <td>
+                    <a href="<?php echo $this->url(array('id' => $r['id']), 'basket-remove'); ?>" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        Удалить
+                    </a>
+                </td>
+            </tr>
+
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">
+            <span class="glyphicon glyphicon-ok"></span>
+            Отправить
+        </button>
+    </form>
+    <?php else: ?>
+    <div class="alert alert-info">
+        <strong>Ваша корзина пуста</strong>
+    </div>
+    <?php endif; ?>
+</div>

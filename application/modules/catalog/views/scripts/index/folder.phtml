@@ -1,10 +1,19 @@
+<?php if (Zend_Auth::getInstance()->hasIdentity()):?>
+<div class="col-md-10">
+    <ol class="breadcrumb">
+        <?php echo $this->crumps;?>
+    </ol>    
+</div>
+<div class="col-md-2"><div id="basket_widget"></div></div>
+<?php else: ?>
 <div class="col-md-12">
     <ol class="breadcrumb">
         <?php echo $this->crumps;?>
-    </ol>
+    </ol>    
 </div>
+<?php endif; ?>
 
-<div class="col-sm-3 hidden-xs hidden-sm">
+<div class="col-sm-3 hidden-xs hidden-sm">    
     <div id="good_tree" onshow="loadmenu()">Каталог товаров</div>
 </div>
 
@@ -19,13 +28,18 @@
     <div class="catalog_block">
         <ul class="catalog_list clearfix">
             <?php foreach ($this->goods as $r): ?>
-            <li class="cat_l_item">
-                <?php if (!$r['folder']||empty($r['folder'])):?>
-                <a href="/catalog/item/<?php echo $r['id']; ?>">
-                <?php else:?>
-                <a href="/catalog/folder/<?php echo $r['id']; ?>">
-                <?php endif;?>
-                    <div class="cat_l_i_wrap">
+            <li class="cat_l_item">                
+                <div class="cat_l_i_wrap">
+                    <?php if (!$r['folder']||empty($r['folder'])):?>
+                    <?php if (Zend_Auth::getInstance()->hasIdentity()):?>
+                    <button type="button" class="btn btn-link btn-xs" onclick="addToBasket(<?php echo $r['id']; ?>)">
+                        <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
+                    </button>
+                    <?php endif; ?>
+                    <a href="/catalog/item/<?php echo $r['id']; ?>">
+                    <?php else:?>
+                    <a href="/catalog/folder/<?php echo $r['id']; ?>">
+                    <?php endif;?>
                         <div class="cat_l_item_img">
                             <img src="<?php echo $this->imagehost . $r['id']; ?>" alt="<?php echo $r['name']; ?>" title="<?php echo $r['name']; ?>">
                         </div>
@@ -37,8 +51,8 @@
                             <span class="cat_l_item_price"><?php echo $r['price']; ?></span> р.
                         </div>
                         <?php endif; ?>
-                    </div>
-                </a>
+                    </a>                    
+                </div>
             </li>
             <?php endforeach; ?>
         </ul>

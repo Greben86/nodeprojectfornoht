@@ -52,15 +52,26 @@
                     cache: false
                 });
                 $.ajax({
-                    url: "/basket/vidjet",
+                    url: "/basket/widget",
                     dataType: "html",
                     success: function (data) {
-                        var cont = document.getElementById('basket_vidjet'); 
+                        var cont = document.getElementById('basket_widget'); 
                         cont.innerHTML = data;
                     },
                     cache: false
                 });
             };
+            function addToBasket(id) {
+                $.ajax({
+                    url: "/basket/add/"+id,
+                    dataType: "html",
+                    success: function (data) {
+                        var cont = document.getElementById('basket_widget'); 
+                        cont.innerHTML = data;
+                    },
+                    cache: false
+                });
+            }
         </script>    
     </head>
 
@@ -140,7 +151,6 @@
                             <h2 class="title">«Содействие»</h2>
                         </div> 
                         <p class="classy">Потребительский кооператив взаимного обеспечения</p>
-                        <div id="basket_vidjet">Корзина</div>
                     </li>
 
                     <li class="logo-box">

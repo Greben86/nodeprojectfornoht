@@ -1,0 +1,10 @@
+<?php if ($this->visible): ?>
+<a href="<?php echo $this->url(array(), 'basket'); ?>" class="btn btn-warning">
+    <span class="glyphicon glyphicon-shopping-cart"></span>
+    <?php if ($this->count>0): ?>
+    <?php echo $this->summa; ?> &#8381; <span class="badge"><?php echo $this->count; ?></span>
+    <?php else: ?>
+    Корзина
+    <?php endif; ?>
+</a>
+<?php endif; ?>
