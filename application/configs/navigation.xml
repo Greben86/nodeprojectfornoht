@@ -21,7 +21,7 @@
         <uri>/home/prices</uri>
     </prices>
     <catalog>
-        <label>Стол заказов (test)</label>
+        <label>Стол заказов</label>
         <uri>/catalog</uri>
     </catalog>
     <details>

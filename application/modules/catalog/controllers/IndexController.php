@@ -180,10 +180,12 @@ class Catalog_IndexController extends Zend_Controller_Action
     {
         // Устанавливаем фильтры и валидаторы для данных, полученных из POST
         $filters = array(
-            'id' => array('HtmlEntities', 'StripTags', 'StringTrim')
+            'id' => array('HtmlEntities', 'StripTags', 'StringTrim'),
+            'page' => array('HtmlEntities', 'StripTags', 'StringTrim')
         );
         $validators = array(
-            'id' => array('NotEmpty', 'Int')
+            'id' => array('NotEmpty', 'Int'),
+            'page' => array('Int')
         );
         
         $input = new Zend_Filter_Input($filters, $validators);
@@ -212,6 +214,10 @@ class Catalog_IndexController extends Zend_Controller_Action
 
         $this->view->imagehost = $this->_config->api->host.'/goods/image/';
         $this->view->goods = json_decode($result, true);
+        $paginator = Zend_Paginator::factory($this->view->goods);
+        $paginator->setItemCountPerPage(15);
+        $paginator->setCurrentPageNumber($input->page);
+        $this->view->paginator = $paginator;
     }
     
     public function itemAction()

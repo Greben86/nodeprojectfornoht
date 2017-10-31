@@ -24,10 +24,10 @@
     <h2>Стол заказов</h2>
     <?php endif; ?>
 
-    <?php if (count($this->goods)):?>
+    <?php if (count($this->paginator)):?>
     <div class="catalog_block">
         <ul class="catalog_list clearfix">
-            <?php foreach ($this->goods as $r): ?>
+            <?php foreach ($this->paginator as $r): ?>
             <li class="cat_l_item">                
                 <div class="cat_l_i_wrap">
                     <?php if (!$r['folder']||empty($r['folder'])):?>
@@ -65,7 +65,8 @@
 </div>
 
 <div class="col-md-12">
-    <ol class="breadcrumb">
-        <?php echo $this->crumps;?>
-    </ol>
+    <div class="text-center">
+        <?php echo $this->paginationControl($this->paginator, 'Elastic', 'pagination_control.phtml'); ?>
+    </div>    
 </div>
+
