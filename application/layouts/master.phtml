@@ -66,8 +66,17 @@
                     url: "/basket/add/"+id,
                     dataType: "html",
                     success: function (data) {
-                        var cont = document.getElementById('basket_widget'); 
-                        cont.innerHTML = data;
+//                        var cont = document.getElementById('basket_widget'); 
+//                        cont.innerHTML = data;
+                        $.ajax({
+                            url: "/basket/widget",
+                            dataType: "html",
+                            success: function (data) {
+                                var cont = document.getElementById('basket_widget'); 
+                                cont.innerHTML = data;
+                            },
+                            cache: false
+                        });
                     },
                     cache: false
                 });

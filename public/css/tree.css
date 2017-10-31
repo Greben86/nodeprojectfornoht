@@ -1,4 +1,4 @@
-.catalog_sidebar {
+/*.catalog_sidebar {
     background: white;
     border-radius: 0px;
 }
@@ -51,7 +51,7 @@
   }
 }
 .catalog_sidebar_node > a::before, .catalog_sidebar_node > a::after {
-  /* arrow goes on the right side - children navigation */
+   arrow goes on the right side - children navigation 
   right: 10px;
   -webkit-transform-origin: 9px 50%;
   -moz-transform-origin: 9px 50%;
@@ -83,15 +83,15 @@
     -ms-transform: translateZ(0);
     -o-transform: translateZ(0);
     transform: translateZ(0);
-}
+}*/
 
-.Container {
+/*.Container {
     list-style: none;
     padding: 0;
     margin: 0;
-}
+}*/
 
-.Container .popover {
+/*.Container .popover {
     min-width: 600px;
     -webkit-border-top-left-radius: 0px;
     -webkit-border-bottom-left-radius: 0px;
@@ -105,18 +105,18 @@
 .Container .popover-content img {
     height: 212px;
     max-width: 250px;
-}
+}*/
 
-.Container li {
+/*.Container li {
     list-style-type: none;
 }
 
 
-/* indent for all tree children excepts root */
+ indent for all tree children excepts root 
 .Node {
     background-position : top left;
     background-repeat : repeat-y;
-    /*margin-left: 18px;*/
+    margin-left: 18px;
     zoom: 1;
 }
 
@@ -125,7 +125,7 @@
 }
 
 
-/* left vertical line (grid) for all nodes */
+ left vertical line (grid) for all nodes 
 .IsLast {
     background-repeat : no-repeat;
 }
@@ -134,14 +134,14 @@
     background-image: url(/css/tree/minus.gif);
 }
 
-/* closed is higher priority than open */
+ closed is higher priority than open 
 .ExpandClosed .Expand {
     background-image: url(/css/tree/plus.gif);
 }
 
 .Content {
     min-height: 18px;
-    /*margin-left:18px;*/
+    margin-left:18px;
 }
 
 .Expand {
@@ -171,4 +171,88 @@
     height: 18px;
     float: left;
     background-image: url(/css/tree/loading.gif);
+}*/
+
+/*Старая версия*/
+.Container {
+    padding: 0;
+    margin: 0;
 }
+
+.Container li {
+    list-style-type: none;
+}
+
+
+/* indent for all tree children excepts root */
+.Node {
+    background-image : url(/css/tree/i.gif);
+    background-position : top left;
+    background-repeat : repeat-y;
+    margin-left: 18px;
+    zoom: 1;
+}
+
+.IsRoot {
+    margin-left: 0;
+}
+
+
+/* left vertical line (grid) for all nodes */
+.IsLast {
+    background-image: url(/css/tree/i_half.gif);
+    background-repeat : no-repeat;
+}
+
+.ExpandOpen .Expand {
+    background-image: url(/css/tree/minus.gif);
+}
+
+/* closed is higher priority than open */
+.ExpandClosed .Expand {
+    background-image: url(/css/tree/plus.gif);
+}
+
+/* highest priority */
+.ExpandLeaf .Expand {
+    background-image: url(/css/tree/expand_leaf.gif);
+}
+
+.Content {
+    min-height: 18px;
+    margin-left:18px;
+}
+
+* html .Content {
+    height: 18px;
+}
+
+.Expand {
+    width: 18px;
+    height: 18px;
+    float: left;
+}
+
+
+.ExpandOpen .Container {
+        display: block;
+}
+
+.ExpandClosed .Container {
+        display: none;
+}
+
+.ExpandOpen .Expand, .ExpandClosed .Expand {
+        cursor: pointer;
+}
+.ExpandLeaf .Expand {
+        cursor: auto;
+}
+
+.ExpandLoading   {
+    width: 18px;
+    height: 18px;
+    float: left;
+    background-image: url(/css/tree/loading.gif);
+}
+

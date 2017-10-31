@@ -81,7 +81,7 @@ class Basket_IndexController extends Zend_Controller_Action
                 }
             }
         }
-        $this->redirect('/basket/widget');
+        $this->redirect('/basket');
     }
     
     public function updateAction()

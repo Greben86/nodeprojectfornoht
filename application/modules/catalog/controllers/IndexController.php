@@ -102,45 +102,46 @@ class Catalog_IndexController extends Zend_Controller_Action
         curl_setopt($ch, CURLOPT_USERAGENT, 'sodeystvie'); 
         $result = curl_exec($ch);
         
+        $this->view->folders = json_decode($result, true);
         
-        $domDoc = new DOMDocument();
-        $menu = $domDoc->createElement( 'ul' );
-        $menu->setAttribute( 'id', 'tree' );
-        $menu->setAttribute( 'class', 'Container' );
-        
-        $folders = json_decode($result, true);
-        foreach ($folders as $f) {
-            $listitem = $domDoc->createElement( 'li' );
-            $listitem->setAttribute( 'data-submenu-id', 'submenu-'.$f['id'] );
-            $listitem->setAttribute( 'class', 'catalog_sidebar_node' );
-            
-            $link = $domDoc->createElement( 'a', $f['name'] );
-            $link->setAttribute( 'href', '/catalog/folder/'.$f['id'] );
-            
-            $panel = $domDoc->createElement( 'div' );
-            $panel->setAttribute( 'id', 'submenu-'.$f['id'] );
-            $panel->setAttribute('class', 'popover');
-            
-            $titlepanel = $domDoc->createElement( 'h3', $f['name'] );
-            $titlepanel->setAttribute('class', 'popover-title');
-            
-            $submenu = $domDoc->createElement( 'ul' );
-            $submenu->setAttribute( 'class', 'Container' );
-            
-            if ($this->buildSubmenu($ch, $domDoc, $submenu, $f['id'])) {            
-                $panel->appendChild($titlepanel);
-                $panel->appendChild($submenu);                
-                $listitem->appendChild($panel);                
-            }
-            $listitem->appendChild($link);
-            $menu->appendChild($listitem);
-        }
-        $listitem = $domDoc->createElement( 'li', 'Еще' );
-        $listitem->setAttribute( 'class', 'catalog_sidebar_divider' );
-        $menu->appendChild($listitem);
-        $domDoc->appendChild( $menu );
-        
-        $this->view->menu = $domDoc->saveHTML();
+//        $domDoc = new DOMDocument();
+//        $menu = $domDoc->createElement( 'ul' );
+//        $menu->setAttribute( 'id', 'tree' );
+//        $menu->setAttribute( 'class', 'Container' );
+//        
+//        $folders = json_decode($result, true);
+//        foreach ($folders as $f) {
+//            $listitem = $domDoc->createElement( 'li' );
+//            $listitem->setAttribute( 'data-submenu-id', 'submenu-'.$f['id'] );
+//            $listitem->setAttribute( 'class', 'catalog_sidebar_node' );
+//            
+//            $link = $domDoc->createElement( 'a', $f['name'] );
+//            $link->setAttribute( 'href', '/catalog/folder/'.$f['id'] );
+//            
+//            $panel = $domDoc->createElement( 'div' );
+//            $panel->setAttribute( 'id', 'submenu-'.$f['id'] );
+//            $panel->setAttribute('class', 'popover');
+//            
+//            $titlepanel = $domDoc->createElement( 'h3', $f['name'] );
+//            $titlepanel->setAttribute('class', 'popover-title');
+//            
+//            $submenu = $domDoc->createElement( 'ul' );
+//            $submenu->setAttribute( 'class', 'Container' );
+//            
+//            if ($this->buildSubmenu($ch, $domDoc, $submenu, $f['id'])) {            
+//                $panel->appendChild($titlepanel);
+//                $panel->appendChild($submenu);                
+//                $listitem->appendChild($panel);                
+//            }
+//            $listitem->appendChild($link);
+//            $menu->appendChild($listitem);
+//        }
+//        $listitem = $domDoc->createElement( 'li', 'Еще' );
+//        $listitem->setAttribute( 'class', 'catalog_sidebar_divider' );
+//        $menu->appendChild($listitem);
+//        $domDoc->appendChild( $menu );
+//        
+//        $this->view->menu = $domDoc->saveHTML();
         
         curl_close($ch);
     }
