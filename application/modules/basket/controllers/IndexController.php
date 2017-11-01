@@ -24,6 +24,21 @@ class Basket_IndexController extends Zend_Controller_Action
             'username' => $localConfig->database->user,
             'password' => $localConfig->database->pass
         ));
+        
+        if ($this->getRequest()->isPost()) {
+            $data = $this->getRequest()->getPost();
+            if (isset($data['remove'])) {
+                foreach ($data['remove'] as $r) {
+                    // Удаляем данные
+                    $db->delete('basket', 'id='.$r);
+                }
+            }
+            if (isset($data['count'])) {
+                foreach ($data['count'] as $key => $value) {
+                    $db->update('basket', array('count'=>$value), 'id='.$key);
+                }
+            }
+        }
 
         $result = $db->fetchAll(
                 "SELECT b.id, b.good, g.name, g.price, b.count ".
@@ -33,6 +48,14 @@ class Basket_IndexController extends Zend_Controller_Action
                 "ORDER BY g.name DESC");
 
         $this->view->records = $result;
+        
+        $summa = 0.0;
+        if (count($result)) {
+            foreach ($result as $r) {
+                $summa = $summa + ($r['count'] * $r['price']);
+            }
+        }
+        $this->view->summa = money_format('%i', $summa);
     }
     
     public function addAction()
@@ -157,7 +180,6 @@ class Basket_IndexController extends Zend_Controller_Action
                 'password' => $localConfig->database->pass
             ));
 
-
             // Удаляем данные
             $db->delete('basket', 'id='.$input->id);
         }
@@ -236,22 +258,33 @@ class Basket_IndexController extends Zend_Controller_Action
         $thead->appendChild($tr);
         $table->appendChild($thead);
         $tbody = $domDoc->createElement( 'tbody' );
+        $summa = 0.0;
         foreach ($result as $r) {
             $tr = $domDoc->createElement( 'tr' );           
             
             $td1 = $domDoc->createElement( 'td', $r['good'] );
             $td2 = $domDoc->createElement( 'td', $r['name'] );
             $td3 = $domDoc->createElement( 'td', $r['count'] );
-            $td4 = $domDoc->createElement( 'td', $r['price'] );   
-            $td5 = $domDoc->createElement( 'td', $r['count'] * $r['price'] );
+            $td4 = $domDoc->createElement( 'td', money_format('%i', $r['price']) );   
+            $td5 = $domDoc->createElement( 'td', money_format('%i', $r['count'] * $r['price']) );
             
             $tr->appendChild($td1);
             $tr->appendChild($td2);
             $tr->appendChild($td3);
             $tr->appendChild($td4);
             $tr->appendChild($td5);
-            $tbody->appendChild($tr);                        
+            $tbody->appendChild($tr); 
+            
+            $summa = $summa + ($r['count'] * $r['price']);
         }
+        $tr = $domDoc->createElement( 'tr' );
+        $td1 = $domDoc->createElement( 'td', 'Итого' );
+        $td1->setAttribute('colspan', '4');
+        $td2 = $domDoc->createElement( 'td', money_format('%i', $summa) );
+        $tr->appendChild($td1);
+        $tr->appendChild($td2);
+        $tbody->appendChild($tr);
+        
         $table->appendChild($tbody);
         $domDoc->appendChild($table);
         return $domDoc->saveHTML();

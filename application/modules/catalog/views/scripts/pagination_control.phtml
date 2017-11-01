@@ -1,10 +1,16 @@
 <?php if ($this->pageCount): ?>
 <ul class="pagination">
-  <li class="<?php echo (isset($this->previous)) ? '' : 'disabled'; ?>">
-      <a href="<?php echo $this->url(array('page' => $this->previous));?>">
-          &laquo;
-      </a>
-  </li>
+    <?php if (!isset($this->previous)): ?>
+    <li class="disabled"><a href="#">&#60;&#60;</a></li>
+    <li class="disabled"><a href="#">&#60;</a></li>    
+    <?php else: ?>
+    <li>
+        <a href="<?php echo $this->url(array('page' => $this->first));?>">&#60;&#60;</a>
+    </li>
+    <li>
+        <a href="<?php echo $this->url(array('page' => $this->previous));?>">&#60;</a>
+    </li>
+    <?php endif; ?>
   <?php foreach ($this->pagesInRange as $page): ?>
   <li class="<?php echo ($page == $this->current) ? 'active' : ''; ?>">
       <a href="<?php echo $this->url(array('page' => $page));?>">
@@ -12,10 +18,16 @@
       </a>
   </li>
   <?php endforeach; ?>
-  <li class="<?php echo (isset($this->next)) ? '' : 'disabled'; ?>">
-      <a href="<?php echo $this->url(array('page' => $this->next));?>">
-          &raquo;
-      </a>
+  <?php if (!isset($this->next)): ?>
+    <li class="disabled"><a href="#">&#62;</a></li>
+    <li class="disabled"><a href="#">&#62;&#62;</a></li>
+  <?php else: ?>
+  <li>
+      <a href="<?php echo $this->url(array('page' => $this->next));?>">&#62;</a>
   </li>
+  <li>
+      <a href="<?php echo $this->url(array('page' => $this->last));?>">&#62;&#62;</a>
+  </li>
+  <?php endif; ?>
 </ul>
 <?php endif; ?>
