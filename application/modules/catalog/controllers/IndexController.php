@@ -251,6 +251,17 @@ class Catalog_IndexController extends Zend_Controller_Action
     }
     
     public function searchAction() {
+        // Устанавливаем фильтры и валидаторы для данных, полученных из POST
+        $filters = array(
+            'page' => array('HtmlEntities', 'StripTags', 'StringTrim')
+        );
+        $validators = array(
+            'page' => array('Int')
+        );
+        
+        $input = new Zend_Filter_Input($filters, $validators);
+        $input -> setData($this->getRequest()->getParams());
+        
         if ($this->getRequest()->isGet()) {
             $data = $this->getRequest()->getParams();
             if (!empty($data['query'])) {
@@ -263,6 +274,11 @@ class Catalog_IndexController extends Zend_Controller_Action
                 $this->view->query = $data['query'];                
                 $this->view->result = $result;
                 $this->view->imagehost = $this->_config->api->host.'/goods/image/';
+                $paginator = Zend_Paginator::factory($result);
+                $paginator->setItemCountPerPage(15);
+                $paginator->setDefaultPageRange(7);
+                $paginator->setCurrentPageNumber($input->page);
+                $this->view->paginator = $paginator;
             }
         }
     }

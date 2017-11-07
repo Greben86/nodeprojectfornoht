@@ -39,7 +39,7 @@ class Basket_IndexController extends Zend_Controller_Action
                 }
             }
         }
-
+        
         $result = $db->fetchAll(
                 "SELECT b.id, b.good, g.name, g.price, b.count ".
                 "FROM `basket` b ".
@@ -104,7 +104,7 @@ class Basket_IndexController extends Zend_Controller_Action
                 }
             }
         }
-        $this->redirect('/basket');
+        $this->redirect('/basket/widget');
     }
     
     public function updateAction()
@@ -305,7 +305,7 @@ class Basket_IndexController extends Zend_Controller_Action
         $mail = new Zend_Mail();
         $mail->setBodyHtml($body);
         $mail->setFrom($localConfig->email->address, 'Система регистрации заказов');
-//        $mail->addTo('vygodno.vmeste@yandex.ru', 'Администратор кооператива');
+        $mail->addTo('vygodno.vmeste@yandex.ru', 'Администратор кооператива');
         $mail->addTo('grebenvictor@yandex.ru', 'Разработчик');
         $mail->setSubject($subject);
 

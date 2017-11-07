@@ -12,9 +12,11 @@ class Catalog_AdminController extends Zend_Controller_Action
     
     public function createFulltextIndexAction()
     {
+        // отключение макета для данного действия
+        $this->_helper->layout->disableLayout(true);
         // Делаем запрос к API
         $ch = curl_init(); 
-        curl_setopt($ch, CURLOPT_URL, $this->_config->api->host.'/goods/list/0'); 
+        curl_setopt($ch, CURLOPT_URL, $this->_config->api->host.'/goods/list/-1'); 
         curl_setopt($ch, CURLOPT_HEADER, false); 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
@@ -26,16 +28,20 @@ class Catalog_AdminController extends Zend_Controller_Action
         $index = Zend_Search_Lucene::create($config['indexPath']);
         if (count($goods)) {
             foreach ($goods as $g) {
-                $doc = new Zend_Search_Lucene_Document();
-                $doc->addField(Zend_Search_Lucene_Field::unIndexed('RecordID', $g['id'], 'UTF-8'));
-                $doc->addField(Zend_Search_Lucene_Field::text('name', $g['name'], 'UTF-8'));
-                $doc->addField(Zend_Search_Lucene_Field::text('description', $g['description'], 'UTF-8'));
-                $doc->addField(Zend_Search_Lucene_Field::text('article', $g['article'], 'UTF-8'));
-                $index->addDocument($doc);
+                if (!$g['folder']||empty($g['folder'])) {
+                    $doc = new Zend_Search_Lucene_Document();
+                    $doc->addField(Zend_Search_Lucene_Field::text('RecordID', $g['id'], 'UTF-8'));
+                    $doc->addField(Zend_Search_Lucene_Field::text('name', $g['name'], 'UTF-8'));
+                    $doc->addField(Zend_Search_Lucene_Field::text('description', $g['description'], 'UTF-8'));
+                    $doc->addField(Zend_Search_Lucene_Field::text('article', $g['article'], 'UTF-8'));
+                    $doc->addField(Zend_Search_Lucene_Field::unIndexed('instock', $g['instock'], 'UTF-8'));
+                    $doc->addField(Zend_Search_Lucene_Field::unIndexed('price', $g['price'], 'UTF-8'));
+                    $index->addDocument($doc);
+                }
             }
         }
         $index->commit();
-        $this->view->count = $index->count();        
+        $this->view->count = $index->count();     
         curl_close($ch);
     }
 }

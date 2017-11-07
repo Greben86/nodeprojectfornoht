@@ -1,32 +1,42 @@
+<?php $attr = ''; if (isset($this->query)&&!empty($this->query)) $attr = '?query='.$this->query; ?>
+
 <?php if ($this->pageCount): ?>
 <ul class="pagination">
     <?php if (!isset($this->previous)): ?>
-    <li class="disabled"><a href="#">&#60;&#60;</a></li>
-    <li class="disabled"><a href="#">&#60;</a></li>    
+    <li class="disabled"><a href="#"><span class="glyphicon glyphicon-fast-backward"></span></a></li>
+    <li class="disabled"><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>    
     <?php else: ?>
     <li>
-        <a href="<?php echo $this->url(array('page' => $this->first));?>">&#60;&#60;</a>
+        <a href="<?php echo $this->url(array('page' => $this->first)) . $attr;?>">
+            <span class="glyphicon glyphicon-fast-backward"></span>
+        </a>
     </li>
     <li>
-        <a href="<?php echo $this->url(array('page' => $this->previous));?>">&#60;</a>
+        <a href="<?php echo $this->url(array('page' => $this->previous)) . $attr;?>">
+            <span class="glyphicon glyphicon-step-backward"></span>
+        </a>
     </li>
     <?php endif; ?>
   <?php foreach ($this->pagesInRange as $page): ?>
   <li class="<?php echo ($page == $this->current) ? 'active' : ''; ?>">
-      <a href="<?php echo $this->url(array('page' => $page));?>">
+      <a href="<?php echo $this->url(array('page' => $page)) . $attr;?>">
           <?php echo $page; ?>
       </a>
   </li>
   <?php endforeach; ?>
   <?php if (!isset($this->next)): ?>
-    <li class="disabled"><a href="#">&#62;</a></li>
-    <li class="disabled"><a href="#">&#62;&#62;</a></li>
+    <li class="disabled"><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+    <li class="disabled"><a href="#"><span class="glyphicon glyphicon-fast-forward"></span></a></li>
   <?php else: ?>
   <li>
-      <a href="<?php echo $this->url(array('page' => $this->next));?>">&#62;</a>
+      <a href="<?php echo $this->url(array('page' => $this->next)) . $attr;?>">
+          <span class="glyphicon glyphicon-step-forward"></span>
+      </a>
   </li>
   <li>
-      <a href="<?php echo $this->url(array('page' => $this->last));?>">&#62;&#62;</a>
+      <a href="<?php echo $this->url(array('page' => $this->last)) . $attr;?>">
+          <span class="glyphicon glyphicon-fast-forward"></span>
+      </a>
   </li>
   <?php endif; ?>
 </ul>

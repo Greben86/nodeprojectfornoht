@@ -1,3 +1,16 @@
+<div class="col-md-12">
+    <form role="form" method="GET" action="<?php echo $this->url(array('page' => 1), 'catalog-search'); ?>">
+        <div class="input-group">
+            <input type="test" name="query" class="form-control" placeholder="Поиск">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+        </div>
+    </form>
+</div>
+
 <?php if (Zend_Auth::getInstance()->hasIdentity()):?>
 <div class="col-md-10">
     <ol class="breadcrumb">

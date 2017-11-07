@@ -62,21 +62,13 @@
                 });
             };
             function addToBasket(id) {
+                alert("/basket/add/"+id);
                 $.ajax({
                     url: "/basket/add/"+id,
                     dataType: "html",
                     success: function (data) {
-//                        var cont = document.getElementById('basket_widget'); 
-//                        cont.innerHTML = data;
-                        $.ajax({
-                            url: "/basket/widget",
-                            dataType: "html",
-                            success: function (data) {
-                                var cont = document.getElementById('basket_widget'); 
-                                cont.innerHTML = data;
-                            },
-                            cache: false
-                        });
+                        var cont = document.getElementById('basket_widget'); 
+                        cont.innerHTML = data;
                     },
                     cache: false
                 });
