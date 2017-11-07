@@ -216,6 +216,7 @@ class Catalog_IndexController extends Zend_Controller_Action
         $this->view->goods = json_decode($result, true);
         $paginator = Zend_Paginator::factory($this->view->goods);
         $paginator->setItemCountPerPage(15);
+        $paginator->setDefaultPageRange(7);
         $paginator->setCurrentPageNumber($input->page);
         $this->view->paginator = $paginator;
     }
@@ -247,5 +248,22 @@ class Catalog_IndexController extends Zend_Controller_Action
         $this->view->crumps = $this->buildBreadCrumps($ch, $this->view->item['owner'], false);
         
         curl_close($ch);
+    }
+    
+    public function searchAction() {
+        if ($this->getRequest()->isGet()) {
+            $data = $this->getRequest()->getParams();
+            if (!empty($data['query'])) {
+                $config = $this->getInvokeArg('bootstrap')->getOption('indexes');
+                Zend_Search_Lucene_Analysis_Analyzer::setDefault(new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8_CaseInsensitive());
+                Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('UTF-8');
+                $index = Zend_Search_Lucene::open($config['indexPath']);
+                $query = Zend_Search_Lucene_Search_QueryParser::parse($data['query']);
+                $result = $index->find($query);
+                $this->view->query = $data['query'];                
+                $this->view->result = $result;
+                $this->view->imagehost = $this->_config->api->host.'/goods/image/';
+            }
+        }
     }
 }

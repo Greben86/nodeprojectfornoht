@@ -1,0 +1,55 @@
+<?php if (Zend_Auth::getInstance()->hasIdentity()):?>
+<div class="col-md-10">
+    <ol class="breadcrumb">
+        <li><a href="/catalog/folder/0"><span class="glyphicon glyphicon-home"></span></a></li>
+        <li class="active">Поиск</li>
+    </ol>    
+</div>
+<div class="col-md-2"><div id="basket_widget"></div></div>
+<?php else: ?>
+<div class="col-md-12">
+    <ol class="breadcrumb">
+        <li><a href="/catalog/folder/0"><span class="glyphicon glyphicon-home"></span></a></li>
+        <li class="active">Поиск</li>
+    </ol>    
+</div>
+<?php endif; ?>
+
+<div class="col-md-12">
+    <form role="form" method="GET" action="<?php echo $this->url(array(), 'catalog-search'); ?>">
+        <input type="test" name="query" class="form-control" placeholder="Поиск" value="<?php echo $this->escape($this->query); ?>">
+        <button type="submit" class="btn btn-primary">
+            <span class="glyphicon glyphicon-search"></span>
+        </button>
+    </form>
+</div>
+
+<div class="col-sm-3 hidden-xs hidden-sm">
+    <div id="good_tree" onshow="loadmenu()"></div>
+</div>
+
+<div class="col-md-9">
+    <?php if (count($this->result)): ?>
+    <div class="catalog_block">
+        <ul class="catalog_list clearfix">
+            <?php foreach ($this->result as $r): ?>
+            <li class="cat_l_item">                
+                <div class="cat_l_i_wrap">
+                    <a href="/catalog/item/<?php echo $this->escape($r->RecordID); ?>">
+                    <div class="cat_l_item_img">
+                        <img src="<?php echo $this->imagehost . $this->escape($r->RecordID); ?>" alt="<?php echo $this->escape($r->name); ?>" title="<?php echo $this->escape($r->name); ?>">
+                    </div>
+                    <div class="cat_l_item_slider">&nbsp;</div>
+                    <div class="cat_l_item_hline"><?php echo $this->escape($r->name); ?></div>
+                    </a>                    
+                </div>
+            </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <?php else: ?>
+    <div class="alert alert-info">
+        <strong>По запросу "<?php echo $this->escape($this->query); ?>" ничего не найдено</strong>
+    </div>
+    <?php endif; ?>
+</div>
