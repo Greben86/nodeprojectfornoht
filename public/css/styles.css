@@ -455,17 +455,36 @@ footer.footer {
 
 .cat_l_i_wrap:hover {
     border-color: #8a898a;
-    background: rgb(255,255,255);
-    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 75%,rgba(247,247,247,1) 81%,rgba(244,244,246,1) 85%,rgba(243,243,243,1) 85%,rgba(240,240,240,1) 89%,rgba(240,240,242,1) 90%,rgba(236,237,239,1) 92%,rgba(233,233,235,1) 99%,rgba(229,229,231,1) 99%,rgba(232,232,234,1) 100%,rgba(201,201,203,1) 100%);
-    background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 75%,rgba(247,247,247,1) 81%,rgba(244,244,246,1) 85%,rgba(243,243,243,1) 85%,rgba(240,240,240,1) 89%,rgba(240,240,242,1) 90%,rgba(236,237,239,1) 92%,rgba(233,233,235,1) 99%,rgba(229,229,231,1) 99%,rgba(232,232,234,1) 100%,rgba(201,201,203,1) 100%);
     box-shadow: 0 0 5px 2px rgba(153,153,153,0.7);
+}
+
+.cat_l_item_id {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    text-align: left;
+    font: 12px Arial, sans-serif;
+    color: #404040;
+}
+
+.cat_l_item_instock {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    text-align: right;
+    font: 12px Arial, sans-serif;
+    color: #404040;
+}
+
+.instock_yes {
+    color: green;
 }
 
 .cat_l_item_img {
     position: relative;
-    width: 239px;
-    height: 230px;
-    padding: 5px;
+    width: 240px;
+    height: 200px;
+    padding: 40px 5px 5px;
     display: table-cell;
     vertical-align: middle;
     text-align: center;
@@ -474,28 +493,17 @@ footer.footer {
     overflow: hidden;
 }
 
-.cat_l_item_img:before {
-    content: "";
-    position: absolute;
-    left: 20px;
-    right: 20px;
-    display: block;
-    border-top: 2px dotted #f0f0f0;
-    bottom: 0;
-}
-
 .cat_l_item_img img {
     object-fit: cover;
     height: 150px;
     margin: 0;
-    padding: 0;
     max-width: 180px;
     vertical-align: middle;
 }
 
 .cat_l_item_slider {
     position: relative;
-    height: 20px;
+    height: 5px;
     padding: 2px 0;
     overflow: hidden;
     margin: 0 0 3px;
@@ -503,38 +511,41 @@ footer.footer {
 
 .cat_l_item_hline {
     display: table-cell;
-    height: 56px;
+    height: 100px;
     overflow: hidden;
     vertical-align: middle;
     text-align: center;
     padding:0 5px;
     line-height: 18px;
-    width: 199px;
+    width: 200px;
 }
 
 a .cat_l_item_hline{
+    position: relative;  
+    display: block;
     font: 14px Calibri, sans-serif;
     color: #000;
     text-decoration: none;
-}
-
-a .cat_l_item_hline:hover {
-    color: #404040;
-    text-decoration: underline;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .cat_l_item_wp_price {
     position: absolute;
-    right: 18px;
-    bottom: 5px;
-    left: 50px;
-    text-align: right;
+    left: 10px;
+    bottom: 10px;
+    text-align: left;
     font: 13px Arial, sans-serif;
     color: #000;
 }
-
-
 .cat_l_item_price {
     font-size: 20px;
     font-weight: bold;
+}
+
+.cat_l_item_basket {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    text-align: right;
 }

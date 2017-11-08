@@ -1,4 +1,4 @@
-<?php if ($this->visible): ?>
+<?php if (Zend_Auth::getInstance()->hasIdentity()):?>
 <a href="<?php echo $this->url(array(), 'basket'); ?>" class="btn btn-warning">
     <span class="glyphicon glyphicon-shopping-cart"></span>
     <?php if ($this->count>0): ?>
@@ -6,5 +6,9 @@
     <?php else: ?>
     Корзина
     <?php endif; ?>
+</a>
+<?php else:?>
+<a class="btn btn-warning" disabled="disabled" data-toggle="tooltip" data-placement="top" title="Для этого действия требуется авторизоваться">
+    <span class="glyphicon glyphicon-shopping-cart"></span> Корзина
 </a>
 <?php endif; ?>

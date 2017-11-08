@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="col-md-10">
     <form role="form" method="GET" action="<?php echo $this->url(array('page' => 1), 'catalog-search'); ?>">
         <div class="input-group">
             <input type="test" name="query" class="form-control" placeholder="Поиск" value="<?php echo $this->escape($this->query); ?>">
@@ -10,23 +10,14 @@
         </div>
     </form>
 </div>
-
-<?php if (Zend_Auth::getInstance()->hasIdentity()):?>
-<div class="col-md-10">
-    <ol class="breadcrumb">
-        <li><a href="/catalog/folder/0"><span class="glyphicon glyphicon-home"></span></a></li>
-        <li class="active">Поиск</li>
-    </ol>    
-</div>
 <div class="col-md-2"><div id="basket_widget"></div></div>
-<?php else: ?>
+
 <div class="col-md-12">
     <ol class="breadcrumb">
         <li><a href="/catalog/folder/0"><span class="glyphicon glyphicon-home"></span></a></li>
         <li class="active">Поиск</li>
     </ol>    
 </div>
-<?php endif; ?>
 
 <div class="col-sm-3 hidden-xs hidden-sm">
     <div id="good_tree" onshow="loadmenu()"></div>
@@ -39,30 +30,39 @@
         <ul class="catalog_list clearfix">
             <?php foreach ($this->paginator as $r): ?>
             <li class="cat_l_item">                
-                <div class="cat_l_i_wrap">
-                    <?php if (Zend_Auth::getInstance()->hasIdentity()):?>
-                    <button type="button" class="btn btn-link btn-xs" onclick="addToBasket(<?php echo $this->escape($r->RecordID); ?>)">
-                        <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
-                    </button>
-                    <?php endif; ?>
+                <div class="cat_l_i_wrap">   
                     <a href="/catalog/item/<?php echo $this->escape($r->RecordID); ?>">
+                        <small class="cat_l_item_id">Код <?php  echo $this->escape($r->RecordID);?></small>
+                        <small class="cat_l_item_instock <?php  echo $this->escape($r->instock)?'instock_yes':'';?>">
+                            <?php echo $this->escape($r->instock)?'в наличии':'под заказ';?>
+                        </small>
                         <div class="cat_l_item_img">
-                            <img src="<?php echo $this->imagehost . $this->escape($r->RecordID); ?>" alt="<?php echo $this->escape($r->name); ?>" title="<?php echo $this->escape($r->name); ?>">
+                            <img src="<?php echo $this->imagehost.$this->escape($r->RecordID);?>">
                         </div>
                         <div class="cat_l_item_slider">&nbsp;</div>
-                        <div class="cat_l_item_hline"><?php echo $this->queryobj->htmlFragmentHighlightMatches($r->name); ?></div>
-                        <small><?php  echo $this->escape($r->instock)>0 ? 'В наличии' : 'Под заказ';?></small>
+                        <div class="cat_l_item_hline"><?php echo $this->queryobj->htmlFragmentHighlightMatches($this->escape($r->name)); ?></div>                      
                         <div class="cat_l_item_wp_price">
-                            <span class="cat_l_item_price"><?php echo $this->escape($r->price); ?></span> р.
+                            <span class="cat_l_item_price"><?php echo $this->escape($r->price); ?></span> &#8381;
                         </div>
                     </a>
+                    <div class="cat_l_item_basket">
+                        <?php if (Zend_Auth::getInstance()->hasIdentity()):?>
+                        <button type="button" class="btn btn-default btn-xs" onclick="addToBasket(<?php echo $this->escape($r->RecordID); ?>)">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
+                        </button>
+                        <?php else:?>
+                        <button type="button" class="btn btn-default btn-xs" disabled="disabled" data-toggle="tooltip" data-placement="top" title="Для этого действия требуется авторизоваться">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
+                        </button>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </li>
             <?php endforeach; ?>
         </ul>
     </div>
     <?php else: ?>
-    <div class="alert alert-info">
+    <div class="alert alert-warning">
         <strong>По запросу "<?php echo $this->escape($this->query); ?>" ничего не найдено</strong>
     </div>
     <?php endif; ?>

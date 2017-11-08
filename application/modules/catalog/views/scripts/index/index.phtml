@@ -1,5 +1,5 @@
-<div class="col-md-12">
-    <form role="form" method="GET" action="<?php echo $this->url(array('page' => 1), 'catalog-search'); ?>">        
+<div class="col-md-10">
+    <form role="form" method="GET" action="<?php echo $this->url(array('page' => 1), 'catalog-search'); ?>">
         <div class="input-group">
             <input type="test" name="query" class="form-control" placeholder="Поиск">
             <span class="input-group-btn">
@@ -10,21 +10,13 @@
         </div>
     </form>
 </div>
-
-<?php if (Zend_Auth::getInstance()->hasIdentity()):?>
-<div class="col-md-10">
-    <ol class="breadcrumb">
-        <?php echo $this->crumps;?>
-    </ol>    
-</div>
 <div class="col-md-2"><div id="basket_widget"></div></div>
-<?php else: ?>
+
 <div class="col-md-12">
     <ol class="breadcrumb">
         <?php echo $this->crumps;?>
     </ol>    
 </div>
-<?php endif; ?>
 
 <div class="col-sm-3 hidden-xs hidden-sm">
     <div id="good_tree" onshow="loadmenu()"></div>
@@ -42,29 +34,38 @@
         <ul class="catalog_list clearfix">
             <?php foreach ($this->goods as $r): ?>
             <li class="cat_l_item">                
-                <div class="cat_l_i_wrap">
-                    <?php if (!$r['folder']||empty($r['folder'])):?>
-                    <?php if (Zend_Auth::getInstance()->hasIdentity()):?>
-                    <button type="button" class="btn btn-link btn-xs" onclick="addToBasket(<?php echo $r['id']; ?>)">
-                        <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
-                    </button>
-                    <?php endif; ?>
-                    <a href="/catalog/item/<?php echo $r['id']; ?>">
-                    <?php else:?>
-                    <a href="/catalog/folder/<?php echo $r['id']; ?>">
-                    <?php endif;?>
+                <div class="cat_l_i_wrap">   
+                    <a href="/catalog/<?php echo ($r['folder']?'folder/':'item/').$r['id'] ?>">
+                        <?php if (!$r['folder']):?>
+                        <small class="cat_l_item_id">Код <?php  echo $r['id'];?></small>
+                        <small class="cat_l_item_instock <?php  echo $r['instock']?'instock_yes':'';?>">
+                            <?php echo $r['instock']?'в наличии':'под заказ';?>
+                        </small>
+                        <?php endif; ?> 
                         <div class="cat_l_item_img">
-                            <img src="<?php echo $this->imagehost . $r['id']; ?>" alt="<?php echo $r['name']; ?>" title="<?php echo $r['name']; ?>">
+                            <img src="<?php echo $this->imagehost.$r['id'];?>">
                         </div>
                         <div class="cat_l_item_slider">&nbsp;</div>
                         <div class="cat_l_item_hline"><?php echo $r['name']; ?></div>
-                        <?php if (!$r['folder']||empty($r['folder'])):?>
-                        <small><?php  echo $r['instock']>0 ? 'В наличии' : 'Под заказ';?></small>
+                        <?php if (!$r['folder']):?>                        
                         <div class="cat_l_item_wp_price">
-                            <span class="cat_l_item_price"><?php echo $r['price']; ?></span> р.
+                            <span class="cat_l_item_price"><?php echo $r['price']; ?></span> &#8381;
                         </div>
                         <?php endif; ?>
-                    </a>                    
+                    </a>
+                    <?php if (!$r['folder']):?> 
+                    <div class="cat_l_item_basket">
+                        <?php if (Zend_Auth::getInstance()->hasIdentity()):?>
+                        <button type="button" class="btn btn-default btn-xs" onclick="addToBasket(<?php echo $r['id']; ?>)">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
+                        </button>
+                        <?php else:?>
+                        <button type="button" class="btn btn-default btn-xs" disabled="disabled" data-toggle="tooltip" data-placement="top" title="Для этого действия требуется авторизоваться">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
+                        </button>
+                        <?php endif; ?>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </li>
             <?php endforeach; ?>
