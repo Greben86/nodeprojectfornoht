@@ -37,7 +37,7 @@
                             <?php echo $this->escape($r->instock)?'в наличии':'под заказ';?>
                         </small>
                         <div class="cat_l_item_img">
-                            <img src="<?php echo $this->imagehost.$this->escape($r->RecordID);?>">
+                            <img data-src="<?php echo $this->imagehost.$this->escape($r->RecordID);?>">
                         </div>
                         <div class="cat_l_item_slider">&nbsp;</div>
                         <div class="cat_l_item_hline"><?php echo $this->queryobj->htmlFragmentHighlightMatches($this->escape($r->name)); ?></div>                      
@@ -67,6 +67,16 @@
     </div>
     <?php endif; ?>
 </div>
+
+<script type='text/javascript'>
+    [].forEach.call(document.querySelectorAll('img[data-src]'), function(img) {
+      img.setAttribute('src', img.getAttribute('data-src'));
+      img.setAttribute('style', "background: none");
+      img.onload = function() {
+        img.removeAttribute('data-src');
+      };
+    });
+</script>
 
 <?php if (count($this->paginator)): ?>
 <div class="col-md-12">

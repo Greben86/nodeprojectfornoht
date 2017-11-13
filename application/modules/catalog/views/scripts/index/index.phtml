@@ -33,8 +33,8 @@
     <div class="catalog_block">
         <ul class="catalog_list clearfix">
             <?php foreach ($this->goods as $r): ?>
-            <li class="cat_l_item">                
-                <div class="cat_l_i_wrap">   
+            <li class="cat_l_item">
+                <div class="cat_l_i_wrap">
                     <a href="/catalog/<?php echo ($r['folder']?'folder/':'item/').$r['id'] ?>">
                         <?php if (!$r['folder']):?>
                         <small class="cat_l_item_id">Код <?php  echo $r['id'];?></small>
@@ -43,7 +43,7 @@
                         </small>
                         <?php endif; ?> 
                         <div class="cat_l_item_img">
-                            <img src="<?php echo $this->imagehost.$r['id'];?>">
+                            <img data-src="<?php echo $this->imagehost.$r['id'];?>">
                         </div>
                         <div class="cat_l_item_slider">&nbsp;</div>
                         <div class="cat_l_item_hline"><?php echo $r['name']; ?></div>
@@ -77,3 +77,13 @@
     </div>
     <?php endif; ?>
 </div>
+
+<script type='text/javascript'>
+    [].forEach.call(document.querySelectorAll('img[data-src]'), function(img) {
+      img.setAttribute('src', img.getAttribute('data-src'));
+      img.setAttribute('style', "background: none");
+      img.onload = function() {
+        img.removeAttribute('data-src');
+      };
+    });
+</script>

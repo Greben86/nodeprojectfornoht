@@ -15,7 +15,7 @@
 <div class="col-md-12">
     <ol class="breadcrumb">
         <?php echo $this->crumps;?>
-    </ol>    
+    </ol>
 </div>
 
 <div class="col-sm-3 hidden-xs hidden-sm">
@@ -28,9 +28,24 @@
             <h3 class="panel-title"><?php echo $this->item['name']; ?></h3>
         </div>
         <div class="panel-body">
-            <div class="cat_l_item_img">
-                <img src="<?php echo $this->imagehost . $this->item['id']; ?>" alt="<?php echo $this->item['name']; ?>" title="<?php echo $this->item['name']; ?>">
+            <div class="cat_item_img_full">
+                <img src="<?php echo $this->imagehost.$this->item['id']; ?>">
             </div>
+            <div class="cat_item_basket">
+                <?php if (Zend_Auth::getInstance()->hasIdentity()):?>
+                <button type="button" class="btn btn-default" onclick="addToBasket(<?php echo $this->item['id']; ?>)">
+                    <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
+                </button>
+                <?php else:?>
+                <button type="button" class="btn btn-default" disabled="disabled" data-toggle="tooltip" data-placement="top" title="Для этого действия требуется авторизоваться">
+                    <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
+                </button>
+                <?php endif; ?>
+            </div>
+            
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#">Описание товара</a></li>
+            </ul>
 
             <dl class="dl-horizontal">
                 <dt>Код товара</dt>
@@ -43,27 +58,13 @@
                 <dd><?php echo $this->item['article']; ?></dd>
 
                 <dt>Цена</dt>
-                <dd><span><?php echo $this->item['price']; ?></span> р.</dd>
+                <dd><span><?php echo $this->item['price'];?></span> р.</dd>
 
                 <dt>Наличие</dt>
-                <dd><small><?php  echo $this->item['instock'] ? 'в наличии' : 'под заказ';?></small></dd>
+                <dd><small><?php echo $this->item['instock']?'в наличии':'под заказ';?></small></dd>
             </dl>
-            <?php if (Zend_Auth::getInstance()->hasIdentity()):?>
-            <button type="button" class="btn btn-default" onclick="addToBasket(<?php echo $this->item['id']; ?>)">
-                <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
-            </button>
-            <?php else:?>
-            <button type="button" class="btn btn-default" disabled="disabled" data-toggle="tooltip" data-placement="top" title="Для этого действия требуется авторизоваться">
-                <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
-            </button>
-            <?php endif; ?>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Пункт выдачи товаров</h3>
-        </div>
-        <div class="panel-body">            
+            
+            <h4>Пункт выдачи товаров</h4>
             <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
             <script type="text/javascript">
                 ymaps.ready(init);

@@ -490,15 +490,17 @@ footer.footer {
     text-align: center;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: hidden;    
 }
 
 .cat_l_item_img img {
     object-fit: cover;
     height: 150px;
-    margin: 0;
+    /*width: 180px;*/
     max-width: 180px;
+    margin: 0;    
     vertical-align: middle;
+    background: url(/img/loading.gif) 50% no-repeat;
 }
 
 .cat_l_item_slider {
@@ -548,4 +550,29 @@ a .cat_l_item_hline{
     right: 10px;
     bottom: 10px;
     text-align: right;
+}
+
+.cat_item_basket {
+    position: absolute;
+    right: 20px;
+    top: 80px;
+    text-align: right;
+}
+
+.cat_item_img_full {
+    position: relative;
+    padding: 40px 5px 5px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.cat_item_img_full img {
+    object-fit: cover;
+    height: 250px;
+    margin: 0;
+    vertical-align: middle;
 }

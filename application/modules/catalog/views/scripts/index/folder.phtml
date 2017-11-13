@@ -37,13 +37,13 @@
                 <div class="cat_l_i_wrap">   
                     <a href="/catalog/<?php echo ($r['folder']?'folder/':'item/').$r['id'] ?>">
                         <?php if (!$r['folder']):?>
-                        <small class="cat_l_item_id">Код <?php  echo $r['id'];?></small>
-                        <small class="cat_l_item_instock <?php  echo $r['instock']?'instock_yes':'';?>">
+                        <small class="cat_l_item_id">Код <?php echo $r['id'];?></small>
+                        <small class="cat_l_item_instock <?php echo $r['instock']?'instock_yes':'';?>">
                             <?php echo $r['instock']?'в наличии':'под заказ';?>
                         </small>
                         <?php endif; ?> 
                         <div class="cat_l_item_img">
-                            <img src="<?php echo $this->imagehost.$r['id'];?>">
+                            <img data-src="<?php echo $this->imagehost.$r['id'];?>">
                         </div>
                         <div class="cat_l_item_slider">&nbsp;</div>
                         <div class="cat_l_item_hline"><?php echo $r['name']; ?></div>
@@ -56,7 +56,7 @@
                     <?php if (!$r['folder']):?> 
                     <div class="cat_l_item_basket">
                         <?php if (Zend_Auth::getInstance()->hasIdentity()):?>
-                        <button type="button" class="btn btn-default btn-xs" onclick="addToBasket(<?php echo $r['id']; ?>)">
+                        <button type="button" class="btn btn-default btn-xs" onclick="addToBasket(<?php echo $r['id'];?>)">
                             <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
                         </button>
                         <?php else:?>
@@ -77,6 +77,16 @@
     </div>
     <?php endif; ?>
 </div>
+
+<script type='text/javascript'>
+    [].forEach.call(document.querySelectorAll('img[data-src]'), function(img) {
+      img.setAttribute('src', img.getAttribute('data-src'));
+      img.setAttribute('style', "background: none");
+      img.onload = function() {
+        img.removeAttribute('data-src');
+      };
+    });
+</script>
 
 <div class="col-md-12">
     <div class="text-center">
