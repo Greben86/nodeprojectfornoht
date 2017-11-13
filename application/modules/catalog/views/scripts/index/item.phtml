@@ -31,8 +31,9 @@
             <div class="cat_item_img_full">
                 <img src="<?php echo $this->imagehost.$this->item['id']; ?>">
             </div>
-            <div class="cat_item_basket">
-                <?php if (Zend_Auth::getInstance()->hasIdentity()):?>
+            <div class="cat_item_basket">                
+                <input type="number" class="form-control" id="basket_count" value="1">
+                <?php if (Zend_Auth::getInstance()->hasIdentity()):?>                
                 <button type="button" class="btn btn-default" onclick="addToBasket(<?php echo $this->item['id']; ?>)">
                     <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
                 </button>

@@ -63,9 +63,14 @@
                 });
             };
             function addToBasket(id) {
-                alert("/basket/add/"+id);
+                var cont = document.getElementById('basket_count');
+                var add_url = "/basket/add/"+id;
+                if (cont!==null) {
+                    add_url = add_url + "/" + cont.value;
+                }
+                alert(add_url);
                 $.ajax({
-                    url: "/basket/add/"+id,
+                    url: add_url,
                     dataType: "html",
                     success: function (data) {
                         var cont = document.getElementById('basket_widget'); 

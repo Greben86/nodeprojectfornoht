@@ -63,10 +63,12 @@ class Basket_IndexController extends Zend_Controller_Action
         // устанавливаем фильтры и валидаторы для входных данных
         // полученных в запросе
         $filters = array(
-            'id' => array('StripTags', 'StringTrim')
+            'id' => array('StripTags', 'StringTrim'),
+            'count' => array('StripTags', 'StringTrim')
         );
         $validators = array(
-            'id' => array('NotEmpty', 'Int')
+            'id' => array('NotEmpty', 'Int'),
+            'count' => array('Digits')
         );
 
         // проверяем корректность входных данных
@@ -91,14 +93,14 @@ class Basket_IndexController extends Zend_Controller_Action
                 "SELECT * FROM `basket` WHERE `good`=".$input->id." and `session`='".Zend_Session::getId()."'");
                 if (count($result)) {
                     $data = array(
-                        'count'     => $result[0]['count'] + 1
+                        'count'     => $result[0]['count'] + $input->count
                     );
                     $db->update('basket', $data, "`good`=".$input->id." and `session`='".Zend_Session::getId()."'");
                 } else {
                     $data = array(
                         'good'      => $input->id,
                         'session'   => Zend_Session::getId(),
-                        'count'     => 1
+                        'count'     => $input->count
                     );
                     $db->insert('basket', $data);
                 }
