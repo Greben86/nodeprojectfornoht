@@ -25,83 +25,90 @@
 <div class="col-md-9">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title"><?php echo $this->item['name']; ?></h3>
+            <h3 class="panel-title">
+                <?php echo $this->item['name']; ?>
+            </h3>
         </div>
         <div class="panel-body">
             <div class="gooditem-container">
                 <div class="col-md-7">
-                    <div class="gooditem-img">
+                    <div class="gooditem-img" id="img_zoom">
                         <img src="<?php echo $this->imagehost . $this->item['id']; ?>" alt="<?php echo $this->item['name']; ?>" title="<?php echo $this->item['name']; ?>">
                     </div>
                 </div>
                 <div class="col-md-5">
-            </div>
                     <div class="gooditem-detail">
-                <input type="number" class="form-control" id="basket_count" value="1">
-                        <?php if (Zend_Auth::getInstance()->hasIdentity()):?>
-                        <button type="button" class="btn btn-default" onclick="addToBasket(<?php echo $this->item['id']; ?>)">
-                            <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
-                        </button>
-                        <?php else:?>
-                        <button type="button" class="btn btn-default" disabled="disabled" data-toggle="tooltip" data-placement="top" title="Для этого действия требуется авторизоваться">
-                            <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
-                        </button>
-                        <?php endif; ?>
+                        <div class="stocks">
+                            <strong class="stock-high"><i class="fa fa-circle"></i></strong> 
+                            <?php echo $this->item['instock']?'в наличии':'под заказ';?>
+                        </div>
+                        <div>
+                            <span class="cat_l_item_price"><?php echo $this->item['price']; ?></span> &#8381;
+                            <input type="hidden" name="product_id" value="<?php echo $this->item['id']; ?>">
+                            <span class="qty pull-right">
+                                <input type="text" name="quantity" value="1" class="tt-input" id="basket_count" maxlength="5">
+                            </span>
+                            <div>
+                                <?php if (Zend_Auth::getInstance()->hasIdentity()):?>
+                                <button type="button" onclick="addToBasket(<?php echo $this->item['id']; ?>)">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
+                                </button>
+                                <?php else:?>
+                                <button type="button" disabled="disabled" data-toggle="tooltip" data-placement="top" title="Для этого действия требуется авторизоваться">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
+                                </button>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <small>Код <?php echo $this->item['id'];?></small>
+                        <br>
+                        <small>Артикул <?php echo $this->item['article']; ?></small>
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <h4>Описание</h4>
+                    <p><?php echo $this->item['description']; ?></p>
+                </div>
             </div>
-
-            <dl class="dl-horizontal">
-                <dt>Код товара</dt>
-                <dd><?php echo $this->item['id']; ?></dd>
-
-                <dt>Описание</dt>
-                <dd><?php echo $this->item['description']; ?></dd>
-
-                <dt>Артикул</dt>
-                <dd><?php echo $this->item['article']; ?></dd>
-
-                <dt>Цена</dt>
-                <dd><span><?php echo $this->item['price'];?></span> р.</dd>
-
-                <dt>Наличие</dt>
-                <dd><small><?php echo $this->item['instock']?'в наличии':'под заказ';?></small></dd>
-            </dl>
+                    
         </div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Пункт выдачи товаров</h3>
-        </div>
-        <div class="panel-body">            
-            <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
-            <script type="text/javascript">
-                ymaps.ready(init);
-                var myMap, 
-                    myPlacemark;
+</div>
+<div class="col-md-12">
+    <h3>Пункт выдачи товаров</h3>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script type="text/javascript">
+        ymaps.ready(init);
+        var myMap, 
+            myPlacemark;
 
-                function init(){ 
-                    myMap = new ymaps.Map("map", {
-                        center: [56.28972796, 43.98710038],
-                        zoom: 17
-                    }, {
-                        searchControlProvider: 'yandex#search'
-                    }); 
+        function init(){ 
+            myMap = new ymaps.Map("map", {
+                center: [56.28972796, 43.98710038],
+                zoom: 17,
+                controls: []
+            }, {
+                searchControlProvider: 'yandex#search'
+            }); 
 
-                    myPlacemark = new ymaps.Placemark([56.28972796, 43.98710038], {
-                        hintContent: 'Пункт выдачи товара', 
-                        balloonContent: 'ПК ВО Содействие' 
-                    });
+            myPlacemark = new ymaps.Placemark([56.28972796, 43.98710038], {
+                hintContent: 'Пункт выдачи товара', 
+                balloonContent: 'ПК ВО Содействие' 
+            });
 
-                    myMap.geoObjects.add(myPlacemark);
-                }
-            </script>
+            myMap.geoObjects.add(myPlacemark);
+            
+            myMap.behaviors.disable('scrollZoom');
+            
+            myMap.controls.add("zoomControl", {
+                position: {top: 15, left: 15}
+            });
+        }
+    </script>
 
-            <div id="map" style="width: 100%; height: 500px; margin-bottom: 30px"></div>
+    <div id="map" style="width: 100%; height: 500px; margin-bottom: 30px"></div>
 
-            <noscript style="color:#c00;font-size:16px;font-weight:bold;">
-                Виджет карты использует JavaScript. Включите его в настройках вашего браузера.
-            </noscript>
-        </div>
-    </div>
+    <noscript style="color:#c00;font-size:16px;font-weight:bold;">
+        Виджет карты использует JavaScript. Включите его в настройках вашего браузера.
+    </noscript>
 </div>

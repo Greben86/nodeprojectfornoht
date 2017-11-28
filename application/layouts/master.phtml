@@ -28,6 +28,7 @@
         <script type="text/javascript" src="/lightbox/js/lightbox.js"></script>
         <script type="text/javascript" src="/js/back-top.js"></script>
         <script type="text/javascript" src="/js/mobile-nav.js"></script>
+        <script type="text/javascript" src="/js/zoom.js"></script>
         <script>
             lightbox.option({
               'albumLabel': 'Изображение %1 из %2'
@@ -76,6 +77,11 @@
                 });
             }
         </script>    
+        <script>
+            $(document).ready(function(){
+                    $('#img_zoom').zoom();
+            });
+	</script>
     </head>
 
     <body>
