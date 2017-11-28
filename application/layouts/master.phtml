@@ -41,10 +41,6 @@
                         if (cont!==null) {
                             cont.innerHTML = data;
 
-                            var libTree = document.createElement('script');
-                            libTree.src = '/js/jquery.menu-aim.js';
-                            document.body.appendChild(libTree);
-
                             var scriptTree = document.createElement('script');
                             scriptTree.src = '/js/tree.js';
                             document.body.appendChild(scriptTree);
@@ -56,7 +52,7 @@
                     url: "/basket/widget",
                     dataType: "html",
                     success: function (data) {
-                        var cont = document.getElementById('basket_widget'); 
+                        var cont = document.getElementById('menu-basket_widget'); 
                         cont.innerHTML = data;
                     },
                     cache: false
@@ -73,7 +69,7 @@
                     url: add_url,
                     dataType: "html",
                     success: function (data) {
-                        var cont = document.getElementById('basket_widget'); 
+                        var cont = document.getElementById('menu-basket_widget'); 
                         cont.innerHTML = data;
                     },
                     cache: false
@@ -204,10 +200,10 @@
 
                 <div class="nav-container hidden-xs hidden-sm">
                     <?php
-                    echo $this->navigation()
-                            ->menu()
-                            ->renderMenu(null, array());
+                    echo $this->navigation()->menu()->renderMenu(null, array());
                     ?>
+                    
+                    <!--<div id="basket_widget"></div>-->
                 </div>
                 
                 <div class="col-lg-1">

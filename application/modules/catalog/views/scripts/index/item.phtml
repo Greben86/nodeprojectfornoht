@@ -28,25 +28,28 @@
             <h3 class="panel-title"><?php echo $this->item['name']; ?></h3>
         </div>
         <div class="panel-body">
-            <div class="cat_item_img_full">
-                <img src="<?php echo $this->imagehost.$this->item['id']; ?>">
+            <div class="gooditem-container">
+                <div class="col-md-7">
+                    <div class="gooditem-img">
+                        <img src="<?php echo $this->imagehost . $this->item['id']; ?>" alt="<?php echo $this->item['name']; ?>" title="<?php echo $this->item['name']; ?>">
+                    </div>
+                </div>
+                <div class="col-md-5">
             </div>
-            <div class="cat_item_basket">                
+                    <div class="gooditem-detail">
                 <input type="number" class="form-control" id="basket_count" value="1">
-                <?php if (Zend_Auth::getInstance()->hasIdentity()):?>                
-                <button type="button" class="btn btn-default" onclick="addToBasket(<?php echo $this->item['id']; ?>)">
-                    <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
-                </button>
-                <?php else:?>
-                <button type="button" class="btn btn-default" disabled="disabled" data-toggle="tooltip" data-placement="top" title="Для этого действия требуется авторизоваться">
-                    <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
-                </button>
-                <?php endif; ?>
+                        <?php if (Zend_Auth::getInstance()->hasIdentity()):?>
+                        <button type="button" class="btn btn-default" onclick="addToBasket(<?php echo $this->item['id']; ?>)">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
+                        </button>
+                        <?php else:?>
+                        <button type="button" class="btn btn-default" disabled="disabled" data-toggle="tooltip" data-placement="top" title="Для этого действия требуется авторизоваться">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> В корзину
+                        </button>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
-            
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#">Описание товара</a></li>
-            </ul>
 
             <dl class="dl-horizontal">
                 <dt>Код товара</dt>
@@ -64,8 +67,13 @@
                 <dt>Наличие</dt>
                 <dd><small><?php echo $this->item['instock']?'в наличии':'под заказ';?></small></dd>
             </dl>
-            
-            <h4>Пункт выдачи товаров</h4>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Пункт выдачи товаров</h3>
+        </div>
+        <div class="panel-body">            
             <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
             <script type="text/javascript">
                 ymaps.ready(init);

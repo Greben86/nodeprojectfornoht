@@ -273,7 +273,7 @@ class Catalog_IndexController extends Zend_Controller_Action
                 $analyzer = new My_Analysis_Analyzer_Common_Utf8();
                 $analyzer->addFilter(new Zend_Search_Lucene_Analysis_TokenFilter_LowerCase());
                 $analyzer->addFilter(new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords());
-                $analyzer->addFilter(new PHPMorphy_TokenFilter());
+//                $analyzer->addFilter(new PHPMorphy_TokenFilter());
                 Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
                 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('UTF-8');
                 $index = Zend_Search_Lucene::open($config['indexPath']);
