@@ -41,7 +41,7 @@ class Basket_IndexController extends Zend_Controller_Action
         }
         
         $result = $db->fetchAll(
-                "SELECT b.id, b.good, g.name, g.price, b.count ".
+                "SELECT b.id, b.good, g.name, g.price, g.instock, b.count ".
                 "FROM `basket` b ".
                 "   INNER JOIN `goods` g ON (g.id=b.good) ".
                 "WHERE `session`='".Zend_Session::getId()."'".
