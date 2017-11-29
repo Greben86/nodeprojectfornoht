@@ -1,19 +1,18 @@
 <?php $attr = ''; if (isset($this->query)&&!empty($this->query)) $attr = '?query='.$this->query; ?>
 
-<?php if ($this->pageCount): ?>
+<?php if ($this->pageCount>1): ?>
 <ul class="pagination">
-    <?php if (!isset($this->previous)): ?>
-    <li class="disabled"><a href="#"><span class="glyphicon glyphicon-fast-backward"></span></a></li>
-    <li class="disabled"><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>    
-    <?php else: ?>
+    <?php if (isset($this->previous)): ?>
+    <?php if ($this->firstPageInRange>1): ?>
     <li>
         <a href="<?php echo $this->url(array('page' => $this->first)) . $attr;?>">
-            <span class="glyphicon glyphicon-fast-backward"></span>
+            1
         </a>
     </li>
+    <?php endif; ?>
     <li>
         <a href="<?php echo $this->url(array('page' => $this->previous)) . $attr;?>">
-            <span class="glyphicon glyphicon-step-backward"></span>
+            <span class="glyphicon glyphicon-chevron-left"></span>
         </a>
     </li>
     <?php endif; ?>
@@ -24,20 +23,19 @@
       </a>
   </li>
   <?php endforeach; ?>
-  <?php if (!isset($this->next)): ?>
-    <li class="disabled"><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
-    <li class="disabled"><a href="#"><span class="glyphicon glyphicon-fast-forward"></span></a></li>
-  <?php else: ?>
+  <?php if (isset($this->next)): ?>
   <li>
       <a href="<?php echo $this->url(array('page' => $this->next)) . $attr;?>">
-          <span class="glyphicon glyphicon-step-forward"></span>
+          <span class="glyphicon glyphicon-chevron-right"></span>
       </a>
   </li>
+  <?php if ($this->lastPageInRange<$this->last): ?>
   <li>
       <a href="<?php echo $this->url(array('page' => $this->last)) . $attr;?>">
-          <span class="glyphicon glyphicon-fast-forward"></span>
+          <?php echo $this->last; ?>
       </a>
   </li>
+  <?php endif; ?>
   <?php endif; ?>
 </ul>
 <?php endif; ?>
