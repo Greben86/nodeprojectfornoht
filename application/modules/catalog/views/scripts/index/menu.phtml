@@ -8,7 +8,9 @@
     <ul class="Container" id="tree">
       <?php foreach ($this->folders as $f): ?>
       <li data-submenu-id="submenu-<?php echo $f['id']; ?>" id="<?php echo $f['id']; ?>" class="catalog_sidebar_node Node IsRoot ExpandClosed">
+        <?php if ($f['haschild']): ?>
         <div class="Expand" onclick="clickExpand()"></div>
+        <?php endif; ?>
         <a href="/catalog/folder/<?php echo $f['id']; ?>">
             <?php echo $f['name']; ?>
         </a>
