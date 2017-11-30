@@ -17,16 +17,20 @@ class Basket_WidgetController extends Zend_Controller_Action
             'password' => $localConfig->database->pass
         ));
 
-        $result = $db->fetchAll(
-                "SELECT SUM(b.count) AS Count, SUM(g.price * b.count) AS Summa  ".
-                "FROM `basket` b ".
-                "   INNER JOIN `goods` g ON (g.id=b.good) ".
-                "WHERE `session`='".Zend_Session::getId()."'");
+        if (Zend_Auth::getInstance()->hasIdentity()) {
+            $result = $db->fetchAll(
+                    "SELECT SUM(b.count) AS Count, SUM(g.price * b.count) AS Summa  ".
+                    "FROM `basket` b ".
+                    "   INNER JOIN `goods` g ON (g.id=b.good) ".
+                    "WHERE `session`='".Zend_Session::getId()."'");
 
-        $this->view->records = $result;
-
-        $this->view->visible = true;
-        $this->view->count = $result[0]['Count'];
-        $this->view->summa = money_format('%i', $result[0]['Summa']);
+            $this->view->records = $result;
+            $this->view->count = $result[0]['Count'];
+            $this->view->summa = money_format('%i', $result[0]['Summa']);
+        } else {
+            $this->view->records = array();
+            $this->view->count = 0;
+            $this->view->summa = '';
+        }
     }
 }
