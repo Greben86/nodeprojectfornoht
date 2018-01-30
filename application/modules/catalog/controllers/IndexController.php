@@ -254,6 +254,56 @@ class Catalog_IndexController extends Zend_Controller_Action
         curl_close($ch);
     }
     
+//    public function searchAction() {
+//        // Устанавливаем фильтры и валидаторы для данных, полученных из POST
+//        $filters = array(
+//            'page' => array('HtmlEntities', 'StripTags', 'StringTrim')
+//        );
+//        $validators = array(
+//            'page' => array('Int')
+//        );
+//        
+//        $input = new Zend_Filter_Input($filters, $validators);
+//        $input -> setData($this->getRequest()->getParams());
+//        
+//        if ($this->getRequest()->isGet()) {
+//            $data = $this->getRequest()->getParams();
+//            if (!empty($data['query'])) {
+//                $config = $this->getInvokeArg('bootstrap')->getOption('indexes');
+//                $analyzer = new My_Analysis_Analyzer_Common_Utf8();
+//                $analyzer->addFilter(new Zend_Search_Lucene_Analysis_TokenFilter_LowerCase());
+//                $analyzer->addFilter(new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords());
+////                $analyzer->addFilter(new PHPMorphy_TokenFilter());
+//                Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
+//                Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('UTF-8');
+//                $index = Zend_Search_Lucene::open($config['indexPath']);
+//                $query = Zend_Search_Lucene_Search_QueryParser::parse($data['query']);
+//                $result = $index->find($query, 'name', SORT_STRING);
+//                $this->view->query = $data['query'];
+//                $this->view->queryobj = $query;
+//                $this->view->imagehost = $this->_config->api->host.'/goods/image/';
+//                $paginator = Zend_Paginator::factory($result);
+//                $paginator->setItemCountPerPage(15);
+//                $paginator->setDefaultPageRange(7);
+//                $paginator->setCurrentPageNumber($input->page);
+//                $this->view->result = $result;
+//                $this->view->paginator = $paginator;
+//            }
+//        }
+//    }
+    public function parseQueryString($query) {
+        $words = explode(" ", $query);
+        unset($query);
+        $query = "";
+        foreach ($words as $word) {
+            $query .= '(*' . $word . '*)';
+            if ($word != end($words)) {
+                $query .= ' AND ';
+            }
+        }
+        return $query;
+    }
+
     public function searchAction() {
         // Устанавливаем фильтры и валидаторы для данных, полученных из POST
         $filters = array(
@@ -269,16 +319,17 @@ class Catalog_IndexController extends Zend_Controller_Action
         if ($this->getRequest()->isGet()) {
             $data = $this->getRequest()->getParams();
             if (!empty($data['query'])) {
+                
                 $config = $this->getInvokeArg('bootstrap')->getOption('indexes');
                 $analyzer = new My_Analysis_Analyzer_Common_Utf8();
                 $analyzer->addFilter(new Zend_Search_Lucene_Analysis_TokenFilter_LowerCase());
                 $analyzer->addFilter(new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords());
-//                $analyzer->addFilter(new PHPMorphy_TokenFilter());
+
                 Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
                 Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('UTF-8');
                 $index = Zend_Search_Lucene::open($config['indexPath']);
-                $query = Zend_Search_Lucene_Search_QueryParser::parse($data['query']);
-                $result = $index->find($query, 'name', SORT_STRING);
+//                $query = Zend_Search_Lucene_Search_QueryParser::parse($data['query']);
+                $result = $index->find(parseQueryString($data['query']), 'name', SORT_STRING);
                 $this->view->query = $data['query'];
                 $this->view->queryobj = $query;
                 $this->view->imagehost = $this->_config->api->host.'/goods/image/';
