@@ -30,7 +30,7 @@ class Catalog_AdminController extends Zend_Controller_Action
             foreach ($goods as $g) {
                 if (!$g['folder']||empty($g['folder'])) {
                     $doc = new Zend_Search_Lucene_Document();
-                    $doc->addField(Zend_Search_Lucene_Field::text('RecordID', $g['id'], 'UTF-8'));
+                    $doc->addField(Zend_Search_Lucene_Field::keyword('RecordID', $g['id'], 'UTF-8'));
                     $doc->addField(Zend_Search_Lucene_Field::text('name', $g['name'], 'UTF-8'));
                     $doc->addField(Zend_Search_Lucene_Field::text('description', $g['description'], 'UTF-8'));
                     $doc->addField(Zend_Search_Lucene_Field::text('article', $g['article'], 'UTF-8'));

@@ -40,7 +40,7 @@
                             <img data-src="<?php echo $this->imagehost.$this->escape($r->RecordID);?>">
                         </div>
                         <div class="cat_l_item_slider">&nbsp;</div>
-                        <div class="cat_l_item_hline"><?php echo $this->queryobj->htmlFragmentHighlightMatches($this->escape($r->name)); ?></div>                      
+                        <div class="cat_l_item_hline"><?php echo $this->escape($r->name); ?></div>                      
                         <div class="cat_l_item_wp_price">
                             <span class="cat_l_item_price"><?php echo $this->escape($r->price); ?></span> &#8381;
                         </div>
