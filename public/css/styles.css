@@ -369,7 +369,7 @@ footer.footer {
     transition: all 0.3s ease-in-out;
     border: 1px solid #BABABA;
 }
-.livelist li::after {
+.livelist li:after {
     position: absolute;
     top: 2.1em;
     left: 0.9em;
@@ -387,6 +387,60 @@ footer.footer {
     background-color: #BCA474;
 }
 .livelist li:hover:after {
+    background-color: #BCA474
+}
+
+/* Оформление нумерации страниц */
+.page_livelist ul {    
+    margin-left: 0;
+    padding-left: 5px;
+    color: rgb(100,100,100);
+}
+.page_livelist li {
+    display: inline;
+}
+.page_livelist li > a {
+    display: inline;
+    list-style: none;    
+    position: relative;
+    padding-left: 3em;
+    margin: 0.45em 0;
+    line-height: 1.8em;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+.page_livelist li>a:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1.8em;
+    height: 1.8em;
+    line-height: 1.8em;
+    padding: 0px;
+    color: #404040;
+    text-align: center;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid #BABABA;
+}
+.page_livelist li>a:after {
+    position: absolute;
+    top: 2.1em;
+    left: 0.9em;
+    width: 2px;
+    height: calc(100% - 2em);
+    content: '';
+    background-color: rgb(203, 203, 203);
+    z-index: 0;
+    color: #fff;
+}
+.page_livelist li>a:hover {
+    color: rgb(0,0,0);    
+}
+.page_livelist li>a:hover:before {
+    background-color: #BCA474;
+}
+.page_livelist li>a:hover:after {
     background-color: #BCA474
 }
 
@@ -656,10 +710,3 @@ a .cat_l_item_hline{
     color: #fff!important;
     background-color: #BABABA;
 }
-
-
-
-/*.gooditem-detail button:active {
-    background-color: #f0ad4e;
-    color: #fff!important;
-}*/
