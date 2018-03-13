@@ -16,10 +16,6 @@
         <label>Акции</label>
         <uri>/home/promo</uri>
     </promo>
-    <prices>
-        <label>Прайс-листы</label>
-        <uri>/home/prices</uri>
-    </prices>
     <catalog>
         <label>Стол заказов</label>
         <uri>/catalog</uri>

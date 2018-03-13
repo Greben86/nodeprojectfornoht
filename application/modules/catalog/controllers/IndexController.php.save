@@ -291,7 +291,7 @@ class Catalog_IndexController extends Zend_Controller_Action
                 $index = Zend_Search_Lucene::open($config['indexPath']);
                 $query = Zend_Search_Lucene_Search_QueryParser::parse(mb_strtolower($data['query'], 'UTF-8'));
                 //$result = $index->find($query, 'name', SORT_STRING);
-try {                
+try Х
 $result = $index->find($this->parseQueryString(mb_strtolower($data['query'], 'UTF-8')));
 } catch(Exception $e) {
 $result = $index->find($query, 'name', SORT_STRING);

@@ -154,12 +154,6 @@
                             <h2 class="title">«Содействие»</h2>
                         </div> 
                         <p class="classy">Потребительский кооператив взаимного обеспечения</p>
-			
-			<div class="text-center">
-			    <a class="btn btn-warning" href="<?php echo $this->url(array(), 'catalog'); ?>">
-                                 <b>Каталог продукции</b>
-                            </a>
-			</div>
                     </li>
 
                     <li class="logo-box">
@@ -171,15 +165,16 @@
                         <div class="bar_top">
                             <?php if (!Zend_Auth::getInstance()->hasIdentity()):?> 
                             <div class="bar_panel">                              
-                                <a href="<?php echo $this->url(array(), 'account-login'); ?>" title="Войти в личный кабинет">
-                                    <b>Войти в ЛК</b>
+                                <a href="<?php echo $this->url(array(), 'account-login'); ?>">
+                                    <b>Войти в личный кабинет</b>
                                 </a>
                                 или 
                                 <a href="<?php echo $this->url(array(), 'register'); ?>">
                                     <b>Зарегистрироваться</b>
                                 </a>
                             </div> 
-                            <small>Подайте заявку на регистрацию в кооперативе</small>
+                            <small>Подайте заявку на <a href="<?php echo $this->url(array(), 'register'); ?>">
+регистрацию в кооперативе</small>
                             <?php else: ?>
                             <div class="bar_panel">                              
                                 <a href="<?php echo $this->url(array(), 'account'); ?>">
@@ -273,7 +268,12 @@
                         <br>                        
                         <a href="mailto:vygodno.vmeste@yandex.ru?subject=Письмо с сайта"><span class="glyphicon glyphicon-envelope"></span> vygodno.vmeste@yandex.ru</a><br>
                     </li>
-                    <li> </li>                    
+                    <li>
+                        <h3>Прайс-листы</h3>
+                        <a href="/pricelists/pricelists.zip"><span class="glyphicon glyphicon-compressed"></span> Zip-архив&nbsp;(122 Кб)</a>
+                        <br>
+                        <small>Обновлен&nbsp;01.06.2017</small>
+                    </li>                    
                     <li>
                         <h3>Ссылки</h3>                        
                         <a href="https://smsc.ru" target="_blank"><span class="glyphicon glyphicon-link"></span> Наш SMS-провайдер</a>                        

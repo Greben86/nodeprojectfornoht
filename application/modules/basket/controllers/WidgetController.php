@@ -17,7 +17,7 @@ class Basket_WidgetController extends Zend_Controller_Action
             'password' => $localConfig->database->pass
         ));
 
-        if (Zend_Auth::getInstance()->hasIdentity()) {
+	if (Zend_Auth::getInstance()->hasIdentity()) {
             $result = $db->fetchAll(
                     "SELECT SUM(b.count) AS Count, SUM(g.price * b.count) AS Summa  ".
                     "FROM `basket` b ".
