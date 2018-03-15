@@ -281,31 +281,78 @@ class Catalog_IndexController extends Zend_Controller_Action
         
         if ($this->getRequest()->isGet()) {
             $data = $this->getRequest()->getParams();
-            if (!empty($data['query'])) {
-                $config = $this->getInvokeArg('bootstrap')->getOption('indexes');
-                $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num();
-                $analyzer->addFilter(new Zend_Search_Lucene_Analysis_TokenFilter_LowerCase());
-                $analyzer->addFilter(new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords(1));
-                Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
-                Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('UTF-8');
-                $index = Zend_Search_Lucene::open($config['indexPath']);
-                $query = Zend_Search_Lucene_Search_QueryParser::parse(mb_strtolower($data['query'], 'UTF-8'));
-                //$result = $index->find($query, 'name', SORT_STRING);
-try {                
-$result = $index->find($this->parseQueryString(mb_strtolower($data['query'], 'UTF-8')));
-} catch(Exception $e) {
-$result = $index->find($query, 'name', SORT_STRING);
-}
+            if (!empty($data['query'])) {                
+                // Делаем запрос к API
+//                var_dump($this->_config->api->host.'/search/goods?query='.$data['query']);
+//                exit;
+                $ch = curl_init(); 
+                curl_setopt($ch, CURLOPT_URL, $this->_config->api->host.'/search/goods?query='.urlencode($data['query'])); 
+//                curl_setopt($ch, CURLOPT_URL, $this->_config->api->host.'/goods/folders/0'); 
+                curl_setopt($ch, CURLOPT_HEADER, false); 
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30); 
+                curl_setopt($ch, CURLOPT_USERAGENT, 'sodeystvie');
+                curl_setopt($ch, CURLOPT_ENCODING ,'UTF-8');
+                $result = curl_exec($ch);
+//                var_dump($this->_config->api->host.'/search/goods?query='.urlencode($data['query']));
+//                var_dump($result);
+//                exit;
+                curl_close($ch);
+                
+//                var_dump($result);
+//                exit;
+                             
+                $this->view->result = json_decode($result, true);
                 $this->view->query = $data['query'];
-                $this->view->queryobj = $query;
                 $this->view->imagehost = $this->_config->api->host.'/goods/image/';
-                $paginator = Zend_Paginator::factory($result);
+                $paginator = Zend_Paginator::factory($this->view->result);
                 $paginator->setItemCountPerPage(15);
                 $paginator->setDefaultPageRange(7);
-                $paginator->setCurrentPageNumber($input->page);
-                $this->view->result = $result;
+                $paginator->setCurrentPageNumber($input->page);                
                 $this->view->paginator = $paginator;
             }
         }
     }
+    
+//    public function searchAction() {
+//        // Устанавливаем фильтры и валидаторы для данных, полученных из POST
+//        $filters = array(
+//            'page' => array('HtmlEntities', 'StripTags', 'StringTrim')
+//        );
+//        $validators = array(
+//            'page' => array('Int')
+//        );
+//        
+//        $input = new Zend_Filter_Input($filters, $validators);
+//        $input -> setData($this->getRequest()->getParams());
+//        
+//        if ($this->getRequest()->isGet()) {
+//            $data = $this->getRequest()->getParams();
+//            if (!empty($data['query'])) {
+//                $config = $this->getInvokeArg('bootstrap')->getOption('indexes');
+//                $analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num();
+//                $analyzer->addFilter(new Zend_Search_Lucene_Analysis_TokenFilter_LowerCase());
+//                $analyzer->addFilter(new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords(1));
+//                Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
+//                Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('UTF-8');
+//                $index = Zend_Search_Lucene::open($config['indexPath']);
+//                $query = Zend_Search_Lucene_Search_QueryParser::parse(mb_strtolower($data['query'], 'UTF-8'));
+//                //$result = $index->find($query, 'name', SORT_STRING);
+//try {                
+//$result = $index->find($this->parseQueryString(mb_strtolower($data['query'], 'UTF-8')));
+//} catch(Exception $e) {
+//$result = $index->find($query, 'name', SORT_STRING);
+//}
+//                $this->view->query = $data['query'];
+//                $this->view->queryobj = $query;
+//                $this->view->imagehost = $this->_config->api->host.'/goods/image/';
+//                $paginator = Zend_Paginator::factory($result);
+//                $paginator->setItemCountPerPage(15);
+//                $paginator->setDefaultPageRange(7);
+//                $paginator->setCurrentPageNumber($input->page);
+//                $this->view->result = $result;
+//                $this->view->paginator = $paginator;
+//            }
+//        }
+//    }
 }
