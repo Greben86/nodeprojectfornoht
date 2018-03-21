@@ -1,5 +1,17 @@
 <?php
 
+class Validate_Pass implements Zend_Validate_Interface {
+    
+    public function getMessages() {
+        return 'Пароли не совпадают';
+    }
+
+    public function isValid($value) {
+        
+    }
+
+}
+
 class Register_Form_Index extends Zend_Form {
 
     private $sitekey;
@@ -116,11 +128,41 @@ class Register_Form_Index extends Zend_Form {
                     'placeholder' => 'Раскажите о себе',
         ));
 
-        // создаем кнопку отправки
-        $submit = new Zend_Form_Element_Submit('submit');
-        $submit->setLabel('Подать заявку')
-                ->setAttribs(array('class' => 'btn btn-success'));
+        $pass0 = new Zend_Form_Element_Password('pass0');
+        $pass0->setLabel('Придумайте пароль')
+                ->setOptions(array('size' => '35'))
+                ->setAttribs(array(
+                    'class' => 'form-control',
+                    'placeholder' => 'Пароль',
+                ))
+                ->setRequired(true)
+                ->addValidator('NotEmpty', true, array(
+                    'messages' => array(
+                        Zend_Validate_NotEmpty::IS_EMPTY => 'Поле не может быть пустым'
+            )))
+                ->addFilter('HtmlEntities')
+                ->addFilter('StringTrim');
 
+        $pass1 = new Zend_Form_Element_Password('pass1');
+        $pass1->setLabel('Введите пароль повторно')
+                ->setOptions(array('size' => '35'))
+                ->setAttribs(array(
+                    'class' => 'form-control',
+                    'placeholder' => 'Пароль',
+                ))
+                ->setRequired(true)
+                ->addValidator('NotEmpty', true, array(
+                    'messages' => array(
+                        Zend_Validate_NotEmpty::IS_EMPTY => 'Поле не может быть пустым'
+            )))
+                ->addValidator('Identical', true, array(
+                    'token' => 'pass0',
+                    'messages' => array(
+                    Zend_Validate_Identical::NOT_SAME => 'Пароли должны совпадать'
+            )))
+                ->addFilter('HtmlEntities')
+                ->addFilter('StringTrim');
+        
         // добавляем элементы к форме
         $this->addElementPrefixPath(
                 'Ghost', 'Ghost'
@@ -129,6 +171,28 @@ class Register_Form_Index extends Zend_Form {
         $this->addElementPrefixPath(
                 'Ghost_Form_Decorator', 'Ghost/Form/Decorator', self::DECORATOR // 'decorator'
         );
+        
+//        $recaptcha = new Zend_Service_ReCaptcha('6LeZVhwUAAAAAN8NQnoxHWD6xxTKmmZ6GeDiqDhz', '6LeZVhwUAAAAAP_Ey3EbH8L1u_gKLngjgpW4x-hN');
+//        $recaptcha->setOption('theme', 'clean');
+//        $recaptcha->setOption('lang', 'ru');
+        $recaptcha = new Ghost_Captcha_ReCaptcha2();
+        $recaptcha->setOption('theme', 'light');
+        $recaptcha->setOption('hl', 'ru');
+        $recaptcha->setOption('pubkey', $this->sitekey);
+        $recaptcha->setOption('privkey', $this->secretkey);
+        $captcha = new Zend_Form_Element_Captcha('captcha');
+        $captcha->setOptions(array(
+                            'service' => $recaptcha)
+                      );
+        
+//        $captcha = new Zend_Form_Element_Captcha('captcha',
+//                  array('captcha' => 'ReCaptcha2',
+//                        'hl' => 'ru',
+//                        'theme' => 'light',
+//                        'pubkey' => $this->sitekey,
+//                        'privkey' => $this->secretkey
+//                    ));
+//        $captcha->setRequired('true');      
 
         $this->addElement($family)
                 ->addElement($name)
@@ -136,20 +200,29 @@ class Register_Form_Index extends Zend_Form {
                 ->addElement($phone)
                 ->addElement($email)
                 ->addElement($note)
-                ->addElement('captcha', 'captcha', array(
-                    'required' => true,
-                    'captcha' => array(
-                        'captcha' => 'ReCaptcha2',
-                        'hl' => 'ru',
-                        'theme' => 'light',
-                        'pubkey' => $this->sitekey,
-                        'privkey' => $this->secretkey
-                    )
-        ));
+                ->addElement($pass0)
+                ->addElement($pass1)
+                ->addElement($captcha);
+//                ->addElement('captcha', 'captcha', array(
+//                    'required' => true,
+//                    'captcha' => array(
+//                        'captcha' => 'ReCaptcha2',
+//                        'hl' => 'ru',
+//                        'theme' => 'light',
+//                        'pubkey' => $this->sitekey,
+//                        'privkey' => $this->secretkey
+//                    )
+//        ));
 
-        $this->addDisplayGroup(array('family', 'name', 'name2', 'phone', 'email', 'note', 'captcha'), 'zayavka');
+        $this->addDisplayGroup(array('family', 'name', 'name2', 'phone', 'email', 'note', 'pass0', 'pass1', 'captcha'), 'zayavka');
         $this->getDisplayGroup('zayavka')
                 ->setLegend('Заявление на вступление');
+        
+        // создаем кнопку отправки
+        $submit = new Zend_Form_Element_Submit('submit');
+        $submit->setLabel('Подать заявку')
+                ->setAttribs(array('class' => 'btn btn-success'));
+        
         $this->addElement($submit);
     }
 
@@ -165,8 +238,8 @@ class Register_IndexController extends Zend_Controller_Action {
         if ($this->getRequest()->isPost()) {
             if ($form->isValid($this->getRequest()->getPost())) {
                 $values = $form->getValues();
-                $this->sendMail('Заявка на вступление', $this->buildBody($values));
-                $this->saveStatement($values);
+                //$this->sendMail('Заявка на вступление', $this->buildBody($values));
+                //$this->saveStatement($values);
                 $this->_redirect('/register/success');
             }
         }
