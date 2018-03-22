@@ -1,13 +1,41 @@
 <?php
 
-class Validate_Pass implements Zend_Validate_Interface {
-    
-    public function getMessages() {
-        return 'Пароли не совпадают';
+class Validate_EmailExists extends Zend_Validate_Abstract {
+
+    const ERROR_RECORD_FOUND = 'recordFound';
+
+    protected $_messageTemplates = array(
+        self::ERROR_RECORD_FOUND => "Email '%value%' уже зарегистрирован в системе",
+    );
+    private $host;
+
+    public function __construct($host) {
+        $this->host = $host;
     }
 
     public function isValid($value) {
-        
+        $valid = true;
+        $this->_setValue($value);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->host . '/customers/list?key=052b15e78378eb6c82164b63c27be0b1');
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'sodeystvie');
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        $customers = json_decode($result, true);
+        foreach ($customers as $customer) {
+            if ($customer['email'] == $value) {
+                $valid = false;
+                $this->_error(self::ERROR_RECORD_FOUND);
+                break;
+            }
+        }
+
+        return $valid;
     }
 
 }
@@ -16,10 +44,13 @@ class Register_Form_Index extends Zend_Form {
 
     private $sitekey;
     private $secretkey;
+    private $host;
 
     public function __construct($options = null) {
         $this->sitekey = $options['sitekey'];
         $this->secretkey = $options['secretkey'];
+//        $localConfig = new Zend_Config_Ini($options['localConfigPath']);
+//        $this->host = $localConfig->api->host;
         parent::__construct(null);
     }
 
@@ -116,6 +147,7 @@ class Register_Form_Index extends Zend_Form {
                         Zend_Validate_EmailAddress::LENGTH_EXCEEDED => "'%value%' превышает допустимую длину",
                         Zend_Validate_EmailAddress::QUOTED_STRING => "'%localPart%' не соответствует формату quoted-string",
             )))
+                ->addValidator(new Validate_EmailExists('http://194.67.215.76:8080/shop/'))
                 ->addFilter('HtmlEntities')
                 ->addFilter('StringToLower')
                 ->addFilter('StringTrim');
@@ -128,7 +160,7 @@ class Register_Form_Index extends Zend_Form {
                     'placeholder' => 'Раскажите о себе',
         ));
 
-        $pass0 = new Zend_Form_Element_Password('pass0');
+        $pass0 = new Zend_Form_Element_Password('password');
         $pass0->setLabel('Придумайте пароль')
                 ->setOptions(array('size' => '35'))
                 ->setAttribs(array(
@@ -156,13 +188,13 @@ class Register_Form_Index extends Zend_Form {
                         Zend_Validate_NotEmpty::IS_EMPTY => 'Поле не может быть пустым'
             )))
                 ->addValidator('Identical', true, array(
-                    'token' => 'pass0',
+                    'token' => 'password',
                     'messages' => array(
-                    Zend_Validate_Identical::NOT_SAME => 'Пароли должны совпадать'
+                        Zend_Validate_Identical::NOT_SAME => 'Пароли должны совпадать'
             )))
                 ->addFilter('HtmlEntities')
                 ->addFilter('StringTrim');
-        
+
         // добавляем элементы к форме
         $this->addElementPrefixPath(
                 'Ghost', 'Ghost'
@@ -171,28 +203,14 @@ class Register_Form_Index extends Zend_Form {
         $this->addElementPrefixPath(
                 'Ghost_Form_Decorator', 'Ghost/Form/Decorator', self::DECORATOR // 'decorator'
         );
-        
-//        $recaptcha = new Zend_Service_ReCaptcha('6LeZVhwUAAAAAN8NQnoxHWD6xxTKmmZ6GeDiqDhz', '6LeZVhwUAAAAAP_Ey3EbH8L1u_gKLngjgpW4x-hN');
-//        $recaptcha->setOption('theme', 'clean');
-//        $recaptcha->setOption('lang', 'ru');
+
         $recaptcha = new Ghost_Captcha_ReCaptcha2();
         $recaptcha->setOption('theme', 'light');
         $recaptcha->setOption('hl', 'ru');
-        $recaptcha->setOption('pubkey', $this->sitekey);
-        $recaptcha->setOption('privkey', $this->secretkey);
-        $captcha = new Zend_Form_Element_Captcha('captcha');
-        $captcha->setOptions(array(
-                            'service' => $recaptcha)
-                      );
-        
-//        $captcha = new Zend_Form_Element_Captcha('captcha',
-//                  array('captcha' => 'ReCaptcha2',
-//                        'hl' => 'ru',
-//                        'theme' => 'light',
-//                        'pubkey' => $this->sitekey,
-//                        'privkey' => $this->secretkey
-//                    ));
-//        $captcha->setRequired('true');      
+        $recaptcha->setPubkey($this->sitekey);
+        $recaptcha->setPrivkey($this->secretkey);
+        $captcha = new Zend_Form_Element_Captcha('captcha', array('captcha' => $recaptcha));
+        $captcha->setRequired('true');
 
         $this->addElement($family)
                 ->addElement($name)
@@ -203,26 +221,16 @@ class Register_Form_Index extends Zend_Form {
                 ->addElement($pass0)
                 ->addElement($pass1)
                 ->addElement($captcha);
-//                ->addElement('captcha', 'captcha', array(
-//                    'required' => true,
-//                    'captcha' => array(
-//                        'captcha' => 'ReCaptcha2',
-//                        'hl' => 'ru',
-//                        'theme' => 'light',
-//                        'pubkey' => $this->sitekey,
-//                        'privkey' => $this->secretkey
-//                    )
-//        ));
 
-        $this->addDisplayGroup(array('family', 'name', 'name2', 'phone', 'email', 'note', 'pass0', 'pass1', 'captcha'), 'zayavka');
+        $this->addDisplayGroup(array('family', 'name', 'name2', 'phone', 'email', 'note', 'password', 'pass1', 'captcha'), 'zayavka');
         $this->getDisplayGroup('zayavka')
                 ->setLegend('Заявление на вступление');
-        
+
         // создаем кнопку отправки
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel('Подать заявку')
                 ->setAttribs(array('class' => 'btn btn-success'));
-        
+
         $this->addElement($submit);
     }
 
@@ -238,21 +246,104 @@ class Register_IndexController extends Zend_Controller_Action {
         if ($this->getRequest()->isPost()) {
             if ($form->isValid($this->getRequest()->getPost())) {
                 $values = $form->getValues();
-                //$this->sendMail('Заявка на вступление', $this->buildBody($values));
-                //$this->saveStatement($values);
-                $this->_redirect('/register/success');
+                $this->saveStatement($values);
+                $this->saveCustomer($values);
+                $this->sendMailConfirm($values);
+                $this->_redirect('/register/send');
             }
         }
     }
 
+    public function sendAction() {
+        //
+    }
+
+    public function verificationAction() {
+        // Устанавливаем фильтры и валидаторы для данных, полученных из POST
+        $filters = array(
+            'hash' => array('HtmlEntities', 'StripTags', 'StringTrim')
+        );
+        $validators = array(
+            'hash' => array('NotEmpty')
+        );
+
+        $input = new Zend_Filter_Input($filters, $validators);
+        $input->setData($this->getRequest()->getParams());
+
+        // Подключаемся к БД
+        $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
+        $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $localConfig->api->host . '/customers/list?key=052b15e78378eb6c82164b63c27be0b1');
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'sodeystvie');
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        $customers = json_decode($result, true);
+        foreach ($customers as $customer) {
+            if ($input->hash == md5($customer['email'])) {
+                $this->sendMail('Заявка на вступление', $this->buildBody($customer));
+                $this->_redirect('/register/success');
+                return;
+            }
+        }
+        throw new Zend_Exception('Ошибка подтверждения адреса электронной почты');
+    }
+    
     public function successAction() {
-        // Убиваем сессию
+        //
+    }
+
+    private function checkEmail($email) {
+        // Подключаемся к БД
+        $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
+        $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
+        $db = Zend_Db::factory('Pdo_Mysql', array(
+                    'host' => $localConfig->database->host,
+                    'dbname' => $localConfig->database->name,
+                    'username' => $localConfig->database->user,
+                    'password' => $localConfig->database->pass
+        ));
+
+        $customers = $db->fetchAll('SELECT * FROM `customers`');
+        foreach ($customers as $customer) {
+            if ($customer['email'] == $email) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function inputformAction() {
         $this->_helper->layout->disableLayout();
         $form = new First_Input_Form();
         $this->view->form = $form;
+    }
+
+    private function sendMailConfirm($values) {
+        $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
+        $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
+        $config = array(
+            'ssl' => 'ssl',
+            'port' => $localConfig->email->port,
+            'auth' => 'login',
+            'username' => $localConfig->email->user,
+            'password' => $localConfig->email->pass
+        );
+
+        $mail = new Zend_Mail();
+        $mail->setBodyHtml('Confirm email test: http://localhost/register/verification/' . md5($values['email']));
+        $mail->setFrom($localConfig->email->address, 'Система регистрации нпо-содействие.рф');
+        $mail->addTo($values['email']);
+        $mail->setSubject('Confirm email');
+
+        $transport = new Zend_Mail_Transport_Smtp($localConfig->email->host, $config);
+
+        $mail->send($transport);
     }
 
     private function sendMail($subject, $body) {
@@ -269,7 +360,7 @@ class Register_IndexController extends Zend_Controller_Action {
         $mail = new Zend_Mail();
         $mail->setBodyHtml($body);
         $mail->setFrom($localConfig->email->address, 'Система регистрации участников');
-        $mail->addTo('vygodno.vmeste@yandex.ru', 'Администратор кооператива');
+        //$mail->addTo('vygodno.vmeste@yandex.ru', 'Администратор кооператива');
         $mail->addTo('grebenvictor@yandex.ru', 'Разработчик');
         $mail->setSubject($subject);
 
@@ -280,22 +371,60 @@ class Register_IndexController extends Zend_Controller_Action {
 
     private function buildBody($values) {
         $domDoc = new DOMDocument();
-        $title = $domDoc->createElement('h2', $values['customer']);
-        $person = $domDoc->createElement('h3', trim(trim($values['family'] . ' ' . $values['name']) . ' ' . $values['name2']));
-        $phone = $domDoc->createElement('p', 'Тел.: ');
-        $phone->appendChild(new DOMElement('b', $values['phone']));
+        $title = $domDoc->createElement('h2', $values['name']);
+        $person = $domDoc->createElement('h3', $values['fullname']);
         $email = $domDoc->createElement('p', 'Email: ');
         $email->appendChild(new DOMElement('b', $values['email']));
-        $note = $domDoc->createElement('p', $values['note']);
 
         $domDoc->appendChild($title);
         $domDoc->appendChild($person);
-        $domDoc->appendChild($phone);
         $domDoc->appendChild($email);
-        $domDoc->appendChild(new DOMElement('br'));
-        $domDoc->appendChild($note);
 
         return $domDoc->saveHTML();
+    }
+
+//    private function buildBody($values) {
+//        $domDoc = new DOMDocument();
+//        $title = $domDoc->createElement('h2', $values['customer']);
+//        $person = $domDoc->createElement('h3', trim(trim($values['family'] . ' ' . $values['name']) . ' ' . $values['name2']));
+//        $phone = $domDoc->createElement('p', 'Тел.: ');
+//        $phone->appendChild(new DOMElement('b', $values['phone']));
+//        $email = $domDoc->createElement('p', 'Email: ');
+//        $email->appendChild(new DOMElement('b', $values['email']));
+//        $note = $domDoc->createElement('p', $values['note']);
+//
+//        $domDoc->appendChild($title);
+//        $domDoc->appendChild($person);
+//        $domDoc->appendChild($phone);
+//        $domDoc->appendChild($email);
+//        $domDoc->appendChild(new DOMElement('br'));
+//        $domDoc->appendChild($note);
+//
+//        return $domDoc->saveHTML();
+//    }
+
+    private function saveCustomer($values) {
+        // Подключаемся к БД
+        $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
+        $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
+        $db = Zend_Db::factory('Pdo_Mysql', array(
+                    'host' => $localConfig->database->host,
+                    'dbname' => $localConfig->database->name,
+                    'username' => $localConfig->database->user,
+                    'password' => $localConfig->database->pass
+        ));
+
+        // Формируем массив данных
+        $data = array(
+            'deletionmark' => 'F',
+            'number' => '',
+            'name' => $values['name'],
+            'fullname' => trim(trim($values['family'] . ' ' . $values['name']) . ' ' . $values['name2']),
+            'email' => $values['email'],
+            'pass' => md5($values['password'])
+        );
+        // Сохраняем данные
+        $db->insert('customers', $data);
     }
 
     private function saveStatement($values) {
