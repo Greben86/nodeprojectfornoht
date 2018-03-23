@@ -286,7 +286,9 @@ class Register_IndexController extends Zend_Controller_Action {
         $customers = json_decode($result, true);
         foreach ($customers as $customer) {
             if ($input->hash == md5($customer['email'])) {
-                $this->sendMail('Заявка на вступление', $this->buildBody($customer));
+                if ($customer['ref'] === '') {
+                    $this->sendMail('Заявка на вступление', $this->buildBody($customer));
+                }
                 $this->_redirect('/register/success');
                 return;
             }
@@ -296,26 +298,6 @@ class Register_IndexController extends Zend_Controller_Action {
     
     public function successAction() {
         //
-    }
-
-    private function checkEmail($email) {
-        // Подключаемся к БД
-        $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
-        $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
-        $db = Zend_Db::factory('Pdo_Mysql', array(
-                    'host' => $localConfig->database->host,
-                    'dbname' => $localConfig->database->name,
-                    'username' => $localConfig->database->user,
-                    'password' => $localConfig->database->pass
-        ));
-
-        $customers = $db->fetchAll('SELECT * FROM `customers`');
-        foreach ($customers as $customer) {
-            if ($customer['email'] == $email) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public function inputformAction() {

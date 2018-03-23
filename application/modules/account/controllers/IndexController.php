@@ -26,7 +26,7 @@ class Account_IndexController extends Zend_Controller_Action
             'password' => $localConfig->database->pass
         ));
 
-        $result = $db->fetchAll("SELECT * FROM `customers` WHERE `number`='".Zend_Auth::getInstance()->getIdentity()."'");
+        $result = $db->fetchAll("SELECT * FROM `customers` WHERE `email`='".Zend_Auth::getInstance()->getIdentity()."'");
 
         $this->view->resources = $result[0];
     }
