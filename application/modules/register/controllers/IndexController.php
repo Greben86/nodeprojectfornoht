@@ -238,6 +238,8 @@ class Register_Form_Index extends Zend_Form {
 
 class Register_IndexController extends Zend_Controller_Action {
 
+    const SALT = 'ros1nf0rm';
+
     public function indexAction() {
         $configs = $this->getInvokeArg('bootstrap')->getOption('recaptcha');
         $form = new Register_Form_Index($configs);
@@ -258,7 +260,7 @@ class Register_IndexController extends Zend_Controller_Action {
         //
     }
 
-    public function verificationAction() {
+    public function confirmAction() {
         // Устанавливаем фильтры и валидаторы для данных, полученных из POST
         $filters = array(
             'hash' => array('HtmlEntities', 'StripTags', 'StringTrim')
@@ -285,8 +287,9 @@ class Register_IndexController extends Zend_Controller_Action {
 
         $customers = json_decode($result, true);
         foreach ($customers as $customer) {
-            if ($input->hash == md5($customer['email'])) {
-                if ($customer['ref'] === '') {
+            if ($input->hash == md5($customer['email'] . self::SALT)) {
+                if ($customer['email_confirmed_date'] === null) {
+                    $this->confirmCustomer($customer);
                     $this->sendMail('Заявка на вступление', $this->buildBody($customer));
                 }
                 $this->_redirect('/register/success');
@@ -295,7 +298,7 @@ class Register_IndexController extends Zend_Controller_Action {
         }
         throw new Zend_Exception('Ошибка подтверждения адреса электронной почты');
     }
-    
+
     public function successAction() {
         //
     }
@@ -317,11 +320,23 @@ class Register_IndexController extends Zend_Controller_Action {
             'password' => $localConfig->email->pass
         );
 
-        $mail = new Zend_Mail();
-        $mail->setBodyHtml('Confirm email test: http://localhost/register/verification/' . md5($values['email']));
+        $mail = new Zend_Mail('UTF-8');
+        $mail->setBodyHtml(
+                '<h2>Здравствуйте.</h2>'
+                . '<br>'
+                . '<p>Благодарим Вас за проявленный интерес к нашему ресурсу - нпо-содействие.рф</p>'
+                . '<p>Для активации учетной записи перейдите, пожалуйста, по ссылке:</p>'
+                . "<a href='http://нпо-содействие.рф/register/confirm/" . md5($values['email'] . self::SALT) . "'>"
+                . "нпо-содействие.рф/register/confirm/" . md5($values['email'] . self::SALT)
+                . '</a>'
+                . '<br>'
+                . "<p>Если вы не проходили процедуру регистрации, то можете проигнорировать это письмо.</p>
+                <p>Данное письмо было отправлено автоматически. Отвечать на него не нужно.</p>
+                <p>С уважением, администрация сайта <a href='http://нпо-содействие.рф/'>нпо-содействие.рф</a></p>"
+        );
         $mail->setFrom($localConfig->email->address, 'Система регистрации нпо-содействие.рф');
         $mail->addTo($values['email']);
-        $mail->setSubject('Confirm email');
+        $mail->setSubject('Регистрация аккаунта нпо-содействие.рф');
 
         $transport = new Zend_Mail_Transport_Smtp($localConfig->email->host, $config);
 
@@ -339,10 +354,10 @@ class Register_IndexController extends Zend_Controller_Action {
             'password' => $localConfig->email->pass
         );
 
-        $mail = new Zend_Mail();
+        $mail = new Zend_Mail('UTF-8');
         $mail->setBodyHtml($body);
         $mail->setFrom($localConfig->email->address, 'Система регистрации участников');
-        //$mail->addTo('vygodno.vmeste@yandex.ru', 'Администратор кооператива');
+        $mail->addTo('vygodno.vmeste@yandex.ru', 'Администратор кооператива');
         $mail->addTo('grebenvictor@yandex.ru', 'Разработчик');
         $mail->setSubject($subject);
 
@@ -393,12 +408,12 @@ class Register_IndexController extends Zend_Controller_Action {
                     'host' => $localConfig->database->host,
                     'dbname' => $localConfig->database->name,
                     'username' => $localConfig->database->user,
-                    'password' => $localConfig->database->pass
+                    'password' => $localConfig->database->pass,
+                    'charset' => 'utf8'
         ));
 
         // Формируем массив данных
         $data = array(
-            'deletionmark' => 'F',
             'number' => '',
             'name' => $values['name'],
             'fullname' => trim(trim($values['family'] . ' ' . $values['name']) . ' ' . $values['name2']),
@@ -409,6 +424,26 @@ class Register_IndexController extends Zend_Controller_Action {
         $db->insert('customers', $data);
     }
 
+    private function confirmCustomer($values) {
+        // Подключаемся к БД
+        $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
+        $localConfig = new Zend_Config_Ini($configs['localConfigPath']);
+        $db = Zend_Db::factory('Pdo_Mysql', array(
+                    'host' => $localConfig->database->host,
+                    'dbname' => $localConfig->database->name,
+                    'username' => $localConfig->database->user,
+                    'password' => $localConfig->database->pass,
+                    'charset' => 'utf8'
+        ));
+
+        // Формируем массив данных
+        $data = array(
+            'email_confirmed_date' => 'T'
+        );
+        // Сохраняем данные
+        $db->update('customers', $data, "`email`='" . $values['email'] . "'");
+    }
+
     private function saveStatement($values) {
         // Подключаемся к БД
         $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
@@ -417,7 +452,8 @@ class Register_IndexController extends Zend_Controller_Action {
                     'host' => $localConfig->database->host,
                     'dbname' => $localConfig->database->name,
                     'username' => $localConfig->database->user,
-                    'password' => $localConfig->database->pass
+                    'password' => $localConfig->database->pass,
+                    'charset' => 'utf8'
         ));
 
         // Формируем массив данных

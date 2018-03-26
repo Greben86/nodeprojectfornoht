@@ -224,22 +224,19 @@ class Basket_IndexController extends Zend_Controller_Action
             'password' => $localConfig->database->pass
         ));
         
-        $result = $db->fetchAll("SELECT * FROM `customers` WHERE `number`='".Zend_Auth::getInstance()->getIdentity()."'");
+        $result = $db->fetchAll("SELECT * FROM `customers` WHERE `email`='".Zend_Auth::getInstance()->getIdentity()."'");
         
         $domDoc = new DOMDocument();
-        $title = $domDoc->createElement( 'h2', 'Заказ товаров' );
-        $person = $domDoc->createElement( 'h3', $result[0]['name'] . ' (' . $result[0]['number'].')');
-
+        $domDoc->appendChild($domDoc->createElement( 'h2', 'Заказ товаров' ));
+        $domDoc->appendChild($domDoc->createElement( 'h3', $result[0]['fullname'] . ' (' . (empty($result[0]['number'])?'N/A':$result[0]['number']) .')'));
+        $domDoc->appendChild($domDoc->createElement( 'h3', 'Email: ' . $result[0]['email']));
+        
         $result = $db->fetchAll(
                 "SELECT b.id, b.good, g.name, g.price, b.count ".
                 "FROM `basket` b ".
                 "   INNER JOIN `goods` g ON (g.id=b.good) ".
                 "WHERE `session`='".Zend_Session::getId()."'".
                 "ORDER BY g.name DESC");
-        
-        
-        $domDoc->appendChild($title);
-        $domDoc->appendChild($person);
         
         $table = $domDoc->createElement( 'table' );
         $table->setAttribute('border', '1');
