@@ -54,7 +54,7 @@ class Auth_Form_Login extends Zend_Form {
         $username->setOptions(array('size' => '35'))
                 ->setAttribs(array(
                     'class' => 'form-control',
-                    'placeholder' => 'Email',
+                    'placeholder' => 'Email или IN',
                 ))
                 ->setRequired(true)
                 ->addValidator('NotEmpty', true, array(
