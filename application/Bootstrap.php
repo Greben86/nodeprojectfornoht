@@ -61,6 +61,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Controller_Action_HelperBroker::addHelper( 
             new My_Controller_Action_Helper_Navigation() 
         );
-    }    
+        
+        setcookie("npo-sodeystvie", "is not new guest", time()+(3600*24));
+    }        
+    
 }
 

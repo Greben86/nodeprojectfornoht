@@ -201,7 +201,7 @@ body {
     border-radius: 1px;
 }
 .header .sidebar-toggle .bar:last-child{
-     margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 /* Customize container */
@@ -245,7 +245,7 @@ footer.footer {
     margin-top: 50px;
     margin-bottom: 0px;
 }
-  
+
 .frame {
     background: #f8f8f8;
     left: 430px;
@@ -304,7 +304,7 @@ footer.footer {
 }
 
 .container-narrow > hr {
-  margin: 10px 0;
+    margin: 10px 0;
 }
 
 .img-card {
@@ -354,7 +354,7 @@ footer.footer {
     точку между цифрами, а точка с пробелом добавляется перед 
     содержимым каждого пункта списка 
     content: counters(number, ".") ". ";*/
-    
+
     content: counter(number);
     position: absolute;
     top: 0;
@@ -709,4 +709,22 @@ a .cat_l_item_hline{
 .gooditem-detail button:disabled {
     color: #fff!important;
     background-color: #BABABA;
+}
+
+.box-permit {
+    position: relative;
+    background-color: #f8efc0;
+    border-style: solid;
+    border-width: 1px 1px 1px 1px;
+    border-color: #BCA474;
+    display: table;
+    width: 100%;
+    margin: 0px auto;
+    padding: 0.1em 0.8em 0.1em 0.8em;
+}
+
+.content-permit {
+    font-size: 0.91em;
+    font-color: #FFFFFF;
+    margin: 0.8em 0em 0em;
 }

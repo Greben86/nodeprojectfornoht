@@ -21,7 +21,7 @@
         <script type="text/javascript" src="/js/jquery.js"></script>
         <script type="text/javascript" src="/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/js/tooltip.js"></script>
-        
+
         <!-- Lightbox -->
         <link href="/lightbox/css/lightbox.css" rel="stylesheet">
         <script src='https://www.google.com/recaptcha/api.js?hl=ru'></script>
@@ -31,15 +31,15 @@
         <script type="text/javascript" src="/js/zoom.js"></script>
         <script>
             lightbox.option({
-              'albumLabel': 'Изображение %1 из %2'
+                'albumLabel': 'Изображение %1 из %2'
             });
-            window.onload = function() {
+            window.onload = function () {
                 $.ajax({
                     url: "/catalog/menu",
                     dataType: "html",
                     success: function (data) {
-                        var cont = document.getElementById('good_tree'); 
-                        if (cont!==null) {
+                        var cont = document.getElementById('good_tree');
+                        if (cont !== null) {
                             cont.innerHTML = data;
 
                             var scriptTree = document.createElement('script');
@@ -53,7 +53,7 @@
                     url: "/basket/widget",
                     dataType: "html",
                     success: function (data) {
-                        var cont = document.getElementById('basket_widget'); 
+                        var cont = document.getElementById('basket_widget');
                         cont.innerHTML = data;
                     },
                     cache: false
@@ -61,15 +61,15 @@
             };
             function addToBasket(id) {
                 var cont = document.getElementById('basket_count');
-                var add_url = "/basket/add/"+id;
-                if (cont!==null) {
+                var add_url = "/basket/add/" + id;
+                if (cont !== null) {
                     add_url = add_url + "/" + cont.value;
                 }
                 $.ajax({
                     url: add_url,
                     dataType: "html",
                     success: function (data) {
-                        var cont = document.getElementById('basket_widget'); 
+                        var cont = document.getElementById('basket_widget');
                         cont.innerHTML = data;
                     },
                     cache: false
@@ -79,7 +79,7 @@
     </head>
 
     <body>
-        
+
         <!-- Yandex.Metrika counter -->
         <script type="text/javascript">
             (function (d, w, c) {
@@ -117,7 +117,7 @@
         </div>
         </noscript>
         <!-- /Yandex.Metrika counter -->
-        
+
         <!-- BEGIN JIVOSITE CODE -->
         <script type='text/javascript'>
             (function () {
@@ -144,22 +144,34 @@
             })();
         </script>
         <!-- END JIVOSITE CODE -->
-        
+        <?php if (!isset($_COOKIE['npo-sodeystvie'])): ?>
+            <div class="box-permit">
+                <div class="content-permit">
+                    <p class="text-center">
+                        В первый раз у нас? Пройдите
+                        <a href="<?php echo $this->url(array(), 'register'); ?>">
+                            регистрацию
+                        </a> 
+                        для того чтобы делать заказы. 
+                        <a href="<?php echo $this->url(array(), 'home-info'); ?>">
+                            Подробнее.
+                        </a> 
+                    </p>
+                </div>
+            </div>
+        <?php endif; ?>
         <div class="container"> 
-
             <div class="header">
                 <ul id="logo" class="hidden-xs hidden-sm">
                     <li class="head-container"> 
-                        <div>
-                            <h2 class="title">«Содействие»</h2>
-                        </div> 
+                        <h2 class="title">«Содействие»</h2>
                         <p class="classy">Потребительский кооператив взаимного обеспечения</p>
-			
-			<div class="text-center">
-			    <a class="btn btn-warning" href="<?php echo $this->url(array(), 'catalog'); ?>">
-                                 <b>Каталог продукции</b>
+
+                        <div class="text-center">
+                            <a class="btn btn-warning" href="<?php echo $this->url(array(), 'catalog'); ?>">
+                                <b>Каталог продукции</b>
                             </a>
-			</div>
+                        </div>
                     </li>
 
                     <li class="logo-box">
@@ -168,39 +180,41 @@
                         </a>
                     </li>
                     <li class="head-container">
-                        <div class="bar_top">
-                            <?php if (!Zend_Auth::getInstance()->hasIdentity()):?> 
-                            <div class="bar_panel">                              
-                                <a href="<?php echo $this->url(array(), 'account-login'); ?>" title="Войти в личный кабинет">
-                                    <b>Войти в ЛК</b>
-                                </a>
-                                или 
-                                <a href="<?php echo $this->url(array(), 'register'); ?>">
-                                    <b>Зарегистрироваться</b>
-                                </a>
-                            </div> 
-                            <small>Подайте заявку на регистрацию в кооперативе</small>
-                            <?php else: ?>
-                            <div class="bar_panel">                              
-                                <a href="<?php echo $this->url(array(), 'account'); ?>">
-                                    <b>Личный кабинет</b>
-                                </a>
-                                 ( 
-                                <a href="<?php echo $this->url(array(), 'account-logout'); ?>">
-                                    <b>Выйти</b>
-                                </a>)
+                        <?php if (!Zend_Auth::getInstance()->hasIdentity()): ?> 
+                            <div class="bar_top">
+                                <div class="bar_panel">                              
+                                    <a href="<?php echo $this->url(array(), 'account-login'); ?>" title="Войти в личный кабинет">
+                                        <b>Войти в ЛК</b>
+                                    </a>
+                                    или 
+                                    <a href="<?php echo $this->url(array(), 'register'); ?>">
+                                        <b>Зарегистрироваться</b>
+                                    </a>
+                                </div> 
+                                <small>Подайте заявку на регистрацию в кооперативе</small>                                
                             </div>
-                            <small>Зайдите в личный кабинет пайщика</small>
-                            <?php endif;?>
-                        </div>
-                        <div class="bar_bottom">
-                            <div class="bar_panel">
-                                <a href="<?php echo $this->url(array(), 'payment'); ?>" class="btn btn-success">
-                                    Оплатить
-                                </a>
-                            </div>  
-                            <small>Оплатите членские взносы online</small>
-                        </div>
+                        <?php else: ?>
+                            <div class="bar_top">
+                                <div class="bar_panel">                              
+                                    <a href="<?php echo $this->url(array(), 'account'); ?>">
+                                        <b>Личный кабинет</b>
+                                    </a>
+                                    ( 
+                                    <a href="<?php echo $this->url(array(), 'account-logout'); ?>">
+                                        <b>Выйти</b>
+                                    </a>)
+                                </div>
+                                <small>Зайдите в личный кабинет пайщика</small>
+                            </div>
+                            <div class="bar_bottom">
+                                <div class="bar_panel">
+                                    <a href="<?php echo $this->url(array(), 'payment'); ?>" class="btn btn-success">
+                                        Оплатить
+                                    </a>
+                                </div>  
+                                <small>Оплатите членские взносы online</small>
+                            </div>
+                        <?php endif; ?>
                     </li>
                 </ul>
 
@@ -208,10 +222,10 @@
                     <?php
                     echo $this->navigation()->menu()->renderMenu(null, array());
                     ?>
-                    
+
                     <!--<div id="basket_widget"></div>-->
                 </div>
-                
+
                 <div class="col-lg-1">
                     <a href="#" data-toggle=".container" class="sidebar-toggle hidden-md hidden-lg">
                         <span class="bar"></span>
@@ -220,7 +234,7 @@
                     </a>
                 </div>
             </div>
-            
+
             <div class="nav-mobile hidden-md hidden-lg">
                 <?php
                 echo $this->navigation()
@@ -229,23 +243,23 @@
                 ?>
                 <br>
                 <br>
-                <?php if (!Zend_Auth::getInstance()->hasIdentity()):?>                             
-                <a href="<?php echo $this->url(array(), 'account-login'); ?>" class="btn btn-default">
-                    <b>Войти</b>
-                </a>
-                или 
-                <a href="<?php echo $this->url(array(), 'register'); ?>" class="btn btn-info">
-                    <b>Зарегистрироваться</b>
-                </a>
+                <?php if (!Zend_Auth::getInstance()->hasIdentity()): ?>                             
+                    <a href="<?php echo $this->url(array(), 'account-login'); ?>" class="btn btn-default">
+                        <b>Войти</b>
+                    </a>
+                    или 
+                    <a href="<?php echo $this->url(array(), 'register'); ?>" class="btn btn-info">
+                        <b>Зарегистрироваться</b>
+                    </a>
                 <?php else: ?>                              
-                <a href="<?php echo $this->url(array(), 'account'); ?>" class="btn btn-default">
-                    <b>Личный кабинет</b>
-                </a>
-                 ( 
-                <a href="<?php echo $this->url(array(), 'account-logout'); ?>" class="btn btn-warning">
-                    <b>Выйти</b>
-                </a>)
-                <?php endif;?>
+                    <a href="<?php echo $this->url(array(), 'account'); ?>" class="btn btn-default">
+                        <b>Личный кабинет</b>
+                    </a>
+                    ( 
+                    <a href="<?php echo $this->url(array(), 'account-logout'); ?>" class="btn btn-warning">
+                        <b>Выйти</b>
+                    </a>)
+                <?php endif; ?>
                 <br>
                 <a href="<?php echo $this->url(array(), 'payment'); ?>" class="btn btn-success">
                     Оплатить
@@ -257,7 +271,7 @@
                     <?php echo $this->layout()->content; ?>
                 </div>
             </div>
-            
+
 
             <footer class="footer hidden-xs hidden-sm">
                 <div class="f-fix">
@@ -289,7 +303,7 @@
                 </div>                
             </footer>            
         </div> 
-        
+
         <a href="#" id="toTop" class="hidden-xs hidden-sm">
             <img alt="" src="/img/up.png">
         </a>
