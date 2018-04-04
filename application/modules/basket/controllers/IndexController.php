@@ -224,7 +224,7 @@ class Basket_IndexController extends Zend_Controller_Action
             'password' => $localConfig->database->pass
         ));
         
-        $result = $db->fetchAll("SELECT * FROM `customers` WHERE `email`='".Zend_Auth::getInstance()->getIdentity()."'");
+        $result = $db->fetchAll("SELECT * FROM `customers` WHERE `email`='".Zend_Auth::getInstance()->getIdentity()."' or `number`='".Zend_Auth::getInstance()->getIdentity()."'");
         
         $domDoc = new DOMDocument();
         $domDoc->appendChild($domDoc->createElement( 'h2', 'Заказ товаров' ));
