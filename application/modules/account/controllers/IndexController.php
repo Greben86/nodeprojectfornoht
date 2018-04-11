@@ -29,6 +29,10 @@ class Account_IndexController extends Zend_Controller_Action
         $result = $db->fetchAll("SELECT * FROM `customers` WHERE `email`='".Zend_Auth::getInstance()->getIdentity()."' or `number`='".Zend_Auth::getInstance()->getIdentity()."'");
 
         $this->view->resources = $result[0];
+        
+        $pay_detail = $db->fetchAll("SELECT * FROM `pay_detail` WHERE `customer_id`=".$result[0]['id']);
+        
+        $this->view->pay_detail = $pay_detail;
     }
 
 }

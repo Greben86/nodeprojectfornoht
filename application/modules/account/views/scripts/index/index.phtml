@@ -1,15 +1,156 @@
-<div class="col-md-6">
+<?php
+$date = new DateTime();
+$date->modify('-4 month');
+
+$period = array(15);
+for ($x = 0; $x < 15; $x++) {
+    $date->modify('+1 month');
+    $period[$x] = new DateTime($date->format('Y-m-d'));
+}
+
+function showDate($date) {
+    $month = array(
+        "1" => "Янв.",
+        "2" => "Фев.",
+        "3" => "Март",
+        "4" => "Апр.",
+        "5" => "Май",
+        "6" => "Июнь",
+        "7" => "Июль",
+        "8" => "Авг.",
+        "9" => "Сен.",
+        "10" => "Окт.",
+        "11" => "Ноя.",
+        "12" => "Дек.");
+
+    echo '<small>' . $month[$date->format('n')] . '<br>' . $date->format('Y') . '</small';
+}
+
+function showPay($detail, $program, $date) {
+    foreach ($detail as $pay) {
+        if ($pay['program_id'] == $program) {
+            $pay_date = new DateTime($pay['date_pay']);
+            if (($pay_date->format('n') === $date->format('n')) && ($pay_date->format('Y') === $date->format('Y'))) {
+                echo '<span class="glyphicon glyphicon-ok-circle"></span>';
+                return;
+            }
+        }
+    }
+}
+?>
+
+<div class="col-md-12">
     <h2>Личный кабинет</h2>        
 
     <p><?php echo $this->resources['fullname']; ?></p>
     <p>
         <?php echo $this->resources['email']; ?>
-        <?php if($this->resources['email_confirmed_date'] === null): ?>
-        <span class="label label-warning">Не подтвержден</span>
+        <?php if ($this->resources['email_confirmed_date'] === null): ?>
+            <span class="label label-warning">Не подтвержден</span>
         <?php else: ?>
-        <span class="label label-success">Подтвержден</span>
+            <span class="label label-success">Подтвержден</span>
         <?php endif; ?>
     </p>
+
+    <h3>Детализация членских взносов</h3> 
+    <div class="table-bordered">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th><h3>#</h3></th>
+                    <th><?php showDate($period[0]); ?></th>
+                    <th><?php showDate($period[1]); ?></th>
+                    <th><?php showDate($period[2]); ?></th>
+                    <th><?php showDate($period[3]); ?></th>
+                    <th><?php showDate($period[4]); ?></th>
+                    <th><?php showDate($period[5]); ?></th>
+                    <th><?php showDate($period[6]); ?></th>
+                    <th><?php showDate($period[7]); ?></th>
+                    <th><?php showDate($period[8]); ?></th>
+                    <th><?php showDate($period[9]); ?></th>
+                    <th><?php showDate($period[10]); ?></th>
+                    <th><?php showDate($period[11]); ?></th>
+                    <th><?php showDate($period[12]); ?></th>
+                    <th><?php showDate($period[13]); ?></th>
+                    <th><?php showDate($period[14]); ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><small>Стол заказов</small></td>
+                    <td><?php showPay($this->pay_detail, 1, $period[0]); ?></td>
+                    <td><?php showPay($this->pay_detail, 1, $period[1]); ?></td>
+                    <td><?php showPay($this->pay_detail, 1, $period[2]); ?></td>
+                    <td><?php showPay($this->pay_detail, 1, $period[3]); ?></td>
+                    <td><?php showPay($this->pay_detail, 1, $period[4]); ?></td>
+                    <td><?php showPay($this->pay_detail, 1, $period[5]); ?></td>
+                    <td><?php showPay($this->pay_detail, 1, $period[6]); ?></td>
+                    <td><?php showPay($this->pay_detail, 1, $period[7]); ?></td>
+                    <td><?php showPay($this->pay_detail, 1, $period[8]); ?></td>
+                    <td><?php showPay($this->pay_detail, 1, $period[9]); ?></td>
+                    <td><?php showPay($this->pay_detail, 1, $period[10]); ?></td>
+                    <td><?php showPay($this->pay_detail, 1, $period[11]); ?></td>
+                    <td><?php showPay($this->pay_detail, 1, $period[12]); ?></td>
+                    <td><?php showPay($this->pay_detail, 1, $period[13]); ?></td>
+                    <td><?php showPay($this->pay_detail, 1, $period[14]); ?></td>
+                </tr>
+                <tr>
+                    <td><small>МЕТРО</small></td>
+                    <td><?php showPay($this->pay_detail, 2, $period[0]); ?></td>
+                    <td><?php showPay($this->pay_detail, 2, $period[1]); ?></td>
+                    <td><?php showPay($this->pay_detail, 2, $period[2]); ?></td>
+                    <td><?php showPay($this->pay_detail, 2, $period[3]); ?></td>
+                    <td><?php showPay($this->pay_detail, 2, $period[4]); ?></td>
+                    <td><?php showPay($this->pay_detail, 2, $period[5]); ?></td>
+                    <td><?php showPay($this->pay_detail, 2, $period[6]); ?></td>
+                    <td><?php showPay($this->pay_detail, 2, $period[7]); ?></td>
+                    <td><?php showPay($this->pay_detail, 2, $period[8]); ?></td>
+                    <td><?php showPay($this->pay_detail, 2, $period[9]); ?></td>
+                    <td><?php showPay($this->pay_detail, 2, $period[10]); ?></td>
+                    <td><?php showPay($this->pay_detail, 2, $period[11]); ?></td>
+                    <td><?php showPay($this->pay_detail, 2, $period[12]); ?></td>
+                    <td><?php showPay($this->pay_detail, 2, $period[13]); ?></td>
+                    <td><?php showPay($this->pay_detail, 2, $period[14]); ?></td>
+                </tr>
+                <tr>
+                    <td><small>Выгодное топливо</small></td>
+                    <td><?php showPay($this->pay_detail, 3, $period[0]); ?></td>
+                    <td><?php showPay($this->pay_detail, 3, $period[1]); ?></td>
+                    <td><?php showPay($this->pay_detail, 3, $period[2]); ?></td>
+                    <td><?php showPay($this->pay_detail, 3, $period[3]); ?></td>
+                    <td><?php showPay($this->pay_detail, 3, $period[4]); ?></td>
+                    <td><?php showPay($this->pay_detail, 3, $period[5]); ?></td>
+                    <td><?php showPay($this->pay_detail, 3, $period[6]); ?></td>
+                    <td><?php showPay($this->pay_detail, 3, $period[7]); ?></td>
+                    <td><?php showPay($this->pay_detail, 3, $period[8]); ?></td>
+                    <td><?php showPay($this->pay_detail, 3, $period[9]); ?></td>
+                    <td><?php showPay($this->pay_detail, 3, $period[10]); ?></td>
+                    <td><?php showPay($this->pay_detail, 3, $period[11]); ?></td>
+                    <td><?php showPay($this->pay_detail, 3, $period[12]); ?></td>
+                    <td><?php showPay($this->pay_detail, 3, $period[13]); ?></td>
+                    <td><?php showPay($this->pay_detail, 3, $period[14]); ?></td>
+                </tr>
+                <tr>
+                    <td><small>Имущество на паях</small></td>
+                    <td><?php showPay($this->pay_detail, 4, $period[0]); ?></td>
+                    <td><?php showPay($this->pay_detail, 4, $period[1]); ?></td>
+                    <td><?php showPay($this->pay_detail, 4, $period[2]); ?></td>
+                    <td><?php showPay($this->pay_detail, 4, $period[3]); ?></td>
+                    <td><?php showPay($this->pay_detail, 4, $period[4]); ?></td>
+                    <td><?php showPay($this->pay_detail, 4, $period[5]); ?></td>
+                    <td><?php showPay($this->pay_detail, 4, $period[6]); ?></td>
+                    <td><?php showPay($this->pay_detail, 4, $period[7]); ?></td>
+                    <td><?php showPay($this->pay_detail, 4, $period[8]); ?></td>
+                    <td><?php showPay($this->pay_detail, 4, $period[9]); ?></td>
+                    <td><?php showPay($this->pay_detail, 4, $period[10]); ?></td>
+                    <td><?php showPay($this->pay_detail, 4, $period[11]); ?></td>
+                    <td><?php showPay($this->pay_detail, 4, $period[12]); ?></td>
+                    <td><?php showPay($this->pay_detail, 4, $period[13]); ?></td>
+                    <td><?php showPay($this->pay_detail, 4, $period[14]); ?></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 
