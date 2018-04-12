@@ -95,24 +95,6 @@ function showPay($detail, $program, $date) {
                     <td><?php showPay($this->pay_detail, 1, $period[14]); ?></td>
                 </tr>
                 <tr>
-                    <td><small>МЕТРО</small></td>
-                    <td><?php showPay($this->pay_detail, 2, $period[0]); ?></td>
-                    <td><?php showPay($this->pay_detail, 2, $period[1]); ?></td>
-                    <td><?php showPay($this->pay_detail, 2, $period[2]); ?></td>
-                    <td><?php showPay($this->pay_detail, 2, $period[3]); ?></td>
-                    <td><?php showPay($this->pay_detail, 2, $period[4]); ?></td>
-                    <td><?php showPay($this->pay_detail, 2, $period[5]); ?></td>
-                    <td><?php showPay($this->pay_detail, 2, $period[6]); ?></td>
-                    <td><?php showPay($this->pay_detail, 2, $period[7]); ?></td>
-                    <td><?php showPay($this->pay_detail, 2, $period[8]); ?></td>
-                    <td><?php showPay($this->pay_detail, 2, $period[9]); ?></td>
-                    <td><?php showPay($this->pay_detail, 2, $period[10]); ?></td>
-                    <td><?php showPay($this->pay_detail, 2, $period[11]); ?></td>
-                    <td><?php showPay($this->pay_detail, 2, $period[12]); ?></td>
-                    <td><?php showPay($this->pay_detail, 2, $period[13]); ?></td>
-                    <td><?php showPay($this->pay_detail, 2, $period[14]); ?></td>
-                </tr>
-                <tr>
                     <td><small>Выгодное топливо</small></td>
                     <td><?php showPay($this->pay_detail, 3, $period[0]); ?></td>
                     <td><?php showPay($this->pay_detail, 3, $period[1]); ?></td>
@@ -150,6 +132,10 @@ function showPay($detail, $program, $date) {
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="alert alert-warning">
+        В работе графика оплат возможны перебои (<strong>некоторые оплаты могут не отображаться</strong>). 
+        Приносим свои извинения за причиненные неудобства.
     </div>
 </div>
 
