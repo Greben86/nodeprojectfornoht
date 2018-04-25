@@ -36,6 +36,30 @@ class Admin_IndexController extends Zend_Controller_Action
         ));
 
         $result = $db->fetchAll('SELECT * FROM statements ORDER BY date_doc DESC');
+        
+//        $db1 = Zend_Db::factory('Pdo_Mysql', array(
+//                    'host' => $localConfig->database->host,
+//                    'dbname' => $localConfig->database->name,
+//                    'username' => $localConfig->database->user,
+//                    'password' => $localConfig->database->pass,
+//                    'charset' => 'utf8'
+//        ));
+//
+//        foreach ($result as $item)
+//        {
+//            // Формируем массив данных
+//            $data = array(
+//                'email' => $item['email'],
+//                'fullname' => $item['fullname'],
+//                'family' => $item['family'],
+//                'name' => $item['name'],
+//                'name2' => $item['name2'],
+//                'phone' => $item['phone'],
+//                'note' => $item['note']
+//            );
+//            // Сохраняем данные
+//            $db1->insert('requests', $data);
+//        }
 
         $this->view->records = $result;
     }
