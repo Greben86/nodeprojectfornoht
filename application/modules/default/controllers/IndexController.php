@@ -1,7 +1,15 @@
 <?php
 
 class IndexController extends Zend_Controller_Action
-{
+{    
+    private $_config;
+    
+    public function init()
+    {
+        $configs = $this->getInvokeArg('bootstrap')->getOption('configs');
+        $this->_config = new Zend_Config_Ini($configs['localConfigPath']);
+    }
+    
     public function indexAction()
     {        
         // Подключаемся к БД
@@ -33,11 +41,35 @@ class IndexController extends Zend_Controller_Action
             'host'     => $localConfig->database->host,
             'dbname'   => $localConfig->database->name,
             'username' => $localConfig->database->user,
-            'password' => $localConfig->database->pass
+            'password' => $localConfig->database->pass,
+            'charset' => 'utf8'
         ));
 
-        $result = $db->fetchAll('SELECT * FROM partners ORDER BY ordr ASC');
+        $result = $db->fetchAll('SELECT * FROM `partner_list` ORDER BY `ordr` ASC;');
         
+//        $db1 = Zend_Db::factory('Pdo_Mysql', array(
+//                    'host' => $localConfig->database->host,
+//                    'dbname' => $localConfig->database->name,
+//                    'username' => $localConfig->database->user,
+//                    'password' => $localConfig->database->pass,
+//                    'charset' => 'utf8'
+//        ));
+//
+//        foreach ($result as $item)
+//        {
+//            // Формируем массив данных
+//            $data = array(
+//                'note' => $item['note'],
+//                'link' => $item['link'],
+//                'file' => $item['file'],
+//                'discount' => $item['discount'],
+//                'ordr' => $item['ordr']
+//            );
+//            // Сохраняем данные
+//            $db1->insert('partner_list', $data);
+//        }
+        
+        $this->view->imagehost = $this->_config->api->host.'/partners/image/';
         $this->view->records = $result;
     }
     
@@ -96,23 +128,55 @@ class IndexController extends Zend_Controller_Action
             'host'     => $localConfig->database->host,
             'dbname'   => $localConfig->database->name,
             'username' => $localConfig->database->user,
-            'password' => $localConfig->database->pass
+            'password' => $localConfig->database->pass,
+            'charset' => 'utf8'
         ));
 
-        $result = $db->fetchAll('SELECT * FROM promos ORDER BY id DESC');
+        $result = $db->fetchAll('SELECT * FROM `promo_list` ORDER BY `id` DESC;');
+        
+//        $db1 = Zend_Db::factory('Pdo_Mysql', array(
+//                    'host' => $localConfig->database->host,
+//                    'dbname' => $localConfig->database->name,
+//                    'username' => $localConfig->database->user,
+//                    'password' => $localConfig->database->pass,
+//                    'charset' => 'utf8'
+//        ));
+// 
+//        foreach ($result as $item)
+//        {
+//            // Формируем массив данных
+//            $data = array(
+//                'name' => $item['name'],
+//                'filename' => $item['file']
+//            );
+//            // Сохраняем данные
+//            $db1->insert('promo_list', $data);
+//        }
         
         $promos = array();
         foreach ($result as $r) 
         {
             $promos[] = array(
+                'id' => $r['id'],
                 'name' => $r['name'],
-                'file' => '/img/promo/' . $r['file']
+                'file' => '/img/promo/' . $r['filename']
             );
         }
 
+        $this->view->imagehost = $this->_config->api->host.'/promos/image/';
         $this->view->promos = $promos;
     }
     
+    public function newsAction() 
+    {
+        //
+    }
+    
+    public function storiesAction()
+    {
+        //
+    }
+
     public function pricesAction()
     {        
         // Подключаемся к БД

@@ -1,43 +1,8 @@
 <div class="col-sm-9">
-    <h2>Действующие акции</h2> 
-    <p>Участникам кооператива нашими партнерами предоставляются <a href="#bottom">акции*</a></p>
+    <h2>Новостная лента</h2>
 
-    <?php 
-    if (count($this->promos)):
-        $i = 0;
-        foreach ($this->promos as $r):
-        $i++;
-    ?>
-    <?php if (($i-1)%3==0): ?><?php endif; ?>
-        <div class="col-md-4" style="height: 400px">
-            <div class="img-thumbnail promoimage">
-                <a href="<?php echo $this->imagehost.$r['id'];?>" target="blank" data-lightbox="roadtrip" data-title="<?php echo $r['name'];?>">
-                    <img src="<?php echo $this->imagehost.$r['id'];?>" width="100%">
-                </a>
-            </div>
-            <p><?php echo $r['name']; ?></p>
-        </div>
-    <?php if ($i%3==0): ?><?php endif; ?>
-
-    <?php endforeach; ?>
-    <?php if ($i%3!=0): ?><?php endif; ?>
-    <?php else: ?>
     <div class="alert alert-info">
-        <strong>Промо-акции отсутствуют</strong>
-    </div>
-    <?php endif; ?>
-
-    <script type='text/javascript'>
-        [].forEach.call(document.querySelectorAll('img[data-src]'), function(img) {
-          img.setAttribute('src', img.getAttribute('data-src'));
-          img.onload = function() {
-            img.removeAttribute('data-src');
-          };
-        });
-    </script>
-
-    <div  class="col-md-12">
-        <small><a name="bottom"></a>* - партнерами кооператива не гарантируется постоянное наличие акционных товаров в точках продаж</small>
+        Наши программисты работают над этим разделом, скоро тут появятся <strong>новости</strong>
     </div>
 </div>
 
