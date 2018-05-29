@@ -169,12 +169,36 @@ class IndexController extends Zend_Controller_Action
     
     public function newsAction() 
     {
-        //
+        // Делаем запрос к API
+        $ch = curl_init(); 
+        curl_setopt($ch, CURLOPT_URL, $this->_config->api->host.'/news/list'); 
+        curl_setopt($ch, CURLOPT_HEADER, false); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'sodeystvie');
+        $result = curl_exec($ch);        
+
+        $this->view->imagehost = $this->_config->api->host.'/news/image/';
+        $this->view->news = json_decode($result, true);
+        
+        curl_close($ch);
     }
     
-    public function storiesAction()
+    public function talesAction()
     {
-        //
+        // Делаем запрос к API
+        $ch = curl_init(); 
+        curl_setopt($ch, CURLOPT_URL, $this->_config->api->host.'/tales/list'); 
+        curl_setopt($ch, CURLOPT_HEADER, false); 
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'sodeystvie');
+        $result = curl_exec($ch);
+
+        $this->view->imagehost = $this->_config->api->host.'/tales/image/';
+        $this->view->tales = json_decode($result, true);
+        
+        curl_close($ch);
     }
 
     public function pricesAction()

@@ -1,49 +1,66 @@
 <div class="col-sm-9">
     <h2>Новостная лента</h2>
 
+    <?php if (count($this->news)):?>
+    <table class="livetable">
+        <?php foreach ($this->news as $r): ?>
+            <tr>  
+                <td style="vertical-align: top">
+                    <img src="<?php echo $this->imagehost . $r['id']; ?>" width="150">
+                </td>
+                <td style="padding-left: 10px; vertical-align: top">
+                    <h4><?php echo $r['title']; ?></h4>
+                    <p><?php echo $r['body']; ?></p>
+                </td>
+            </tr>
+            <tr><hr></tr>
+        <?php endforeach; ?>
+    </table>
+    <?php else: ?>
     <div class="alert alert-info">
-        Наши программисты работают над этим разделом, скоро тут появятся <strong>новости</strong>
+        <strong>Нет новостей</strong>
     </div>
+    <?php endif; ?>
 </div>
 
 <div class="col-sm-3 hidden-xs hidden-sm">
     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-      <ol class="carousel-indicators">
-        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-      </ol>
-      <div class="carousel-inner">
-        <div class="item active">
-          <img src="/img/carousel/slide1.png">
-          <div class="carousel-caption">
-              <h3>Приглашаем</h3>
-              <p>к сотрудничеству производителей и поставщиков товаров народного потребления</p>                            
-          </div>
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="/img/carousel/slide1.png">
+                <div class="carousel-caption">
+                    <h3>Приглашаем</h3>
+                    <p>к сотрудничеству производителей и поставщиков товаров народного потребления</p>                            
+                </div>
+            </div>
+            <div class="item">
+                <img src="/img/carousel/slide2.png">
+                <div class="carousel-caption">
+                    <h3>Приглашаем</h3>
+                    <p>к сотрудничеству менеджеров отделов снабжения предприятий</p>                            
+                </div>
+            </div>
+            <div class="item">
+                <img src="/img/carousel/slide3.png">
+                <div class="carousel-caption">
+                    <h3>Приглашаем</h3>
+                    <p>к сотрудничеству менеджеров активных продаж</p>                            
+                </div>
+            </div>
+            <div class="item">
+                <img src="/img/carousel/slide4.png">
+                <div class="carousel-caption">
+                    <h3>Приглашаем</h3>
+                    <p>предпринимателей к совместной закупке</p>                            
+                </div>
+            </div>
         </div>
-        <div class="item">
-          <img src="/img/carousel/slide2.png">
-          <div class="carousel-caption">
-              <h3>Приглашаем</h3>
-              <p>к сотрудничеству менеджеров отделов снабжения предприятий</p>                            
-          </div>
-        </div>
-        <div class="item">
-          <img src="/img/carousel/slide3.png">
-          <div class="carousel-caption">
-              <h3>Приглашаем</h3>
-              <p>к сотрудничеству менеджеров активных продаж</p>                            
-          </div>
-        </div>
-        <div class="item">
-          <img src="/img/carousel/slide4.png">
-          <div class="carousel-caption">
-              <h3>Приглашаем</h3>
-              <p>предпринимателей к совместной закупке</p>                            
-          </div>
-        </div>
-      </div>
     </div>
     <br>
     <script type="text/javascript" src="//vk.com/js/api/openapi.js?152"></script>
@@ -51,6 +68,6 @@
     <!-- VK Widget -->
     <div id="vk_groups"></div>
     <script type="text/javascript">
-    VK.Widgets.Group("vk_groups", {mode: 3}, 143698905);
+        VK.Widgets.Group("vk_groups", {mode: 3}, 143698905);
     </script>
 </div>

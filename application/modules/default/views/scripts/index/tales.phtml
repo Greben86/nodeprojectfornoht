@@ -1,9 +1,26 @@
 <div class="col-sm-9">
     <h2>Истории успеха</h2>
 
+    <?php if (count($this->tales)): ?>
+    <table class="livetable">
+        <?php foreach ($this->tales as $r): ?>
+            <tr>  
+                <td style="vertical-align: top">
+                    <img src="<?php echo $this->imagehost . $r['id']; ?>" width="150">
+                </td>
+                <td style="padding-left: 10px; vertical-align: top">
+                    <h4><?php echo $r['title']; ?></h4>
+                    <p><?php echo $r['body']; ?></p>
+                </td>
+            </tr>
+            <tr><hr></tr>
+        <?php endforeach; ?>
+    </table>
+    <?php else: ?>
     <div class="alert alert-info">
-        Наши программисты работают над этим разделом, скоро тут появятся <strong>истории успеха</strong>
+        <strong>Нет историй</strong>
     </div>
+    <?php endif; ?>
 </div>
 
 <div class="col-sm-3 hidden-xs hidden-sm">

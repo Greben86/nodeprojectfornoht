@@ -22,7 +22,7 @@
     </news>
     <stories>
         <label>Истории успеха</label>
-        <uri>/home/stories</uri>
+        <uri>/home/tales</uri>
     </stories>
     <catalog>
         <label>Стол заказов</label>
