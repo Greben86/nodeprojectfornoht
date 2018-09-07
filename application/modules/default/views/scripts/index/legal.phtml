@@ -1,0 +1,76 @@
+<script>
+    $(function () {
+        // Отображается 1 вкладка, 
+        // т.к. отсчёт начинается с нуля
+        $("#myTab li:eq(0) a").tab('show');
+    });
+</script>
+<div class="col-sm-9">
+    <h2>Юр. услуги</h2>
+    <ul id="myTab"  class="nav nav-tabs">
+        <li><a data-toggle="tab" href="#panely1">Для должника</a></li>
+        <li><a data-toggle="tab" href="#panely2">Для кредитора</a></li>
+        <li><a data-toggle="tab" href="#panely3">Банкротство физ. лиц</a></li>
+        <li><a data-toggle="tab" href="#panely4">Полезные ссылки</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="panely1" class="tab-pane fade in active">
+            <h3>Панель 1</h3>
+            <p>Содержимое 1 панели...</p>
+        </div>
+        <div id="panely2" class="tab-pane fade">
+            <h3>Панель 2</h3>
+            <p>Содержимое 2 панели...</p>
+        </div>
+        <div id="panely3" class="tab-pane fade">
+            <h3>Панель 3</h3>
+            <p>Содержимое 3 панели...</p>
+        </div>
+        <div id="panely4" class="tab-pane fade">
+            <h3>Панель 4</h3>
+            <p>Содержимое 4 панели...</p>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-3 hidden-xs hidden-sm">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="/img/carousel/slide1.png">
+                <div class="carousel-caption">
+                    <h3>Приглашаем</h3>
+                    <p>к сотрудничеству производителей и поставщиков товаров народного потребления</p>                            
+                </div>
+            </div>
+            <div class="item">
+                <img src="/img/carousel/slide2.png">
+                <div class="carousel-caption">
+                    <h3>Приглашаем</h3>
+                    <p>к сотрудничеству менеджеров отделов снабжения предприятий</p>                            
+                </div>
+            </div>
+            <div class="item">
+                <img src="/img/carousel/slide3.png">
+                <div class="carousel-caption">
+                    <h3>Приглашаем</h3>
+                    <p>к сотрудничеству менеджеров активных продаж</p>                            
+                </div>
+            </div>
+            <div class="item">
+                <img src="/img/carousel/slide4.png">
+                <div class="carousel-caption">
+                    <h3>Приглашаем</h3>
+                    <p>предпринимателей к совместной закупке</p>                            
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

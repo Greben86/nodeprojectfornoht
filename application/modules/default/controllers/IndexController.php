@@ -228,6 +228,11 @@ class IndexController extends Zend_Controller_Action
         $this->view->prices = $pricelists;
     }
     
+    public function legalAction()
+    {
+        //
+    }
+    
     public function detailsAction()
     {
         //

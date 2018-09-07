@@ -28,6 +28,10 @@
         <label>Стол заказов</label>
         <uri>/catalog</uri>
     </catalog>
+    <legal>
+        <label>Юр. услуги</label>
+        <uri>/home/legal</uri>
+    </legal>
     <details>
         <label>Реквизиты</label>
         <uri>/home/details</uri>
@@ -35,5 +39,5 @@
     <about>
         <label>Контакты</label>
         <uri>/home/about</uri>
-    </about>    
+    </about>
 </config>
